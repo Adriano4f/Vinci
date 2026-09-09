@@ -1,0 +1,5 @@
+# Dependencies (reinstall with: npm install)
+node_modules/
+
+# Note: js/ is committed on purpose — it lets the site work (e.g. on GitHub
+# Pages) without anyone needing to run the TypeScript compiler first.

@@ -1,0 +1,216 @@
+/*
+ * examples.css — styles shared by the demo template pages in /examples.
+ *
+ * These are intentionally separate from main.css: they show clients that
+ * every site we ship can have its own look. Each demo page sets a theme
+ * class on <body> (theme-bakery, theme-tech, theme-portfolio) which swaps
+ * the color palette.
+ */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* ------- "This is a demo" ribbon shown at the top of every demo ------- */
+.demo-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #d4a437;
+  color: #1a1405;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.demo-ribbon a {
+  color: #1a1405;
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 2px solid #1a1405;
+}
+
+/* ------- Themes ------- */
+.theme-bakery {
+  --t-bg: #fdf8f0;
+  --t-surface: #ffffff;
+  --t-text: #3b2c1f;
+  --t-muted: #8a7561;
+  --t-accent: #c07b3a;
+  --t-line: #eadfce;
+  background: var(--t-bg);
+  color: var(--t-text);
+}
+
+.theme-tech {
+  --t-bg: #0b1220;
+  --t-surface: #131c2e;
+  --t-text: #e7ecf5;
+  --t-muted: #8d99b3;
+  --t-accent: #4f8ef7;
+  --t-line: #223052;
+  background: var(--t-bg);
+  color: var(--t-text);
+}
+
+.theme-portfolio {
+  --t-bg: #faf7fc;
+  --t-surface: #ffffff;
+  --t-text: #2d2237;
+  --t-muted: #7d6f8c;
+  --t-accent: #8b5cf6;
+  --t-line: #e8ddf5;
+  background: var(--t-bg);
+  color: var(--t-text);
+}
+
+.demo-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+.demo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--t-line);
+  background: var(--t-bg);
+}
+
+.demo-nav .logo {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--t-text);
+}
+
+.demo-nav .logo i {
+  color: var(--t-accent);
+  font-style: normal;
+}
+
+.demo-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.demo-nav ul a {
+  color: var(--t-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.demo-nav ul a:hover {
+  color: var(--t-accent);
+}
+
+.demo-hero {
+  text-align: center;
+  padding: 72px 22px 56px;
+}
+
+.demo-hero h1 {
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  margin: 0 0 14px;
+  color: var(--t-text);
+}
+
+.demo-hero p {
+  color: var(--t-muted);
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+.demo-btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 10px;
+  background: var(--t-accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.demo-section {
+  padding: 48px 0;
+}
+
+.demo-section h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 0 0 8px;
+  color: var(--t-text);
+}
+
+.demo-section .sub {
+  text-align: center;
+  color: var(--t-muted);
+  margin: 0 0 34px;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.demo-card {
+  background: var(--t-surface);
+  border: 1px solid var(--t-line);
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.demo-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  color: var(--t-text);
+}
+
+.demo-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--t-muted);
+}
+
+.demo-card .price {
+  display: block;
+  margin-top: 12px;
+  font-weight: 800;
+  color: var(--t-accent);
+}
+
+/* A colored block standing in for a photo. */
+.demo-img {
+  height: 110px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--t-accent), var(--t-line));
+}
+
+.demo-footer {
+  text-align: center;
+  padding: 30px 0 44px;
+  color: var(--t-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--t-line);
+}
+
+@media (max-width: 700px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-nav ul {
+    gap: 12px;
+  }
+}

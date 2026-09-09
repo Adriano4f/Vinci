@@ -1,0 +1,14 @@
+{
+  "name": "vinci-websites",
+  "version": "1.0.0",
+  "description": "Vinci — a student web studio. TypeScript + HTML + CSS site for our school entrepreneurship project.",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "serve": "npx --yes serve ."
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
