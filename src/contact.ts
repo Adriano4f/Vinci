@@ -29,6 +29,17 @@
     return "";
   };
 
+  /** For a <select>, returns the visible label of the chosen option
+      ("" when the placeholder is selected); other fields fall back to valueOf. */
+  const labelOf = (name: string): string => {
+    const field = form.elements.namedItem(name);
+    if (field instanceof HTMLSelectElement) {
+      const option = field.selectedOptions[0];
+      return option && option.value !== "" ? option.textContent.trim() : "";
+    }
+    return valueOf(name);
+  };
+
   /** Shows (or clears) the error message under a field. */
   const setError = (name: string, message: string): void => {
     const slot = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
@@ -97,8 +108,8 @@
       `Nombre: ${valueOf("name")}`,
       `Negocio / equipo: ${valueOf("business") || "(sin especificar)"}`,
       `Correo: ${valueOf("email")}`,
-      `Tipo de proyecto: ${valueOf("project-type")}`,
-      `Presupuesto: ${valueOf("budget") || "(sin especificar)"}`,
+      `Tipo de proyecto: ${labelOf("project-type")}`,
+      `Presupuesto: ${labelOf("budget") || "(sin especificar)"}`,
       "",
       valueOf("message"),
     ];
