@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact us — Vinci</title>
-  <meta name="description" content="Tell us about your student business and get a free design suggestion from the Vinci team." />
+  <title>Contáctanos — Vinci</title>
+  <meta name="description" content="Cuéntanos sobre tu negocio estudiantil y recibe una propuesta de diseño gratis del equipo Vinci." />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
@@ -12,114 +12,114 @@
   <header class="site-nav">
     <div class="container">
       <a class="brand" href="index.html">Vinci<span>Web Studio</span></a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="templates.html">Templates</a></li>
-        <li><a href="contact.html" class="nav-cta">Contact us</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="templates.html">Plantillas</a></li>
+        <li><a href="contact.html" class="nav-cta">Contáctanos</a></li>
       </ul>
     </div>
   </header>
 
   <section class="page-head">
     <div class="container">
-      <h1>Let's build your website</h1>
-      <p>Fill in the form and we will get back to you with a design suggestion —
-        free and with no commitment.</p>
+      <h1>Construyamos tu sitio web</h1>
+      <p>Llena el formulario y te responderemos con una propuesta de diseño —
+        gratis y sin compromiso.</p>
     </div>
   </section>
 
   <section class="section" style="padding-top: 0;">
     <div class="container contact-wrap">
 
-      <!-- ===== Form (validated by js/contact.js) ===== -->
+      <!-- ===== Formulario (lo valida js/contact.js) ===== -->
       <div class="form-card">
         <form id="contact-form" novalidate>
           <div class="form-row">
             <div class="field">
-              <label for="f-name">Your name *</label>
+              <label for="f-name">Tu nombre *</label>
               <input type="text" id="f-name" name="name" placeholder="Ada Lovelace" />
               <p class="field-error" data-error-for="name"></p>
             </div>
             <div class="field">
-              <label for="f-business">Business / team name</label>
-              <input type="text" id="f-business" name="business" placeholder="The Golden Crumb" />
+              <label for="f-business">Nombre del negocio / equipo</label>
+              <input type="text" id="f-business" name="business" placeholder="La Miga Dorada" />
               <p class="field-error" data-error-for="business"></p>
             </div>
           </div>
 
           <div class="field">
-            <label for="f-email">Email *</label>
-            <input type="email" id="f-email" name="email" placeholder="you@school.edu" />
+            <label for="f-email">Correo electrónico *</label>
+            <input type="email" id="f-email" name="email" placeholder="tu@escuela.edu" />
             <p class="field-error" data-error-for="email"></p>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="f-type">What do you need? *</label>
+              <label for="f-type">¿Qué necesitas? *</label>
               <select id="f-type" name="project-type">
-                <option value="">Choose one…</option>
-                <option value="one-page">One-page site</option>
-                <option value="multi-page">Multi-page site</option>
-                <option value="shop">Online shop</option>
-                <option value="portfolio">Portfolio</option>
-                <option value="other">Something else / not sure</option>
+                <option value="">Elige una…</option>
+                <option value="one-page">Sitio de una página</option>
+                <option value="multi-page">Sitio de varias páginas</option>
+                <option value="shop">Tienda en línea</option>
+                <option value="portfolio">Portafolio</option>
+                <option value="other">Otra cosa / aún no lo sé</option>
               </select>
               <p class="field-error" data-error-for="project-type"></p>
             </div>
             <div class="field">
-              <label for="f-budget">Rough budget</label>
+              <label for="f-budget">Presupuesto aproximado</label>
               <select id="f-budget" name="budget">
-                <option value="">Choose one…</option>
-                <option value="small">As cheap as possible</option>
-                <option value="medium">Moderate — quality matters</option>
-                <option value="large">We want the best you can do</option>
+                <option value="">Elige una…</option>
+                <option value="small">Lo más barato posible</option>
+                <option value="medium">Moderado — la calidad importa</option>
+                <option value="large">Queremos lo mejor que puedan hacer</option>
               </select>
               <p class="field-error" data-error-for="budget"></p>
             </div>
           </div>
 
           <div class="field">
-            <label for="f-message">Tell us about your project *</label>
+            <label for="f-message">Cuéntanos sobre tu proyecto *</label>
             <textarea id="f-message" name="message"
-              placeholder="What do you sell? Who is it for? Do you already have a name, logo or colors? When is your deadline?"></textarea>
+              placeholder="¿Qué vendes? ¿Para quién es? ¿Ya tienes nombre, logo o colores? ¿Cuál es tu fecha límite?"></textarea>
             <p class="field-error" data-error-for="message"></p>
           </div>
 
-          <button class="btn btn-primary" type="submit">Send message</button>
+          <button class="btn btn-primary" type="submit">Enviar mensaje</button>
         </form>
 
-        <!-- Shown instead of the form after a valid submit (contact.js) -->
+        <!-- Se muestra en lugar del formulario tras un envío válido (contact.js) -->
         <div id="form-success" hidden>
-          <h2>Message ready!</h2>
-          <p>Your details look good. Because this is a school project without a
-            server, the button below opens your email app with everything
-            filled in — just press send there.</p>
+          <h2>¡Mensaje listo!</h2>
+          <p>Tus datos se ven bien. Como este es un proyecto escolar sin
+            servidor, el botón de abajo abre tu aplicación de correo con todo
+            ya escrito — solo presiona enviar ahí.</p>
           <p>
-            <a id="mailto-link" class="btn btn-primary" href="#">Open email app</a>
-            <button id="form-reset" class="btn btn-ghost" type="button">Write another</button>
+            <a id="mailto-link" class="btn btn-primary" href="#">Abrir aplicación de correo</a>
+            <button id="form-reset" class="btn btn-ghost" type="button">Escribir otro</button>
           </p>
         </div>
       </div>
 
-      <!-- ===== Sidebar ===== -->
+      <!-- ===== Barra lateral ===== -->
       <aside>
         <div class="info-card">
-          <h3>What happens next</h3>
+          <h3>Qué sigue después</h3>
           <ul>
-            <li>We reply within <strong>2 school days</strong>.</li>
-            <li>We sketch a preview of your site for free.</li>
-            <li>You approve the design and the price.</li>
-            <li>We build it — and you get the code.</li>
+            <li>Respondemos en máximo <strong>2 días escolares</strong>.</li>
+            <li>Hacemos un boceto de tu sitio gratis.</li>
+            <li>Tú apruebas el diseño y el precio.</li>
+            <li>Lo construimos — y te quedas con el código.</li>
           </ul>
         </div>
         <div class="info-card">
-          <h3>Useful things to include</h3>
+          <h3>Cosas útiles para incluir</h3>
           <ul>
-            <li>What you sell or offer</li>
-            <li>Your name, logo and colors (if you have them)</li>
-            <li>Your deadline (fair date?)</li>
-            <li>Any website you like the look of</li>
+            <li>Qué vendes u ofreces</li>
+            <li>Tu nombre, logo y colores (si los tienes)</li>
+            <li>Tu fecha límite (¿fecha de la feria?)</li>
+            <li>Cualquier sitio web que te guste</li>
           </ul>
         </div>
       </aside>
@@ -129,8 +129,8 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p><strong>Vinci</strong> — websites built by students, for student businesses.</p>
-      <p>&copy; <span data-year>2026</span> Vinci Web Studio · School entrepreneurship project</p>
+      <p><strong>Vinci</strong> — sitios web hechos por estudiantes, para negocios estudiantiles.</p>
+      <p>&copy; <span data-year>2026</span> Vinci Web Studio · Proyecto de emprendimiento escolar</p>
     </div>
   </footer>
 

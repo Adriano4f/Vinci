@@ -194,7 +194,8 @@ svg {
   background: var(--accent);
 }
 
-.nav-links a.nav-cta:hover {
+.nav-links a.nav-cta:hover,
+.nav-links a.nav-cta.active {
   background: var(--accent-soft);
 }
 

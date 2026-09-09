@@ -46,28 +46,28 @@
     let ok = true;
 
     if (valueOf("name").length < 2) {
-      setError("name", "Please tell us your name.");
+      setError("name", "Por favor dinos tu nombre.");
       ok = false;
     } else {
       setError("name", "");
     }
 
     if (!EMAIL_PATTERN.test(valueOf("email"))) {
-      setError("email", "That email address does not look right.");
+      setError("email", "Ese correo electrónico no parece correcto.");
       ok = false;
     } else {
       setError("email", "");
     }
 
     if (valueOf("project-type") === "") {
-      setError("project-type", "Please choose what kind of site you need.");
+      setError("project-type", "Elige qué tipo de sitio necesitas.");
       ok = false;
     } else {
       setError("project-type", "");
     }
 
     if (valueOf("message").length < 10) {
-      setError("message", "Tell us a little more about your idea (10+ characters).");
+      setError("message", "Cuéntanos un poco más sobre tu idea (mínimo 10 caracteres).");
       ok = false;
     } else {
       setError("message", "");
@@ -92,13 +92,13 @@
 
     // Build a mailto: link containing everything the user wrote.
     const recipient = "vinci.websites@example.com"; // <- replace with your real email
-    const subject = `New website request — ${valueOf("name")}`;
+    const subject = `Nueva solicitud de sitio web — ${valueOf("name")}`;
     const bodyLines = [
-      `Name: ${valueOf("name")}`,
-      `Business / team: ${valueOf("business") || "(not given)"}`,
-      `Email: ${valueOf("email")}`,
-      `Project type: ${valueOf("project-type")}`,
-      `Budget: ${valueOf("budget") || "(not given)"}`,
+      `Nombre: ${valueOf("name")}`,
+      `Negocio / equipo: ${valueOf("business") || "(sin especificar)"}`,
+      `Correo: ${valueOf("email")}`,
+      `Tipo de proyecto: ${valueOf("project-type")}`,
+      `Presupuesto: ${valueOf("budget") || "(sin especificar)"}`,
       "",
       valueOf("message"),
     ];

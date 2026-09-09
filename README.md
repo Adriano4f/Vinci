@@ -1,114 +1,119 @@
-# Vinci — websites for student businesses
+# Vinci — sitios web para negocios estudiantiles
 
-This is the website for **Vinci**, our school entrepreneurship project: a
-student-run web studio that builds websites for other student businesses.
+Este es el sitio web de **Vinci**, nuestro proyecto de emprendimiento
+escolar: un estudio web dirigido por estudiantes que construye páginas para
+otros negocios de estudiantes.
 
-The site has three main pages plus a folder of demo templates:
+El sitio tiene tres páginas principales más una carpeta con plantillas demo:
 
-| Page | File | What it is |
-|------|------|-----------|
-| Home | `index.html` | Who we are, why teams should buy from us, what we offer |
-| Templates | `templates.html` | Gallery of template designs clients can pick from |
-| Contact | `contact.html` | Form clients use to tell us about their project |
-| Demos | `examples/` | Three sample sites (bakery, tech store, portfolio) that show what a finished client site can look like |
+| Página | Archivo | Qué es |
+|--------|---------|--------|
+| Inicio | `index.html` | Quiénes somos, por qué deberían comprarnos, qué ofrecemos |
+| Plantillas | `templates.html` | Galería de diseños que los clientes pueden elegir |
+| Contacto | `contact.html` | Formulario para que los clientes nos cuenten su proyecto |
+| Demos | `examples/` | Tres sitios de muestra (panadería, tienda de tecnología, portafolio) que muestran cómo puede verse un sitio terminado |
 
 ---
 
-## How the project is organized
+## Cómo está organizado el proyecto
 
 ```
 Vinci/
-├── index.html          # Home page
-├── templates.html      # Template gallery (with category filter)
-├── contact.html        # Contact page with a validated form
-├── examples/           # Self-contained demo sites clients can preview
+├── index.html          # Página de inicio
+├── templates.html      # Galería de plantillas (con filtro por categoría)
+├── contact.html        # Página de contacto con formulario validado
+├── examples/           # Sitios demo independientes para que los clientes vean
 │   ├── bakery.html
 │   ├── techstore.html
 │   └── portfolio.html
 ├── css/
-│   ├── main.css        # All styling for the three main pages
-│   └── examples.css    # Styling shared by the demo pages
-├── src/                # TypeScript SOURCE code — this is what we edit
-│   ├── common.ts       # Navbar (mobile menu, active link), footer year
-│   ├── gallery.ts      # Category filter on templates.html
-│   └── contact.ts      # Validation for the contact form
-├── js/                 # Compiled JavaScript — GENERATED, do not edit by hand
-├── tsconfig.json       # Compiler settings for TypeScript
-├── package.json        # Project metadata + shortcut commands
-└── .gitignore          # Tells git to ignore node_modules/
+│   ├── main.css        # Todos los estilos de las tres páginas principales
+│   └── examples.css    # Estilos compartidos por las páginas demo
+├── src/                # Código TypeScript FUENTE — esto es lo que editamos
+│   ├── common.ts       # Navbar (menú móvil, enlace activo), año del footer
+│   ├── gallery.ts      # Filtro de categorías en templates.html
+│   └── contact.ts      # Validación del formulario de contacto
+├── js/                 # JavaScript compilado — GENERADO, no editar a mano
+├── tsconfig.json       # Configuración del compilador TypeScript
+├── package.json        # Metadatos del proyecto + comandos abreviados
+└── .gitignore          # Le dice a git que ignore node_modules/
 ```
 
-## The mental model (for C++ programmers)
+## El modelo mental (para quien viene de C++)
 
-If you know C++, the web stack maps roughly like this:
+Si conoces C++, las tecnologías web se corresponden más o menos así:
 
-| Web | C++ equivalent |
-|-----|----------------|
-| **HTML** (`.html`) | The *structure* of the page — like declaring the widgets/layout of a program. Text, headings, buttons, forms. No logic. |
-| **CSS** (`.css`) | The *appearance* — colors, fonts, sizes, spacing, layout. Purely cosmetic. |
-| **TypeScript** (`.ts`) | The *logic* — like your `.cpp` files. Browsers cannot run TypeScript directly. |
-| **JavaScript** (`.js` in `js/`) | The *compiled output* — like the binary `g++` produces. `tsc` turns each `.ts` file into a `.js` file the browser can run. |
-| `tsc` (TypeScript compiler) | `g++` / `clang++` |
-| `tsconfig.json` | Compiler flags, like a Makefile's `CXXFLAGS` |
-| `package.json` | A bit like a Makefile + project manifest: lists dependencies and defines `npm run …` shortcuts |
-| `npm` | Package manager — like vcpkg/conan, installs libraries (`typescript` is our only dependency) |
+| Web | Equivalente en C++ |
+|-----|--------------------|
+| **HTML** (`.html`) | La *estructura* de la página — como declarar los widgets/layout de un programa. Texto, encabezados, botones, formularios. Sin lógica. |
+| **CSS** (`.css`) | La *apariencia* — colores, fuentes, tamaños, espaciado, disposición. Puramente cosmético. |
+| **TypeScript** (`.ts`) | La *lógica* — como tus archivos `.cpp`. Los navegadores no pueden ejecutar TypeScript directamente. |
+| **JavaScript** (`.js` en `js/`) | El *resultado compilado* — como el binario que produce `g++`. `tsc` convierte cada `.ts` en un `.js` que el navegador sí entiende. |
+| `tsc` (compilador de TypeScript) | `g++` / `clang++` |
+| `tsconfig.json` | Las banderas del compilador, como los `CXXFLAGS` de un Makefile |
+| `package.json` | Algo como un Makefile + manifiesto: lista dependencias y define atajos `npm run …` |
+| `npm` | Gestor de paquetes — como vcpkg/conan, instala bibliotecas (`typescript` es nuestra única dependencia) |
 
-Each HTML page loads the scripts it needs at the bottom, e.g.
+Cada página HTML carga los scripts que necesita al final, por ejemplo
 `<script src="js/common.js" defer></script>`.
 
-## First-time setup
+## Configuración inicial (una sola vez)
 
-You need **Node.js** (it includes `npm`). Install it from
-<https://nodejs.org> (choose the LTS version), then in this folder run:
+Necesitas **Node.js** (incluye `npm`). Instálalo desde
+<https://nodejs.org> (elige la versión LTS) y luego, en esta carpeta, ejecuta:
 
 ```bash
 npm install
 ```
 
-That downloads the TypeScript compiler into `node_modules/`. You only need to
-do this once (and again only if `package.json` changes).
+Eso descarga el compilador de TypeScript en `node_modules/`. Solo hace falta
+una vez (y de nuevo únicamente si cambia `package.json`).
 
-## Everyday workflow
+## Flujo de trabajo diario
 
 ```bash
-# 1. Edit files in src/ (TypeScript) or the .html / .css files.
+# 1. Edita los archivos de src/ (TypeScript) o los .html / .css.
 
-# 2. Compile TypeScript -> JavaScript
-npm run build        # same as running: npx tsc
+# 2. Compila TypeScript -> JavaScript
+npm run build        # es lo mismo que: npx tsc
 
-#    …or keep the compiler running so it rebuilds on every save:
+#    …o deja el compilador corriendo para que recompile al guardar:
 npm run watch
 
-# 3. Look at the site
-npm run serve        # then open http://localhost:3000
-#    or without npm:
-python3 -m http.server 8000    # then open http://localhost:8000
+# 3. Mira el sitio
+npm run serve        # luego abre http://localhost:3000
+#    o sin npm:
+python3 -m http.server 8000    # luego abre http://localhost:8000
 ```
 
-> **Why a server?** Opening `index.html` directly by double-clicking works for
-> most of the site, but using a local server is the reliable way — some
-> browsers restrict pages opened from `file://`. The `serve`/`http.server`
-> commands above are the recommended approach.
+> **¿Por qué un servidor?** Abrir `index.html` con doble clic funciona para
+> la mayoría del sitio, pero usar un servidor local es la forma confiable —
+> algunos navegadores restringen páginas abiertas desde `file://`. Los
+> comandos `serve`/`http.server` de arriba son la forma recomendada.
 
-`js/` is committed to git on purpose: the site works even on machines where
-nobody has run `tsc` (for example, GitHub Pages). Just remember — **edit the
-`.ts` files in `src/`, never the `.js` files in `js/`**.
+La carpeta `js/` está versionada en git a propósito: el sitio funciona aunque
+nadie haya ejecutado `tsc` (por ejemplo, en GitHub Pages). Solo recuerda —
+**edita los `.ts` de `src/`, nunca los `.js` de `js/`**.
 
-## Where to make common changes
+## Dónde hacer los cambios más comunes
 
-| You want to… | Edit… |
+| Si quieres… | Edita… |
 |---|---|
-| Change text, prices, sections | The `.html` file of that page |
-| Change colors / fonts / spacing | `css/main.css` — all colors are CSS variables in the `:root` block at the top |
-| Add a template card to the gallery | Copy a `<article class="card template-card">` block in `templates.html` and set its `data-category` |
-| Change the email the contact form uses | `recipient` near the bottom of `src/contact.ts` |
-| Change how validation works | `src/contact.ts` — each rule is a small `if` block |
-| Add a new demo site | Create a file in `examples/` (copy an existing one) and add a card in `templates.html` |
+| Cambiar textos, precios o secciones | El `.html` de esa página |
+| Cambiar colores / fuentes / espaciado | `css/main.css` — todos los colores son variables CSS en el bloque `:root` de arriba |
+| Agregar una tarjeta a la galería | Copia un bloque `<article class="card template-card">` en `templates.html` y ajusta su `data-category` |
+| Cambiar el correo del formulario | `recipient` cerca del final de `src/contact.ts` |
+| Cambiar cómo funciona la validación | `src/contact.ts` — cada regla es un pequeño `if` |
+| Agregar un nuevo sitio demo | Crea un archivo en `examples/` (copia uno existente) y agrega una tarjeta en `templates.html` |
 
-## Notes
+## Notas
 
-- There is **no backend**: the contact form validates input and then builds a
-  `mailto:` link that opens the visitor's email app with the message filled
-  in. For a real deployment we could add a form service later.
-- The TypeScript config uses `strict` mode — if `npm run build` complains,
-  the error message tells you the file and line, just like `g++` errors.
+- **No hay backend**: el formulario valida los datos y luego construye un
+  enlace `mailto:` que abre la aplicación de correo del visitante con el
+  mensaje ya escrito. Para una versión real podríamos agregar un servicio de
+  formularios después.
+- La configuración de TypeScript usa el modo `strict` — si `npm run build`
+  marca un error, el mensaje te dice el archivo y la línea, igual que los
+  errores de `g++`.
+- El texto visible del sitio está en español; el código (nombres, comentarios)
+  está en inglés.
