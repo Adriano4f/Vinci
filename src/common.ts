@@ -24,29 +24,32 @@
 
   // --- 2. "Otros servicios" dropdown -----------------------------------------
   // Desktop opens it on hover/focus (pure CSS). On mobile there is no hover,
-  // so the first tap expands the submenu instead of following the link.
+  // so the first tap expands the submenu; once it is open the link behaves
+  // normally and navigates to the services hub.
   const dropToggle = document.querySelector<HTMLAnchorElement>(".nav-drop");
   const dropParent = dropToggle?.closest<HTMLElement>(".has-dropdown");
   const mobileQuery = window.matchMedia("(max-width: 640px)");
 
   if (dropToggle && dropParent) {
     dropToggle.addEventListener("click", (event) => {
-      if (mobileQuery.matches) {
+      if (mobileQuery.matches && !dropParent.classList.contains("open")) {
         event.preventDefault();
-        const isOpen = dropParent.classList.toggle("open");
-        dropToggle.setAttribute("aria-expanded", String(isOpen));
+        dropParent.classList.add("open");
+        dropToggle.setAttribute("aria-expanded", "true");
       }
     });
   }
 
   // --- 3. Highlight the link of the page we are on ---------------------------
-  // Each top-level nav link carries data-route; the current route is derived
-  // from the path so nested service pages still mark "Otros servicios".
+  // Each top-level nav link carries data-route. Service pages are detected by
+  // the "servicios" directory anywhere in the path and other pages by their
+  // file name, so the logic works under a hosting prefix and on file:// too.
   const segments = window.location.pathname.split("/").filter(Boolean);
+  const lastSegment = segments[segments.length - 1] ?? "";
   let route = "inicio";
-  if (segments[0] === "servicios") route = "servicios";
-  else if (segments[0] === "templates.html") route = "plantillas";
-  else if (segments[0] === "contact.html") route = "contacto";
+  if (segments.includes("servicios")) route = "servicios";
+  else if (lastSegment === "templates.html") route = "plantillas";
+  else if (lastSegment === "contact.html") route = "contacto";
 
   document.querySelectorAll<HTMLAnchorElement>("[data-route]").forEach((link) => {
     if (link.dataset.route === route) link.classList.add("active");

@@ -107,6 +107,20 @@
     };
     if (typeSelect instanceof HTMLSelectElement) {
         typeSelect.addEventListener("change", syncBudgetVisibility);
+        // Product CTAs on the servicios pages arrive as ?servicio=<slug>; offer
+        // a matching option so customers do not have to pick a website plan.
+        const PRODUCT_SERVICES = {
+            posters: "Poster personalizado",
+            imanes: "Imanes personalizados",
+            marcos: "Marco con estampado",
+            bisuteria: "Bisutería personalizada",
+        };
+        const product = new URLSearchParams(window.location.search).get("servicio");
+        if (product && product in PRODUCT_SERVICES) {
+            const option = new Option(PRODUCT_SERVICES[product], "product");
+            typeSelect.add(option, 1);
+            typeSelect.value = "product";
+        }
     }
     syncBudgetVisibility();
     // --- Submit ---------------------------------------------------------------
@@ -115,14 +129,17 @@
         if (!validate())
             return;
         // Build a mailto: link containing everything the user wrote.
+        const isProduct = valueOf("project-type") === "product";
         const recipient = "vinci.websites@example.com"; // <- replace with your real email
-        const subject = `Nueva solicitud de sitio web · ${valueOf("name")}`;
+        const subject = isProduct
+            ? `Nueva solicitud de producto · ${valueOf("name")}`
+            : `Nueva solicitud de sitio web · ${valueOf("name")}`;
         const bodyLines = [
             `Nombre: ${valueOf("name")}`,
             `Negocio / equipo: ${valueOf("business") || "(sin especificar)"}`,
             `Correo: ${valueOf("email")}`,
             `WhatsApp / teléfono: ${valueOf("phone") || "(sin especificar)"}`,
-            `Plan que le interesa: ${labelOf("project-type")}`,
+            `${isProduct ? "Producto" : "Plan"} que le interesa: ${labelOf("project-type")}`,
             `Presupuesto: ${labelOf("budget") || "(sin especificar)"}`,
             "",
             valueOf("message"),

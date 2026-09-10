@@ -11,6 +11,7 @@
  *   5. Reveal-on-scroll animation for elements with .reveal.
  */
 (() => {
+    var _a;
     // --- 1. Mobile menu -------------------------------------------------------
     const toggle = document.querySelector(".nav-toggle");
     const menu = document.querySelector(".nav-links");
@@ -22,29 +23,32 @@
     }
     // --- 2. "Otros servicios" dropdown -----------------------------------------
     // Desktop opens it on hover/focus (pure CSS). On mobile there is no hover,
-    // so the first tap expands the submenu instead of following the link.
+    // so the first tap expands the submenu; once it is open the link behaves
+    // normally and navigates to the services hub.
     const dropToggle = document.querySelector(".nav-drop");
     const dropParent = dropToggle === null || dropToggle === void 0 ? void 0 : dropToggle.closest(".has-dropdown");
     const mobileQuery = window.matchMedia("(max-width: 640px)");
     if (dropToggle && dropParent) {
         dropToggle.addEventListener("click", (event) => {
-            if (mobileQuery.matches) {
+            if (mobileQuery.matches && !dropParent.classList.contains("open")) {
                 event.preventDefault();
-                const isOpen = dropParent.classList.toggle("open");
-                dropToggle.setAttribute("aria-expanded", String(isOpen));
+                dropParent.classList.add("open");
+                dropToggle.setAttribute("aria-expanded", "true");
             }
         });
     }
     // --- 3. Highlight the link of the page we are on ---------------------------
-    // Each top-level nav link carries data-route; the current route is derived
-    // from the path so nested service pages still mark "Otros servicios".
+    // Each top-level nav link carries data-route. Service pages are detected by
+    // the "servicios" directory anywhere in the path and other pages by their
+    // file name, so the logic works under a hosting prefix and on file:// too.
     const segments = window.location.pathname.split("/").filter(Boolean);
+    const lastSegment = (_a = segments[segments.length - 1]) !== null && _a !== void 0 ? _a : "";
     let route = "inicio";
-    if (segments[0] === "servicios")
+    if (segments.includes("servicios"))
         route = "servicios";
-    else if (segments[0] === "templates.html")
+    else if (lastSegment === "templates.html")
         route = "plantillas";
-    else if (segments[0] === "contact.html")
+    else if (lastSegment === "contact.html")
         route = "contacto";
     document.querySelectorAll("[data-route]").forEach((link) => {
         if (link.dataset.route === route)

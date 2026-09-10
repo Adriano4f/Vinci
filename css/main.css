@@ -770,6 +770,17 @@ svg {
   z-index: 60;
 }
 
+/* Invisible bridge so the pointer can cross the 10px visual gap without
+   losing :hover on the parent. */
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
 .has-dropdown:hover .dropdown,
 .has-dropdown:focus-within .dropdown,
 .has-dropdown.open .dropdown {
