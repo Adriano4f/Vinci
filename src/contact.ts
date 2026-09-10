@@ -114,6 +114,10 @@
   };
   if (typeSelect instanceof HTMLSelectElement) {
     typeSelect.addEventListener("change", syncBudgetVisibility);
+
+    // "Pedir este" buttons on the pricing cards arrive as ?plan=<slug>.
+    const plan = new URLSearchParams(window.location.search).get("plan");
+    if (plan) typeSelect.value = plan;
   }
   syncBudgetVisibility();
 
