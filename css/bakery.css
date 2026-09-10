@@ -288,12 +288,14 @@ h1, h2, h3, h4 { font-family: var(--lmd-font-title); font-weight: 400; line-heig
   white-space: nowrap;
 }
 .lmd-marquee-track {
-  display: inline-block;
+  display: inline-flex;
   animation: lmd-scroll 26s linear infinite;
   font-family: var(--lmd-font-title);
   font-size: 1.05rem;
   letter-spacing: 0.16em;
 }
+.lmd-marquee-part { flex-shrink: 0; padding-right: 0.5em; }
+/* The track is two identical halves, so -50% lands exactly on the second half. */
 @keyframes lmd-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ---------- product grid & cards ---------- */
