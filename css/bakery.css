@@ -289,7 +289,7 @@ h1, h2, h3, h4 { font-family: var(--lmd-font-title); font-weight: 400; line-heig
 }
 .lmd-marquee-track {
   display: inline-flex;
-  animation: lmd-scroll 26s linear infinite;
+  animation: lmd-scroll 32s linear infinite;
   font-family: var(--lmd-font-title);
   font-size: 1.05rem;
   letter-spacing: 0.16em;
