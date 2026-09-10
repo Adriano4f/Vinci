@@ -105,7 +105,10 @@
   };
   const saveFavs = (favs: string[]): void => localStorage.setItem(FAV_KEY, JSON.stringify(favs));
 
-  const cartCount = (): number => Object.values(getCart()).reduce((a, b) => a + b, 0);
+  const cartCount = (): number =>
+    Object.entries(getCart())
+      .filter(([slug]) => product(slug))
+      .reduce((total, [, qty]) => total + qty, 0);
 
   const updateBadge = (): void => {
     document.querySelectorAll<HTMLElement>("[data-cart-count]").forEach((el) => {
@@ -468,19 +471,21 @@
 
     // If the cart has items, carry them into the order: mark "Otro / varios"
     // and prefill the message with the cart lines and total.
-    const cart = getCart();
-    const entries = Object.entries(cart).filter(([slug]) => product(slug));
-    const msg = form.querySelector<HTMLTextAreaElement>("#mensaje");
-    if (entries.length > 0) {
+    const cartBlock = (): string => {
+      const entries = Object.entries(getCart()).filter(([slug]) => product(slug));
+      if (entries.length === 0) return "";
       const lines = entries.map(([slug, qty]) => {
         const p = product(slug) as Product;
         return `${qty} x ${p.name} (${money(p.price)} c/u, subtotal ${money(p.price * qty)})`;
       });
       const total = entries.reduce((acc, [slug, qty]) => acc + (product(slug) as Product).price * qty, 0);
+      return `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
+    };
+    const msg = form.querySelector<HTMLTextAreaElement>("#mensaje");
+    const generated = cartBlock();
+    if (generated) {
       if (sel) sel.value = "otro";
-      if (msg) {
-        msg.value = `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
-      }
+      if (msg) msg.value = generated;
     }
 
     form.addEventListener("submit", (e) => {
@@ -491,7 +496,16 @@
       const prodLabel = prodSel?.selectedOptions[0]?.textContent ?? "";
       const cantidad = form.querySelector<HTMLInputElement>("#cantidad")?.value ?? "1";
       const metodo = form.querySelector<HTMLSelectElement>("#contacto-met")?.value ?? "";
-      const mensaje = (msg?.value ?? "").trim();
+      // Rebuild the cart block from live state so drawer edits aren't stale;
+      // anything the customer typed beyond the generated block is preserved.
+      const rawMsg = (msg?.value ?? "").trim();
+      const extra = generated && rawMsg.startsWith(generated)
+        ? rawMsg.slice(generated.length).trim()
+        : rawMsg === generated
+          ? ""
+          : rawMsg;
+      const fresh = cartBlock();
+      const mensaje = [fresh, extra].filter(Boolean).join("\n\n");
       const text =
         `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
         `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +

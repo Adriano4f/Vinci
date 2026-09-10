@@ -91,7 +91,9 @@
         }
     };
     const saveFavs = (favs) => localStorage.setItem(FAV_KEY, JSON.stringify(favs));
-    const cartCount = () => Object.values(getCart()).reduce((a, b) => a + b, 0);
+    const cartCount = () => Object.entries(getCart())
+        .filter(([slug]) => product(slug))
+        .reduce((total, [, qty]) => total + qty, 0);
     const updateBadge = () => {
         document.querySelectorAll("[data-cart-count]").forEach((el) => {
             const n = cartCount();
@@ -434,20 +436,24 @@
             return;
         // If the cart has items, carry them into the order: mark "Otro / varios"
         // and prefill the message with the cart lines and total.
-        const cart = getCart();
-        const entries = Object.entries(cart).filter(([slug]) => product(slug));
-        const msg = form.querySelector("#mensaje");
-        if (entries.length > 0) {
+        const cartBlock = () => {
+            const entries = Object.entries(getCart()).filter(([slug]) => product(slug));
+            if (entries.length === 0)
+                return "";
             const lines = entries.map(([slug, qty]) => {
                 const p = product(slug);
                 return `${qty} x ${p.name} (${money(p.price)} c/u, subtotal ${money(p.price * qty)})`;
             });
             const total = entries.reduce((acc, [slug, qty]) => acc + product(slug).price * qty, 0);
+            return `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
+        };
+        const msg = form.querySelector("#mensaje");
+        const generated = cartBlock();
+        if (generated) {
             if (sel)
                 sel.value = "otro";
-            if (msg) {
-                msg.value = `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
-            }
+            if (msg)
+                msg.value = generated;
         }
         form.addEventListener("submit", (e) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
@@ -459,7 +465,16 @@
             const prodLabel = (_d = (_c = prodSel === null || prodSel === void 0 ? void 0 : prodSel.selectedOptions[0]) === null || _c === void 0 ? void 0 : _c.textContent) !== null && _d !== void 0 ? _d : "";
             const cantidad = (_f = (_e = form.querySelector("#cantidad")) === null || _e === void 0 ? void 0 : _e.value) !== null && _f !== void 0 ? _f : "1";
             const metodo = (_h = (_g = form.querySelector("#contacto-met")) === null || _g === void 0 ? void 0 : _g.value) !== null && _h !== void 0 ? _h : "";
-            const mensaje = ((_j = msg === null || msg === void 0 ? void 0 : msg.value) !== null && _j !== void 0 ? _j : "").trim();
+            // Rebuild the cart block from live state so drawer edits aren't stale;
+            // anything the customer typed beyond the generated block is preserved.
+            const rawMsg = ((_j = msg === null || msg === void 0 ? void 0 : msg.value) !== null && _j !== void 0 ? _j : "").trim();
+            const extra = generated && rawMsg.startsWith(generated)
+                ? rawMsg.slice(generated.length).trim()
+                : rawMsg === generated
+                    ? ""
+                    : rawMsg;
+            const fresh = cartBlock();
+            const mensaje = [fresh, extra].filter(Boolean).join("\n\n");
             const text = `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
                 `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +
                 `Método de contacto: ${metodo}${mensaje ? `\n\n${mensaje}` : ""}`;
