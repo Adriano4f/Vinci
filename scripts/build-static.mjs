@@ -5,7 +5,7 @@ import { cpSync, copyFileSync, mkdirSync, rmSync } from "node:fs";
 
 const OUT = "dist";
 const files = ["index.html", "templates.html", "contact.html", "favicon.svg"];
-const dirs = ["css", "examples", "js"];
+const dirs = ["css", "examples", "img", "js", "servicios"];
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
