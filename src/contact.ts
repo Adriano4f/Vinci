@@ -50,6 +50,8 @@
 
   // Reasonably strict email pattern (same idea as checking a format in C++).
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  // Digits, spaces and the usual phone punctuation; only checked when filled.
+  const PHONE_PATTERN = /^[+()0-9][0-9()\-\s]{6,}$/;
 
   // --- Validation rules -----------------------------------------------------
 
@@ -70,8 +72,15 @@
       setError("email", "");
     }
 
+    if (valueOf("phone") !== "" && !PHONE_PATTERN.test(valueOf("phone"))) {
+      setError("phone", "Ese número no parece correcto.");
+      ok = false;
+    } else {
+      setError("phone", "");
+    }
+
     if (valueOf("project-type") === "") {
-      setError("project-type", "Elige qué tipo de sitio necesitas.");
+      setError("project-type", "Elige qué plan te interesa.");
       ok = false;
     } else {
       setError("project-type", "");
@@ -95,6 +104,19 @@
     }
   });
 
+  // The budget select only makes sense for the personalized plan, so it
+  // stays hidden until that option is chosen.
+  const budgetField = form.querySelector<HTMLElement>("#budget-field");
+  const typeSelect = form.elements.namedItem("project-type");
+  const syncBudgetVisibility = (): void => {
+    if (!budgetField || !(typeSelect instanceof HTMLSelectElement)) return;
+    budgetField.hidden = typeSelect.value !== "custom";
+  };
+  if (typeSelect instanceof HTMLSelectElement) {
+    typeSelect.addEventListener("change", syncBudgetVisibility);
+  }
+  syncBudgetVisibility();
+
   // --- Submit ---------------------------------------------------------------
 
   form.addEventListener("submit", (event) => {
@@ -103,12 +125,13 @@
 
     // Build a mailto: link containing everything the user wrote.
     const recipient = "vinci.websites@example.com"; // <- replace with your real email
-    const subject = `Nueva solicitud de sitio web — ${valueOf("name")}`;
+    const subject = `Nueva solicitud de sitio web · ${valueOf("name")}`;
     const bodyLines = [
       `Nombre: ${valueOf("name")}`,
       `Negocio / equipo: ${valueOf("business") || "(sin especificar)"}`,
       `Correo: ${valueOf("email")}`,
-      `Tipo de proyecto: ${labelOf("project-type")}`,
+      `WhatsApp / teléfono: ${valueOf("phone") || "(sin especificar)"}`,
+      `Plan que le interesa: ${labelOf("project-type")}`,
       `Presupuesto: ${labelOf("budget") || "(sin especificar)"}`,
       "",
       valueOf("message"),
