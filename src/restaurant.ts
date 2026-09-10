@@ -539,6 +539,31 @@ const MENU: Category[] = [
     }
   });
 
+  // Scroll-spy: underline the nav link of the section currently in view.
+  const spySections = Array.from(
+    document.querySelectorAll<HTMLElement>("section[id]")
+  );
+  const spyAnchors = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>(
+      ".rest-nav-links a[href^='#']:not(.rest-btn)"
+    )
+  );
+  const spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        spyAnchors.forEach((a) => {
+          a.classList.toggle(
+            "active",
+            a.getAttribute("href") === `#${entry.target.id}`
+          );
+        });
+      });
+    },
+    { rootMargin: "-40% 0px -55% 0px" }
+  );
+  spySections.forEach((s) => spy.observe(s));
+
   // --- Scroll reveal --------------------------------------------------------
 
   const observer = new IntersectionObserver(

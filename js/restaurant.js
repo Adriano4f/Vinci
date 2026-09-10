@@ -503,6 +503,19 @@ const MENU = [
             navToggle === null || navToggle === void 0 ? void 0 : navToggle.setAttribute("aria-expanded", "false");
         }
     });
+    // Scroll-spy: underline the nav link of the section currently in view.
+    const spySections = Array.from(document.querySelectorAll("section[id]"));
+    const spyAnchors = Array.from(document.querySelectorAll(".rest-nav-links a[href^='#']:not(.rest-btn)"));
+    const spy = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting)
+                return;
+            spyAnchors.forEach((a) => {
+                a.classList.toggle("active", a.getAttribute("href") === `#${entry.target.id}`);
+            });
+        });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    spySections.forEach((s) => spy.observe(s));
     // --- Scroll reveal --------------------------------------------------------
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
