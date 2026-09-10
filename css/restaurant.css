@@ -83,6 +83,7 @@ body.rest.modal-open { overflow: hidden; }
   padding: 0;
 }
 .rest-nav-links a {
+  position: relative;
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
@@ -90,7 +91,16 @@ body.rest.modal-open { overflow: hidden; }
   color: var(--r-muted);
   transition: color 0.2s;
 }
+.rest-nav-links a:not(.rest-btn) { padding: 6px 0; }
 .rest-nav-links a:hover { color: var(--r-gold); }
+.rest-nav-links a.active { color: var(--r-gold); }
+.rest-nav-links a.active:not(.rest-btn)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--r-gold);
+}
 .rest-nav-toggle { display: none; background: none; border: 0; color: var(--r-cream); font-size: 1.5rem; cursor: pointer; }
 
 .rest-btn {
