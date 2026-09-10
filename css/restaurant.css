@@ -433,6 +433,13 @@ body.rest.modal-open { overflow: hidden; }
 .rest-footer-links a:hover { color: var(--r-gold); }
 .rest-footer-note { font-family: var(--r-serif); font-style: italic; color: var(--r-gold); }
 .rest-footer-copy { color: rgba(191, 179, 160, 0.6); font-size: 0.8rem; }
+.rest-footer-copy.fake-notice {
+  color: var(--r-gold);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  margin-top: 10px;
+}
 
 /* ---------- Modal ---------- */
 .modal {

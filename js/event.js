@@ -11,7 +11,7 @@
  *   - sticky header state, mobile nav, scroll reveal
  */
 // Fixed countdown values for this fictional demo event.
-const COUNTDOWN = { days: "67", hours: "06", minutes: "07", seconds: "67" };
+const COUNTDOWN = { days: "676", hours: "07", minutes: "06", seconds: "07" };
 const SCHEDULE = [
     { time: "09:00", title: "Registro y bienvenida", where: "Salón Principal · Apertura", type: "general" },
     { time: "10:00", title: "Inteligencia Artificial en la vida real", where: "Juan Pérez · Conferencia", type: "conferencia" },
@@ -23,7 +23,7 @@ const SCHEDULE = [
 const FAQS = [
     {
         q: "¿Cuándo y dónde será el evento?",
-        a: "Del 25 al 27 de abril de 2027 en el Centro de Convenciones, Santo Domingo, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
+        a: "Del 25 al 27 de abril de 2027 en el Instituto Politécnico Loyola, San Cristóbal, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
     },
     {
         q: "¿La entrada tiene algún costo?",
@@ -139,8 +139,12 @@ const FAQS = [
     });
     // Active link underline on scroll (scroll-spy): marks the last section
     // whose top has passed the reading line (40% down the viewport).
-    const sections = Array.from(document.querySelectorAll("section[id]"));
+    // Sections without a nav entry (countdown, galeria, CTA) keep the
+    // nearest previous nav item highlighted; Entradas highlights the
+    // "Registrarme" button instead of a text link.
     const navAnchors = Array.from(document.querySelectorAll(".ev-nav-links a[href^='#']"));
+    const navIds = new Set(navAnchors.map((a) => { var _a, _b; return (_b = (_a = a.getAttribute("href")) === null || _a === void 0 ? void 0 : _a.slice(1)) !== null && _b !== void 0 ? _b : ""; }));
+    const sections = Array.from(document.querySelectorAll("section[id]")).filter((s) => navIds.has(s.id));
     const updateSpy = () => {
         var _a, _b, _c, _d;
         const line = window.scrollY + window.innerHeight * 0.4;
@@ -154,9 +158,7 @@ const FAQS = [
         if (atBottom)
             current = (_d = (_c = sections[sections.length - 1]) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : current;
         navAnchors.forEach((a) => {
-            const active = a.getAttribute("href") === `#${current}`;
-            if (!a.classList.contains("ev-btn"))
-                a.classList.toggle("active", active);
+            a.classList.toggle("active", a.getAttribute("href") === `#${current}`);
         });
     };
     window.addEventListener("scroll", updateSpy, { passive: true });
