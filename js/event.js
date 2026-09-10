@@ -23,7 +23,7 @@ const SCHEDULE = [
 const FAQS = [
     {
         q: "¿Cuándo y dónde será el evento?",
-        a: "Del 25 al 27 de abril de 2027 en el Centro de Convenciones, Santo Domingo, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
+        a: "Del 25 al 27 de abril de 2027 en el Instituto Politécnico Loyola, San Cristóbal, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
     },
     {
         q: "¿La entrada tiene algún costo?",

@@ -340,7 +340,7 @@ body.ev h1, body.ev h2, body.ev h3 { font-family: var(--e-display); }
 .person-role { color: var(--e-blue-hi); font-size: 0.82rem; font-weight: 600; margin: 0 0 8px; }
 .person-body > p:last-of-type { color: var(--e-gray); font-size: 0.88rem; margin: 0; }
 .person-social { display: flex; gap: 10px; margin-top: 14px; }
-.person-social a { color: var(--e-gray); transition: color 0.2s; }
+.person-social a { color: var(--e-gray); transition: color 0.2s; cursor: default; display: inline-flex; }
 .person-social a:hover { color: var(--e-blue-hi); }
 .person-social svg { width: 17px; height: 17px; }
 
@@ -487,8 +487,8 @@ body.ev h1, body.ev h2, body.ev h3 { font-family: var(--e-display); }
 .ev-footer-links a:hover { color: var(--e-blue-hi); }
 .ev-footer-right { text-align: right; }
 .ev-socials { display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 18px; }
-.ev-socials a { color: var(--e-gray); transition: color 0.2s; }
-.ev-socials a:hover { color: var(--e-blue-hi); }
+.ev-socials .social { color: var(--e-gray); transition: color 0.2s; display: inline-flex; }
+.ev-socials .social:hover { color: var(--e-blue-hi); }
 .ev-socials svg { width: 19px; height: 19px; }
 .ev-motto { font-family: var(--e-display); color: var(--e-blue-hi); font-size: 0.9rem; font-weight: 600; line-height: 1.4; margin: 0; }
 .ev-footer-bottom {
@@ -510,7 +510,7 @@ body.ev h1, body.ev h2, body.ev h3 { font-family: var(--e-display); }
   font-size: 0.85rem !important;
 }
 .ev-legal { display: flex; gap: 20px; }
-.ev-legal a { color: inherit; text-decoration: none; }
+.ev-legal a { color: inherit; text-decoration: none; cursor: default; }
 .ev-legal a:hover { color: var(--e-blue-hi); }
 
 /* ---------- Reveal ---------- */
