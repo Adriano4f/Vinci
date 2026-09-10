@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedir · ByteShop</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/techstore.css" />
+  <script defer src="../js/techstore.js"></script>
+</head>
+<body data-page="order">
+
+  <div class="ts-ribbon">
+    <span>Plantilla demo de <strong>Vinci</strong>. Este es un sitio de muestra.</span>
+    <a href="../templates.html">&larr; Volver a la galería</a>
+  </div>
+
+  <nav class="ts-nav">
+    <a class="ts-logo" href="techstore.html"><span class="mark">B</span>ByteShop</a>
+    <ul class="ts-nav-links">
+      <li><a href="techstore.html">Inicio</a></li>
+      <li><a href="techstore-productos.html">Productos</a></li>
+      <li><a href="techstore-por-que.html">Por qué nosotros</a></li>
+      <li><a href="techstore-pedir.html" class="active">Pedir</a></li>
+    </ul>
+    <div class="ts-nav-actions">
+      <a class="ts-icon-btn" href="techstore-productos.html" data-search aria-label="Buscar productos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+      <button class="ts-icon-btn ts-cart-btn" type="button" data-cart-open aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="ts-cart-count is-empty" data-cart-count>0</span>
+      </button>
+      <a class="ts-btn ts-btn-primary ts-btn-small" href="techstore-pedir.html">Pedir ahora</a>
+      <button class="ts-burger" type="button" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+    </div>
+  </nav>
+
+  <section class="ts-section">
+    <div class="ts-deco" aria-hidden="true"></div>
+    <div class="ts-container" style="text-align: center;">
+      <span class="ts-kicker">Pedido</span>
+      <h2 class="ts-h2">¿Listo para pedir?</h2>
+      <p class="ts-sub" style="margin: 0 auto;">Escríbenos lo que quieres; pagas al recoger.</p>
+
+      <form class="ts-form" data-order-form>
+        <div class="ts-field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" required placeholder="Tu nombre" />
+        </div>
+        <div class="ts-form-row">
+          <div class="ts-field">
+            <label for="producto">Producto</label>
+            <select id="producto" data-product-select required></select>
+          </div>
+          <div class="ts-field">
+            <label for="cantidad">Cantidad</label>
+            <input id="cantidad" type="number" min="1" value="1" required />
+          </div>
+        </div>
+        <div class="ts-field">
+          <label for="contacto-met">Método de contacto</label>
+          <select id="contacto-met" required>
+            <option value="">Elige uno</option>
+            <option>WhatsApp</option>
+            <option>Instagram</option>
+            <option>En persona en el colegio</option>
+          </select>
+        </div>
+        <div class="ts-field">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" placeholder="Cuéntanos qué necesitas (color, casillero, hora...)"></textarea>
+        </div>
+        <button class="ts-btn ts-btn-primary ts-btn-block" type="submit">Enviar pedido</button>
+      </form>
+
+      <div class="ts-success hidden" data-order-done>
+        <h3>¡Pedido recibido!</h3>
+        <p data-order-note>Abrimos WhatsApp con tu pedido listo para enviar. Recuerda: pagas al recoger.</p>
+        <a class="ts-btn ts-btn-primary ts-btn-block" data-wa-retry href="#" target="_blank" rel="noopener" style="margin-top: 1.2rem;">Abrir WhatsApp con mi pedido</a>
+        <button class="ts-btn ts-btn-ghost ts-btn-block" data-order-clear type="button" style="margin-top: 0.7rem;">Ya lo envié · vaciar carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ts-footer">
+    <div class="ts-container">
+      <div class="ts-footer-grid">
+        <div>
+          <a class="ts-logo" href="techstore.html"><span class="mark">B</span>ByteShop</a>
+          <p class="ts-footer-tag">Gadgets y accesorios a precio de estudiante.</p>
+        </div>
+        <div>
+          <h4>Páginas</h4>
+          <ul>
+            <li><a href="techstore-productos.html">Productos</a></li>
+            <li><a href="techstore-por-que.html">Por qué nosotros</a></li>
+            <li><a href="techstore-pedir.html">Pedir</a></li>
+            <li><a href="../contact.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Redes sociales</h4>
+          <div class="ts-socials">
+            <span class="ts-social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></span>
+            <span class="ts-social" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.23l-4.88-6.38L6.5 22H3.34l7.24-8.28L1.2 2h6.39l4.41 5.83L18.9 2Zm-1.1 18.1h1.72L7.7 3.8H5.85L17.8 20.1Z"/></svg></span>
+            <span class="ts-social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.36 2.04 1.7 3.4 3.9 3.62v3.1c-1.45 0-2.74-.44-3.9-1.18v6.53c0 3.66-2.6 6.43-6.1 6.43A5.9 5.9 0 0 1 4.4 15.6c0-3.4 3.06-6.05 6.9-5.73v3.23a2.9 2.9 0 0 0-.95-.16 2.72 2.72 0 0 0-2.75 2.72 2.75 2.75 0 0 0 2.78 2.77c1.63 0 2.85-1.28 2.85-3.02V3h3.37Z"/></svg></span>
+            <span class="ts-social" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.3 5.4A16.6 16.6 0 0 0 15.2 4l-.2.4a13.3 13.3 0 0 1 3.6 1.8 15.7 15.7 0 0 0-13.2 0 13.3 13.3 0 0 1 3.6-1.8L8.8 4a16.6 16.6 0 0 0-4.1 1.4C2.2 9.2 1.5 12.9 1.9 16.6a16.7 16.7 0 0 0 5 2.5l.6-1a10.9 10.9 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.2 0l.4.3a10.9 10.9 0 0 1-1.7.8l.6 1a16.7 16.7 0 0 0 5-2.5c.5-4.3-.6-8-2.4-11.2ZM9.5 14.3c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg></span>
+          </div>
+        </div>
+      </div>
+      <div class="ts-footer-bottom">
+        <span>ByteShop · Tecnología accesible para estudiantes.</span>
+        <span>© 2026 ByteShop</span>
+      </div>
+      <p class="ts-fake">ESTA ES UNA PÁGINA FICTICIA, NINGUNA INFORMACIÓN MOSTRADA ES REAL. Muestra creada por Vinci.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

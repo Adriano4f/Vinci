@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ByteShop · Gadgets y accesorios a precio de estudiante</title>
+  <title>Por qué nosotros · ByteShop</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,21 +11,20 @@
   <link rel="stylesheet" href="../css/techstore.css" />
   <script defer src="../js/techstore.js"></script>
 </head>
-<body data-page="home">
+<body data-page="why">
 
   <div class="ts-ribbon">
     <span>Plantilla demo de <strong>Vinci</strong>. Este es un sitio de muestra.</span>
     <a href="../templates.html">&larr; Volver a la galería</a>
   </div>
 
-  <!-- ===== Navbar ===== -->
   <nav class="ts-nav">
-    <a class="ts-logo" href="#inicio"><span class="mark">B</span>ByteShop</a>
+    <a class="ts-logo" href="techstore.html"><span class="mark">B</span>ByteShop</a>
     <ul class="ts-nav-links">
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#productos">Productos</a></li>
-      <li><a href="#porque">Por qué nosotros</a></li>
-      <li><a href="#pedir">Pedir</a></li>
+      <li><a href="techstore.html">Inicio</a></li>
+      <li><a href="techstore-productos.html">Productos</a></li>
+      <li><a href="techstore-por-que.html" class="active">Por qué nosotros</a></li>
+      <li><a href="techstore-pedir.html">Pedir</a></li>
     </ul>
     <div class="ts-nav-actions">
       <a class="ts-icon-btn" href="techstore-productos.html" data-search aria-label="Buscar productos">
@@ -40,94 +39,55 @@
     </div>
   </nav>
 
-  <!-- ===== Hero ===== -->
-  <section class="ts-hero" id="inicio">
+  <section class="ts-section">
     <div class="ts-deco" aria-hidden="true"></div>
-    <div class="ts-container ts-hero-inner">
-      <div>
-        <p class="ts-hero-eyebrow"><span class="ts-led"></span> BYTE VERIFIED · HECHO PARA ESTUDIANTES</p>
-        <h1>Gadgets y accesorios a <span class="grad">precio de estudiante</span>.</h1>
-        <p>Cables, audífonos, soportes y accesorios, probados por nosotros,
-          vendidos a precios justos y entregados en tu casillero.</p>
-        <div class="ts-hero-actions">
-          <a class="ts-btn ts-btn-primary" href="#productos">Ver productos</a>
-          <a class="ts-btn ts-btn-ghost" href="techstore-pedir.html">Pedir ahora</a>
-        </div>
-      </div>
-      <div class="ts-hero-visual reveal">
-        <img src="img/byteshop-hero.jpg" alt="Productos ByteShop: cable, soporte, organizador y caja misteriosa" />
-        <span class="ts-chip c1">TESTED</span>
-        <span class="ts-chip c2">STUDENT PRICE</span>
-        <span class="ts-chip c3">BYTE VERIFIED</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Productos ===== -->
-  <section class="ts-section alt" id="productos">
     <div class="ts-container">
-      <span class="ts-kicker">Catálogo</span>
-      <h2 class="ts-h2">Los más vendidos</h2>
-      <p class="ts-sub">En existencia en el puesto de la feria y en línea.</p>
-      <div class="ts-grid" data-grid></div>
-      <p style="margin-top: 1.6rem;">
-        <a class="ts-btn ts-btn-ghost" href="techstore-productos.html">Ver todos los productos</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ===== Caja misteriosa ===== -->
-  <section class="ts-section" id="mystery">
-    <div class="ts-deco" aria-hidden="true"></div>
-    <div class="ts-container ts-mystery">
-      <div class="ts-mystery-img reveal">
-        <img src="img/byteshop-caja.jpg" alt="Caja misteriosa de gadgets con luz cyan y morado" loading="lazy" />
-      </div>
-      <div class="reveal">
-        <span class="ts-kicker">MYSTERY</span>
-        <h2>Caja misteriosa de gadgets</h2>
-        <p class="ts-sub">Una mezcla sorpresa que vale más que su precio.</p>
-        <span class="ts-pd-price">$10</span>
-        <div class="ts-hero-actions">
-          <button class="ts-btn ts-btn-primary" type="button" data-add="caja-misteriosa">Quiero la mystery box</button>
-          <a class="ts-btn ts-btn-ghost" href="techstore-producto.html?p=caja-misteriosa">Ver detalles</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Por qué nosotros ===== -->
-  <section class="ts-section alt" id="porque">
-    <div class="ts-container">
-      <span class="ts-kicker">La promesa</span>
-      <h2 class="ts-h2">¿Por qué comprarnos?</h2>
+      <span class="ts-kicker">¿Por qué comprarnos?</span>
+      <h2 class="ts-h2">ByteShop, hecho por estudiantes<br />para estudiantes.</h2>
       <p class="ts-sub">Todo lo probamos durante una semana antes de ponerlo a la venta.
         Si se rompe en el primer mes, lo reemplazamos.</p>
-      <div class="ts-why-grid">
-        <div class="ts-why-card reveal">
+
+      <div class="ts-why-rows">
+        <div class="ts-why-row reveal">
           <span class="ts-why-num">01</span>
-          <h3>Probado durante una semana</h3>
-          <p>Todo lo probamos durante una semana antes de ponerlo a la venta.</p>
+          <div>
+            <h3>Pruebas de productos</h3>
+            <p>Cada producto pasa una semana de uso real con nosotros antes de salir a la venta.</p>
+          </div>
         </div>
-        <div class="ts-why-card reveal">
+        <div class="ts-why-row reveal">
           <span class="ts-why-num">02</span>
-          <h3>Reemplazo durante el primer mes</h3>
-          <p>Si se rompe en el primer mes, lo reemplazamos.</p>
+          <div>
+            <h3>Precios justos</h3>
+            <p>Tecnología accesible: todo cuesta lo que un estudiante puede pagar.</p>
+          </div>
         </div>
-        <div class="ts-why-card reveal">
+        <div class="ts-why-row reveal">
           <span class="ts-why-num">03</span>
-          <h3>Precio de estudiante</h3>
-          <p>Productos tecnológicos a precios justos.</p>
+          <div>
+            <h3>Reemplazo durante el primer mes</h3>
+            <p>Si algo se rompe en el primer mes, te lo cambiamos sin vueltas.</p>
+          </div>
+        </div>
+        <div class="ts-why-row reveal">
+          <span class="ts-why-num">04</span>
+          <div>
+            <h3>Compra sencilla</h3>
+            <p>Pides por el formulario y pagas al recoger. Sin cuentas, sin tarjetas.</p>
+          </div>
+        </div>
+        <div class="ts-why-row reveal">
+          <span class="ts-why-num">05</span>
+          <div>
+            <h3>Entrega en el casillero</h3>
+            <p>Tu pedido llega directo a tu casillero del colegio, sin envíos complicados.</p>
+          </div>
         </div>
       </div>
-      <p style="margin-top: 1.6rem;">
-        <a class="ts-btn ts-btn-ghost" href="techstore-por-que.html">Conocer más de ByteShop</a>
-      </p>
     </div>
   </section>
 
-  <!-- ===== Byte Verified ===== -->
-  <section class="ts-section" id="verified">
+  <section class="ts-section alt">
     <div class="ts-container">
       <span class="ts-kicker"><span class="ts-led"></span>&nbsp; Control de calidad</span>
       <h2 class="ts-h2">BYTE VERIFIED</h2>
@@ -142,13 +102,7 @@
         <span class="ts-step-arrow" aria-hidden="true">&rarr;</span>
         <div class="ts-step reveal"><span class="ts-step-num">04</span><span><strong>Vendemos</strong><span>a precio de estudiante</span></span></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== Pedir ===== -->
-  <section class="ts-section alt" id="pedir">
-    <div class="ts-container">
-      <div class="ts-cta reveal">
+      <div class="ts-cta reveal" style="margin-top: 3rem;">
         <h2>¿Listo para pedir?</h2>
         <p>Escríbenos lo que quieres; pagas al recoger.</p>
         <a class="ts-btn ts-btn-primary" href="techstore-pedir.html">Pedir ahora</a>
@@ -156,12 +110,11 @@
     </div>
   </section>
 
-  <!-- ===== Footer ===== -->
   <footer class="ts-footer">
     <div class="ts-container">
       <div class="ts-footer-grid">
         <div>
-          <a class="ts-logo" href="#inicio"><span class="mark">B</span>ByteShop</a>
+          <a class="ts-logo" href="techstore.html"><span class="mark">B</span>ByteShop</a>
           <p class="ts-footer-tag">Gadgets y accesorios a precio de estudiante.</p>
         </div>
         <div>
@@ -179,7 +132,7 @@
             <span class="ts-social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></span>
             <span class="ts-social" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.23l-4.88-6.38L6.5 22H3.34l7.24-8.28L1.2 2h6.39l4.41 5.83L18.9 2Zm-1.1 18.1h1.72L7.7 3.8H5.85L17.8 20.1Z"/></svg></span>
             <span class="ts-social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.36 2.04 1.7 3.4 3.9 3.62v3.1c-1.45 0-2.74-.44-3.9-1.18v6.53c0 3.66-2.6 6.43-6.1 6.43A5.9 5.9 0 0 1 4.4 15.6c0-3.4 3.06-6.05 6.9-5.73v3.23a2.9 2.9 0 0 0-.95-.16 2.72 2.72 0 0 0-2.75 2.72 2.75 2.75 0 0 0 2.78 2.77c1.63 0 2.85-1.28 2.85-3.02V3h3.37Z"/></svg></span>
-            <span class="ts-social" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.3 5.4A16.6 16.6 0 0 0 15.2 4l-.2.4a13.3 13.3 0 0 1 3.6 1.8 15.7 15.7 0 0 0-13.2 0 13.3 13.3 0 0 1 3.6-1.8L8.8 4a16.6 16.6 0 0 0-4.1 1.4C2.2 9.2 1.5 12.9 1.9 16.6a16.7 16.7 0 0 0 5 2.5l.6-1a10.9 10.9 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.2 0l.4.3a10.9 10.9 0 0 1-1.7.8l.6 1a16.7 16.7 0 0 0 5-2.5c.5-4.3-.6-8-2.4-11.2ZM9.5 14.3c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Zm5 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg></span>
+            <span class="ts-social" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.3 5.4A16.6 16.6 0 0 0 15.2 4l-.2.4a13.3 13.3 0 0 1 3.6 1.8 15.7 15.7 0 0 0-13.2 0 13.3 13.3 0 0 1 3.6-1.8L8.8 4a16.6 16.6 0 0 0-4.1 1.4C2.2 9.2 1.5 12.9 1.9 16.6a16.7 16.7 0 0 0 5 2.5l.6-1a10.9 10.9 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.2 0l.4.3a10.9 10.9 0 0 1-1.7.8l.6 1a16.7 16.7 0 0 0 5-2.5c.5-4.3-.6-8-2.4-11.2ZM9.5 14.3c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg></span>
           </div>
         </div>
       </div>
