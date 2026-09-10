@@ -510,7 +510,7 @@
       done?.querySelector<HTMLButtonElement>("[data-order-clear]")?.addEventListener("click", (ev) => {
         saveCart({});
         updateBadge();
-        const b = ev.currentTarget;
+        const b = ev.currentTarget as HTMLButtonElement;
         b.textContent = "Carrito vaciado";
         b.disabled = true;
       });
