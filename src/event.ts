@@ -11,7 +11,7 @@
  */
 
 // Fixed countdown values for this fictional demo event.
-const COUNTDOWN = { days: "67", hours: "06", minutes: "07", seconds: "67" };
+const COUNTDOWN = { days: "676", hours: "07", minutes: "06", seconds: "07" };
 
 interface ScheduleItem {
   time: string;

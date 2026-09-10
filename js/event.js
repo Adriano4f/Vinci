@@ -11,7 +11,7 @@
  *   - sticky header state, mobile nav, scroll reveal
  */
 // Fixed countdown values for this fictional demo event.
-const COUNTDOWN = { days: "67", hours: "06", minutes: "07", seconds: "67" };
+const COUNTDOWN = { days: "676", hours: "07", minutes: "06", seconds: "07" };
 const SCHEDULE = [
     { time: "09:00", title: "Registro y bienvenida", where: "Salón Principal · Apertura", type: "general" },
     { time: "10:00", title: "Inteligencia Artificial en la vida real", where: "Juan Pérez · Conferencia", type: "conferencia" },
