@@ -862,6 +862,9 @@ body.cart-open .ts-cart-overlay { opacity: 1; pointer-events: auto; }
   .ts-hero-inner, .ts-mystery, .ts-pd { grid-template-columns: 1fr; }
   .ts-hero { padding-top: 3.5rem; }
   .ts-hero-visual { order: -1; }
+  /* Keep only cart + burger in the cramped mobile header; the links menu already covers Pedir. */
+  .ts-nav-actions .ts-btn,
+  .ts-nav-actions a[data-search] { display: none; }
   .ts-nav-links {
     position: absolute;
     top: 100%; left: 0; right: 0;

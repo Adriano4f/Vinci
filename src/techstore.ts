@@ -301,6 +301,12 @@
         const open = links.classList.toggle("open");
         toggle.setAttribute("aria-expanded", String(open));
       });
+      links.addEventListener("click", (event) => {
+        if ((event.target as HTMLElement).closest("a")) {
+          links.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
     }
     const searchBtn = document.querySelector<HTMLAnchorElement>("[data-search]");
     if (searchBtn) {
@@ -490,9 +496,24 @@
         `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
         `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +
         `Método de contacto: ${metodo}${mensaje ? `\n\n${mensaje}` : ""}`;
-      window.open(`https://wa.me/18298591920?text=${encodeURIComponent(text)}`, "_blank");
-      saveCart({});
-      updateBadge();
+      const waLink = `https://wa.me/18298591920?text=${encodeURIComponent(text)}`;
+      const retry = done?.querySelector<HTMLAnchorElement>("[data-wa-retry]");
+      if (retry) retry.href = waLink;
+      const win = window.open(waLink, "_blank");
+      const note = done?.querySelector<HTMLElement>("[data-order-note]");
+      if (note) {
+        note.textContent = win
+          ? "Abrimos WhatsApp con tu pedido listo para enviar. Si no se abrió, usa el botón de abajo. Recuerda: pagas al recoger."
+          : "Tu navegador bloqueó la ventana de WhatsApp. Envía tu pedido con el botón de abajo. Recuerda: pagas al recoger.";
+      }
+      // The cart is only emptied when the customer confirms the message was sent.
+      done?.querySelector<HTMLButtonElement>("[data-order-clear]")?.addEventListener("click", (ev) => {
+        saveCart({});
+        updateBadge();
+        const b = ev.currentTarget;
+        b.textContent = "Carrito vaciado";
+        b.disabled = true;
+      });
       form.classList.add("hidden");
       done?.classList.remove("hidden");
       done?.scrollIntoView({ block: "center", behavior: "smooth" });
