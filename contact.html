@@ -49,26 +49,32 @@
             </div>
           </div>
 
-          <div class="field">
-            <label for="f-email">Correo electrónico *</label>
-            <input type="email" id="f-email" name="email" placeholder="tu@escuela.edu" />
-            <p class="field-error" data-error-for="email"></p>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-email">Correo electrónico *</label>
+              <input type="email" id="f-email" name="email" placeholder="tu@correo.com" />
+              <p class="field-error" data-error-for="email"></p>
+            </div>
+            <div class="field">
+              <label for="f-phone">Tu WhatsApp / teléfono</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="+1 (829) 000-0000" />
+              <p class="field-error" data-error-for="phone"></p>
+            </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="f-type">¿Qué necesitas? *</label>
+              <label for="f-type">¿Qué plan te interesa? *</label>
               <select id="f-type" name="project-type">
-                <option value="">Elige una…</option>
-                <option value="one-page">Sitio de una página</option>
-                <option value="multi-page">Sitio de varias páginas</option>
-                <option value="shop">Tienda en línea</option>
-                <option value="portfolio">Portafolio</option>
-                <option value="other">Otra cosa / aún no lo sé</option>
+                <option value="">Elige uno…</option>
+                <option value="basic">Básico — RD$500</option>
+                <option value="complete">Completo — RD$1,000</option>
+                <option value="custom">Personalizado — desde RD$1,500</option>
+                <option value="not-sure">Aún no lo sé</option>
               </select>
               <p class="field-error" data-error-for="project-type"></p>
             </div>
-            <div class="field">
+            <div class="field" id="budget-field" hidden>
               <label for="f-budget">Presupuesto aproximado</label>
               <select id="f-budget" name="budget">
                 <option value="">Elige una…</option>
