@@ -89,12 +89,16 @@ body.ev h1, body.ev h2, body.ev h3 { font-family: var(--e-display); }
 }
 .ev-nav-links a:hover { color: var(--e-white); }
 .ev-nav-links a.active { color: var(--e-white); }
-.ev-nav-links a.active::after {
+.ev-nav-links a.active:not(.ev-btn)::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 2px;
   background: var(--e-blue);
+}
+.ev-nav-links .ev-btn.active {
+  background: var(--e-blue-hi);
+  box-shadow: 0 0 0 2px rgba(245, 247, 250, 0.35), 0 8px 24px rgba(22, 140, 255, 0.5);
 }
 .ev-nav-toggle { display: none; background: none; border: 0; color: var(--e-white); font-size: 1.5rem; cursor: pointer; }
 
@@ -499,6 +503,12 @@ body.ev h1, body.ev h2, body.ev h3 { font-family: var(--e-display); }
   color: rgba(167, 177, 191, 0.7);
 }
 .ev-footer-bottom p { margin: 0; }
+.ev-fake-notice {
+  color: var(--e-blue-hi) !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem !important;
+}
 .ev-legal { display: flex; gap: 20px; }
 .ev-legal a { color: inherit; text-decoration: none; }
 .ev-legal a:hover { color: var(--e-blue-hi); }

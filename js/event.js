@@ -139,8 +139,12 @@ const FAQS = [
     });
     // Active link underline on scroll (scroll-spy): marks the last section
     // whose top has passed the reading line (40% down the viewport).
-    const sections = Array.from(document.querySelectorAll("section[id]"));
+    // Sections without a nav entry (countdown, galeria, CTA) keep the
+    // nearest previous nav item highlighted; Entradas highlights the
+    // "Registrarme" button instead of a text link.
     const navAnchors = Array.from(document.querySelectorAll(".ev-nav-links a[href^='#']"));
+    const navIds = new Set(navAnchors.map((a) => { var _a, _b; return (_b = (_a = a.getAttribute("href")) === null || _a === void 0 ? void 0 : _a.slice(1)) !== null && _b !== void 0 ? _b : ""; }));
+    const sections = Array.from(document.querySelectorAll("section[id]")).filter((s) => navIds.has(s.id));
     const updateSpy = () => {
         var _a, _b, _c, _d;
         const line = window.scrollY + window.innerHeight * 0.4;
@@ -154,9 +158,7 @@ const FAQS = [
         if (atBottom)
             current = (_d = (_c = sections[sections.length - 1]) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : current;
         navAnchors.forEach((a) => {
-            const active = a.getAttribute("href") === `#${current}`;
-            if (!a.classList.contains("ev-btn"))
-                a.classList.toggle("active", active);
+            a.classList.toggle("active", a.getAttribute("href") === `#${current}`);
         });
     };
     window.addEventListener("scroll", updateSpy, { passive: true });

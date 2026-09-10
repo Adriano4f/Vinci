@@ -506,8 +506,9 @@ const MENU = [
     // Scroll-spy: underline the nav link of the section currently in view.
     // Marks the last section whose top has passed the reading line (40% down
     // the viewport), so every section is covered, tall or short.
-    const spySections = Array.from(document.querySelectorAll("section[id]"));
     const spyAnchors = Array.from(document.querySelectorAll(".rest-nav-links a[href^='#']:not(.rest-btn)"));
+    const navIds = new Set(spyAnchors.map((a) => { var _a, _b; return (_b = (_a = a.getAttribute("href")) === null || _a === void 0 ? void 0 : _a.slice(1)) !== null && _b !== void 0 ? _b : ""; }));
+    const spySections = Array.from(document.querySelectorAll("section[id]")).filter((s) => navIds.has(s.id));
     const updateSpy = () => {
         var _a, _b, _c, _d;
         const line = window.scrollY + window.innerHeight * 0.4;
