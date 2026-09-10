@@ -92,6 +92,12 @@
     ];
     const product = (slug) => PRODUCTS.find((p) => p.slug === slug);
     const money = (n) => `$${n.toFixed(2)}`;
+    /* Called whenever the cart changes; the pedido page hooks in its summary. */
+    let orderRefresh;
+    const cartChanged = () => {
+        updateBadge();
+        orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh();
+    };
     /* ---------- storage (resilient) ---------- */
     const CART_KEY = "lmd-cart";
     const FAV_KEY = "lmd-favs";
@@ -219,14 +225,14 @@
                 delete cart[slug];
             saveCart(cart);
             renderCart();
-            updateBadge();
+            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh();
         }));
         list.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => {
             const cart = getCart();
             delete cart[b.dataset.remove];
             saveCart(cart);
             renderCart();
-            updateBadge();
+            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh();
         }));
         updateBadge();
     };
@@ -240,7 +246,7 @@
         const cart = getCart();
         cart[slug] = ((_a = cart[slug]) !== null && _a !== void 0 ? _a : 0) + qty;
         saveCart(cart);
-        updateBadge();
+        cartChanged();
         bumpBadge();
         toast(`Agregado: ${product(slug).name}`);
     };
@@ -466,15 +472,21 @@
                 updateBadge();
             }));
         };
+        orderRefresh = renderSummary;
         renderSummary();
         form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
             e.preventDefault();
             if (!form.reportValidity())
                 return;
+            // Re-read the cart: it may have been emptied from the drawer meanwhile.
+            if (Object.keys(getCart()).filter((slug) => product(slug)).length === 0) {
+                renderSummary();
+                return;
+            }
             // Demo site: the order is only simulated, nothing is sent anywhere.
             saveCart({});
             updateBadge();
-            renderSummary();
+            wrap.classList.add("hidden");
             form.classList.add("hidden");
             done === null || done === void 0 ? void 0 : done.classList.remove("hidden");
             done === null || done === void 0 ? void 0 : done.scrollIntoView({ block: "center", behavior: "smooth" });

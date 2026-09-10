@@ -104,6 +104,13 @@
   const product = (slug: string): Product | undefined => PRODUCTS.find((p) => p.slug === slug);
   const money = (n: number): string => `$${n.toFixed(2)}`;
 
+  /* Called whenever the cart changes; the pedido page hooks in its summary. */
+  let orderRefresh: (() => void) | undefined;
+  const cartChanged = (): void => {
+    updateBadge();
+    orderRefresh?.();
+  };
+
   /* ---------- storage (resilient) ---------- */
   const CART_KEY = "lmd-cart";
   const FAV_KEY = "lmd-favs";
@@ -233,7 +240,7 @@
         if (cart[slug] <= 0) delete cart[slug];
         saveCart(cart);
         renderCart();
-        updateBadge();
+        orderRefresh?.();
       })
     );
     list.querySelectorAll<HTMLButtonElement>("[data-remove]").forEach((b) =>
@@ -242,7 +249,7 @@
         delete cart[b.dataset.remove as string];
         saveCart(cart);
         renderCart();
-        updateBadge();
+        orderRefresh?.();
       })
     );
     updateBadge();
@@ -258,7 +265,7 @@
     const cart = getCart();
     cart[slug] = (cart[slug] ?? 0) + qty;
     saveCart(cart);
-    updateBadge();
+    cartChanged();
     bumpBadge();
     toast(`Agregado: ${(product(slug) as Product).name}`);
   };
@@ -497,15 +504,21 @@
         })
       );
     };
+    orderRefresh = renderSummary;
     renderSummary();
 
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
+      // Re-read the cart: it may have been emptied from the drawer meanwhile.
+      if (Object.keys(getCart()).filter((slug) => product(slug)).length === 0) {
+        renderSummary();
+        return;
+      }
       // Demo site: the order is only simulated, nothing is sent anywhere.
       saveCart({});
       updateBadge();
-      renderSummary();
+      wrap.classList.add("hidden");
       form.classList.add("hidden");
       done?.classList.remove("hidden");
       done?.scrollIntoView({ block: "center", behavior: "smooth" });
