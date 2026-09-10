@@ -67,9 +67,30 @@
     /* ---------- cart state ---------- */
     const CART_KEY = "byteshop-cart";
     const FAV_KEY = "byteshop-favs";
+    /* Storage access can throw (blocked storage, quota). Keep an in-memory
+       copy so cart/fav actions still work for the rest of the session. */
+    const memStore = {};
+    const getItem = (key) => {
+        var _a, _b, _c;
+        try {
+            return (_b = (_a = localStorage.getItem(key)) !== null && _a !== void 0 ? _a : memStore[key]) !== null && _b !== void 0 ? _b : null;
+        }
+        catch (_d) {
+            return (_c = memStore[key]) !== null && _c !== void 0 ? _c : null;
+        }
+    };
+    const setItem = (key, value) => {
+        memStore[key] = value;
+        try {
+            localStorage.setItem(key, value);
+        }
+        catch (_a) {
+            /* in-memory copy already updated */
+        }
+    };
     const readMap = (key) => {
         try {
-            const raw = localStorage.getItem(key);
+            const raw = getItem(key);
             const parsed = raw ? JSON.parse(raw) : {};
             return typeof parsed === "object" && parsed ? parsed : {};
         }
@@ -79,18 +100,18 @@
     };
     const getCart = () => readMap(CART_KEY);
     const saveCart = (cart) => {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        setItem(CART_KEY, JSON.stringify(cart));
     };
     const getFavs = () => {
         var _a;
         try {
-            return JSON.parse((_a = localStorage.getItem(FAV_KEY)) !== null && _a !== void 0 ? _a : "[]");
+            return JSON.parse((_a = getItem(FAV_KEY)) !== null && _a !== void 0 ? _a : "[]");
         }
         catch (_b) {
             return [];
         }
     };
-    const saveFavs = (favs) => localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    const saveFavs = (favs) => setItem(FAV_KEY, JSON.stringify(favs));
     const cartCount = () => Object.entries(getCart())
         .filter(([slug]) => product(slug))
         .reduce((total, [, qty]) => total + qty, 0);
@@ -474,6 +495,13 @@
                     ? ""
                     : rawMsg;
             const fresh = cartBlock();
+            // If the customer emptied the prefilled cart and left no notes, the
+            // "Otro / varios" selection describes nothing: force a concrete choice.
+            if (generated && !fresh && !extra && sel && sel.value === "otro") {
+                sel.value = "";
+                form.reportValidity();
+                return;
+            }
             const mensaje = [fresh, extra].filter(Boolean).join("\n\n");
             const text = `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
                 `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +

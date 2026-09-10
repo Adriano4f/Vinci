@@ -81,9 +81,28 @@
   const CART_KEY = "byteshop-cart";
   const FAV_KEY = "byteshop-favs";
 
+  /* Storage access can throw (blocked storage, quota). Keep an in-memory
+     copy so cart/fav actions still work for the rest of the session. */
+  const memStore: Record<string, string> = {};
+  const getItem = (key: string): string | null => {
+    try {
+      return localStorage.getItem(key) ?? memStore[key] ?? null;
+    } catch {
+      return memStore[key] ?? null;
+    }
+  };
+  const setItem = (key: string, value: string): void => {
+    memStore[key] = value;
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      /* in-memory copy already updated */
+    }
+  };
+
   const readMap = (key: string): Record<string, number> => {
     try {
-      const raw = localStorage.getItem(key);
+      const raw = getItem(key);
       const parsed = raw ? JSON.parse(raw) : {};
       return typeof parsed === "object" && parsed ? (parsed as Record<string, number>) : {};
     } catch {
@@ -93,17 +112,17 @@
 
   const getCart = (): Record<string, number> => readMap(CART_KEY);
   const saveCart = (cart: Record<string, number>): void => {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    setItem(CART_KEY, JSON.stringify(cart));
   };
 
   const getFavs = (): string[] => {
     try {
-      return JSON.parse(localStorage.getItem(FAV_KEY) ?? "[]") as string[];
+      return JSON.parse(getItem(FAV_KEY) ?? "[]") as string[];
     } catch {
       return [];
     }
   };
-  const saveFavs = (favs: string[]): void => localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+  const saveFavs = (favs: string[]): void => setItem(FAV_KEY, JSON.stringify(favs));
 
   const cartCount = (): number =>
     Object.entries(getCart())
@@ -505,6 +524,13 @@
           ? ""
           : rawMsg;
       const fresh = cartBlock();
+      // If the customer emptied the prefilled cart and left no notes, the
+      // "Otro / varios" selection describes nothing: force a concrete choice.
+      if (generated && !fresh && !extra && sel && sel.value === "otro") {
+        sel.value = "";
+        form.reportValidity();
+        return;
+      }
       const mensaje = [fresh, extra].filter(Boolean).join("\n\n");
       const text =
         `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
