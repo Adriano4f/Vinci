@@ -95,6 +95,22 @@ La carpeta `js/` está versionada en git a propósito: el sitio funciona aunque
 nadie haya ejecutado `tsc` (por ejemplo, en GitHub Pages). Solo recuerda —
 **edita los `.ts` de `src/`, nunca los `.js` de `js/`**.
 
+## Desplegar en Vercel
+
+`npm run build` hace dos cosas: compila TypeScript (`tsc`) y copia los
+archivos públicos a la carpeta `dist/` (`scripts/build-static.mjs`). El
+archivo `vercel.json` ya le dice a Vercel que use `npm run build` y publique
+`dist/`, así que basta con importar este repo en Vercel — sin configuración
+extra.
+
+Para ver localmente exactamente lo que Vercel publicará:
+
+```bash
+npm run preview    # compila y sirve dist/
+```
+
+`dist/` está en `.gitignore`: se genera en cada build/deploy, no se versiona.
+
 ## Dónde hacer los cambios más comunes
 
 | Si quieres… | Edita… |

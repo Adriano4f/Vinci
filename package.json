@@ -4,9 +4,10 @@
   "description": "Vinci — a student web studio. TypeScript + HTML + CSS site for our school entrepreneurship project.",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/build-static.mjs",
     "watch": "tsc --watch",
-    "serve": "npx --yes serve ."
+    "serve": "npx --yes serve .",
+    "preview": "npm run build && npx --yes serve dist"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
