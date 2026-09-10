@@ -1,22 +1,19 @@
 /*
- * contact.ts — validation for the "Contact us" form.
- * Compiled to js/contact.js and loaded only by contact.html.
+ * pedido.ts — validation for the product order form (servicios/pedido.html).
+ * Compiled to js/pedido.js and loaded only by servicios/pedido.html.
  *
- * The site has no server, so instead of sending data anywhere the script:
- *   1. Checks every field and shows an inline error message when something
- *      is missing or invalid.
- *   2. On success, hides the form and shows a confirmation panel with a
- *      ready-made WhatsApp deep link and a mailto: link, so pressing either
- *      opens the user's app with the whole message already filled in.
+ * Same idea as contact.ts: the site has no server, so the script validates
+ * the fields and then shows a confirmation panel with a WhatsApp deep link
+ * and a mailto: link carrying the whole message. Product pages link here
+ * with ?servicio=<slug> to preselect the matching product.
  */
 
 (() => {
   const form = document.querySelector<HTMLFormElement>("#contact-form");
-  if (!form) return; // We are not on the contact page; do nothing.
+  if (!form) return; // Not on the order page; do nothing.
 
   // --- Small helpers --------------------------------------------------------
 
-  /** Returns the trimmed value of a named field. */
   const valueOf = (name: string): string => {
     const field = form.elements.namedItem(name);
     if (
@@ -29,8 +26,6 @@
     return "";
   };
 
-  /** For a <select>, returns the visible label of the chosen option
-      ("" when the placeholder is selected); other fields fall back to valueOf. */
   const labelOf = (name: string): string => {
     const field = form.elements.namedItem(name);
     if (field instanceof HTMLSelectElement) {
@@ -40,7 +35,6 @@
     return valueOf(name);
   };
 
-  /** Shows (or clears) the error message under a field. */
   const setError = (name: string, message: string): void => {
     const slot = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
     const field = form.querySelector<HTMLElement>(`[name="${name}"]`);
@@ -48,12 +42,18 @@
     if (field) field.classList.toggle("invalid", message !== "");
   };
 
-  // Reasonably strict email pattern (same idea as checking a format in C++).
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  // Digits, spaces and the usual phone punctuation; only checked when filled.
   const PHONE_PATTERN = /^[+()0-9][0-9()\-\s]{6,}$/;
 
-  // --- Validation rules -----------------------------------------------------
+  // --- Preselect the product the visitor came from ---------------------------
+
+  const productSelect = form.elements.namedItem("product");
+  const product = new URLSearchParams(window.location.search).get("servicio");
+  if (productSelect instanceof HTMLSelectElement && product) {
+    productSelect.value = product;
+  }
+
+  // --- Validation rules ------------------------------------------------------
 
   const validate = (): boolean => {
     let ok = true;
@@ -79,11 +79,11 @@
       setError("phone", "");
     }
 
-    if (valueOf("project-type") === "") {
-      setError("project-type", "Elige qué plan te interesa.");
+    if (valueOf("product") === "") {
+      setError("product", "Elige qué producto quieres.");
       ok = false;
     } else {
-      setError("project-type", "");
+      setError("product", "");
     }
 
     if (valueOf("message").length < 10) {
@@ -96,7 +96,6 @@
     return ok;
   };
 
-  // Clear a field's error as soon as the user starts fixing it.
   form.addEventListener("input", (event) => {
     const target = event.target;
     if (target instanceof HTMLElement && target.getAttribute("name")) {
@@ -104,35 +103,19 @@
     }
   });
 
-  // The budget select only makes sense for the personalized plan, so it
-  // stays hidden until that option is chosen.
-  const budgetField = form.querySelector<HTMLElement>("#budget-field");
-  const typeSelect = form.elements.namedItem("project-type");
-  const syncBudgetVisibility = (): void => {
-    if (!budgetField || !(typeSelect instanceof HTMLSelectElement)) return;
-    budgetField.hidden = typeSelect.value !== "custom";
-  };
-  if (typeSelect instanceof HTMLSelectElement) {
-    typeSelect.addEventListener("change", syncBudgetVisibility);
-  }
-  syncBudgetVisibility();
-
-  // --- Submit ---------------------------------------------------------------
+  // --- Submit ----------------------------------------------------------------
 
   form.addEventListener("submit", (event) => {
-    event.preventDefault(); // Never reload the page.
+    event.preventDefault();
     if (!validate()) return;
 
-    // Build a mailto: link containing everything the user wrote.
     const recipient = "vinci.websites@example.com"; // <- replace with your real email
-    const subject = `Nueva solicitud de sitio web · ${valueOf("name")}`;
+    const subject = `Nuevo pedido de producto · ${valueOf("name")}`;
     const bodyLines = [
       `Nombre: ${valueOf("name")}`,
-      `Negocio / equipo: ${valueOf("business") || "(sin especificar)"}`,
       `Correo: ${valueOf("email")}`,
       `WhatsApp / teléfono: ${valueOf("phone") || "(sin especificar)"}`,
-      `Plan que le interesa: ${labelOf("project-type")}`,
-      `Presupuesto: ${labelOf("budget") || "(sin especificar)"}`,
+      `Producto: ${labelOf("product")}`,
       "",
       valueOf("message"),
     ];
@@ -140,14 +123,13 @@
       `mailto:${recipient}?subject=${encodeURIComponent(subject)}` +
       `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 
-    // WhatsApp deep link — opens a chat with our number, message prefilled.
     const whatsappNumber = "18298591920"; // <- replace with your real number
     const whatsapp =
       `https://wa.me/${whatsappNumber}?text=` +
       encodeURIComponent(`${subject}\n\n${bodyLines.join("\n")}`);
 
-    const successLink = document.querySelector<HTMLAnchorElement>("#mailto-link");
-    if (successLink) successLink.href = mailto;
+    const mailtoLink = document.querySelector<HTMLAnchorElement>("#mailto-link");
+    if (mailtoLink) mailtoLink.href = mailto;
     const whatsappLink = document.querySelector<HTMLAnchorElement>("#whatsapp-link");
     if (whatsappLink) whatsappLink.href = whatsapp;
 
@@ -159,7 +141,6 @@
     }
   });
 
-  // "Write another message" button on the confirmation panel.
   const resetBtn = document.querySelector<HTMLButtonElement>("#form-reset");
   resetBtn?.addEventListener("click", () => {
     form.reset();

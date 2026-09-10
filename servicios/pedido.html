@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vinci · Otros servicios: productos personalizados</title>
-  <meta name="description" content="Además de páginas web, Vinci convierte tus ideas, fotos y diseños en posters, imanes, marcos con estampado y bisutería personalizada." />
+  <title>Pedir un producto · Vinci</title>
+  <meta name="description" content="Pide tu producto personalizado: posters, imanes, marcos con estampado o bisutería hechos a tu medida por el equipo Vinci." />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
   <link rel="stylesheet" href="../css/main.css" />
 </head>
@@ -31,79 +31,107 @@
     </div>
   </header>
 
-  <section class="hero">
+  <section class="page-head">
     <div class="container">
-      <span class="kicker">Más que páginas web</span>
-      <h1>También creamos <em>productos personalizados</em>.</h1>
-      <p class="lead">Además de diseñar páginas web, convertimos tus ideas,
-        fotografías y diseños en productos personalizados que puedes tener en
-        tus manos.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#servicios">Ver servicios</a>
-        <a class="btn btn-ghost" href="pedido.html">Contáctanos</a>
-      </div>
+      <h1>Pide tu producto</h1>
+      <p>Posters, imanes, marcos y bisutería hechos a tu medida. Cuéntanos tu idea.</p>
     </div>
   </section>
 
-  <section class="section" id="servicios">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="kicker">Nuestros servicios</span>
-        <h2>Elige lo que quieres crear</h2>
+  <section class="section" style="padding-top: 0;">
+    <div class="container contact-wrap">
+
+      <!-- ===== Formulario (lo valida js/pedido.js) ===== -->
+      <div class="form-card">
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-name">Tu nombre *</label>
+              <input type="text" id="f-name" name="name" placeholder="Ada Lovelace" />
+              <p class="field-error" data-error-for="name"></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Correo electrónico *</label>
+              <input type="email" id="f-email" name="email" placeholder="tu@correo.com" />
+              <p class="field-error" data-error-for="email"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="f-phone">Tu WhatsApp / teléfono</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="+1 (829) 000-0000" />
+              <p class="field-error" data-error-for="phone"></p>
+            </div>
+            <div class="field">
+              <label for="f-product">¿Qué producto quieres? *</label>
+              <select id="f-product" name="product">
+                <option value="">Elige uno…</option>
+                <option value="posters">Poster personalizado</option>
+                <option value="imanes">Imanes personalizados</option>
+                <option value="marcos">Marco con estampado</option>
+                <option value="bisuteria">Bisutería personalizada</option>
+                <option value="otro">Otro / varios</option>
+              </select>
+              <p class="field-error" data-error-for="product"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-message">Cuéntanos tu idea *</label>
+            <textarea id="f-message" name="message"
+              placeholder="¿Qué imagen, frase o diseño quieres? ¿Cuántas unidades? ¿Para cuándo lo necesitas?"></textarea>
+            <p class="field-error" data-error-for="message"></p>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Enviar pedido</button>
+        </form>
+
+        <!-- Se muestra en lugar del formulario tras un envío válido (pedido.js) -->
+        <div id="form-success" hidden>
+          <h2>¡Mensaje listo!</h2>
+          <p>Tus datos se ven bien. Como el sitio no tiene servidor, elige
+            cómo enviárnoslo: WhatsApp abre un chat con el mensaje ya escrito
+            (llega al instante) y el correo abre tu aplicación de email con
+            todo lleno; solo presiona enviar.</p>
+          <p>
+            <a id="whatsapp-link" class="btn btn-primary" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+            <a id="mailto-link" class="btn btn-ghost" href="#">Enviar por correo</a>
+            <button id="form-reset" class="btn btn-ghost" type="button">Escribir otro</button>
+          </p>
+        </div>
       </div>
 
-      <div class="grid-2">
-        <a class="card svc-card reveal" href="posters.html">
-          <img src="../img/servicios/posters-hero.jpg" alt="Posters personalizados con diseños en dorado" />
-          <div class="body">
-            <h3>Posters personalizados
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </h3>
-            <p>Con la imagen, frase o estilo que elijas.</p>
-          </div>
-        </a>
+      <!-- ===== Barra lateral ===== -->
+      <aside>
+        <div class="info-card">
+          <h3>Otras formas de contactarnos</h3>
+          <ul>
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/18298591920" target="_blank" rel="noopener">+1 (829) 859-1920</a></li>
+            <li><strong>Discord:</strong> <code>64bitz</code></li>
+            <li>O llena el formulario y te llegamos por WhatsApp o correo.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>Qué sigue después</h3>
+          <ul>
+            <li>Respondemos en máximo <strong>una semana</strong>.</li>
+            <li>Confirmamos contigo el diseño y el precio.</li>
+            <li>Preparamos tu producto.</li>
+            <li>Lo recibes listo para usar.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>Cosas útiles para incluir</h3>
+          <ul>
+            <li>La imagen, frase o diseño que quieres</li>
+            <li>Colores o estilo que te gusten</li>
+            <li>Cuántas unidades</li>
+            <li>Tu fecha límite</li>
+          </ul>
+        </div>
+      </aside>
 
-        <a class="card svc-card reveal" href="imanes.html">
-          <img src="../img/servicios/imanes-hero.jpg" alt="Imanes personalizados con fotos y diseños" />
-          <div class="body">
-            <h3>Imanes personalizados
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </h3>
-            <p>Con tus fotos, frases, logos o arte.</p>
-          </div>
-        </a>
-
-        <a class="card svc-card reveal" href="marcos.html">
-          <img src="../img/servicios/marcos-hero.jpg" alt="Marco con estampado personalizado" />
-          <div class="body">
-            <h3>Marcos con estampado
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </h3>
-            <p>Diseños personalizados para convertir tus imágenes favoritas en
-              una pieza física.</p>
-          </div>
-        </a>
-
-        <a class="card svc-card reveal" href="bisuteria.html">
-          <img src="../img/servicios/bisuteria-hero.jpg" alt="Bisutería personalizada con cuentas y dijes" />
-          <div class="body">
-            <h3>Bisutería personalizada
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </h3>
-            <p>Una pieza hecha a tu medida.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="cta-band reveal">
-        <h2>¿Tienes algo en mente?</h2>
-        <p>Cuéntanos tu idea y te decimos cómo hacerla realidad.</p>
-        <a class="btn btn-primary" href="pedido.html">Contáctanos</a>
-      </div>
     </div>
   </section>
 
@@ -115,5 +143,6 @@
   </footer>
 
   <script src="../js/common.js" defer></script>
+  <script src="../js/pedido.js" defer></script>
 </body>
 </html>
