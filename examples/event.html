@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Summit · plantilla demo de Vinci</title>
+  <meta name="description" content="Nexus Summit, conferencia tecnológica. Plantilla demo de Vinci." />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/event.css" />
+</head>
+<body class="ev" data-event-page>
+
+  <div class="demo-ribbon">
+    <span>Plantilla demo de <strong>Vinci</strong>. Este es un sitio de muestra.</span>
+    <a href="../templates.html">&larr; Volver a la galería</a>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header class="ev-header">
+    <a class="ev-logo" href="#inicio" aria-label="Nexus Summit, inicio">
+      <svg class="n-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M4 28 L12 4 L16 4 L8 28 Z" fill="#168CFF"/>
+        <path d="M14 4 L18 4 L26 28 L22 28 Z" fill="#2CA6FF"/>
+        <path d="M24 4 L28 4 L28 28 L24 28 Z" fill="#168CFF" opacity="0.55"/>
+      </svg>
+      <span class="ev-logo-text">NEXUS<small>SUMMIT</small></span>
+    </a>
+    <nav>
+      <button class="ev-nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+      <ul class="ev-nav-links">
+        <li><a href="#inicio" class="active">Inicio</a></li>
+        <li><a href="#evento">Evento</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#participantes">Participantes</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a class="ev-btn ev-btn-small" href="#entradas">Registrarme</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="ev-hero" id="inicio">
+    <div class="ev-hero-inner">
+      <p class="ev-kicker">Conferencia tecnológica · 2027</p>
+      <h1 class="ev-title">NEXUS<br /><span>SUMMIT</span></h1>
+      <p class="ev-sub">Ideas que conectan. Personas que construyen el futuro.</p>
+      <ul class="ev-meta">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          25 – 27 de abril, 2027
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          8:00 a.m. – 6:00 p.m.
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Centro de Convenciones, Santo Domingo, RD
+        </li>
+      </ul>
+      <div class="ev-hero-actions">
+        <a class="ev-btn" href="#entradas">Reservar mi lugar <span class="arrow">&rarr;</span></a>
+        <a class="ev-btn ghost" href="#evento">Conocer el evento</a>
+      </div>
+    </div>
+    <ul class="ev-hero-words" aria-hidden="true">
+      <li>Tecnología</li>
+      <li>Innovación</li>
+      <li>Personas</li>
+      <li>Futuro</li>
+    </ul>
+    <a class="ev-scroll" href="#countdown">Desliza para explorar
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    </a>
+  </section>
+
+  <!-- ===== Countdown ===== -->
+  <section class="ev-countdown" id="countdown">
+    <div class="ev-container ev-countdown-inner">
+      <p class="ev-countdown-label">Faltan:</p>
+      <div class="ev-count">
+        <div class="count-block"><span data-count="days">--</span><small>Días</small></div>
+        <div class="count-block"><span data-count="hours">--</span><small>Horas</small></div>
+        <div class="count-block"><span data-count="minutes">--</span><small>Minutos</small></div>
+        <div class="count-block"><span data-count="seconds">--</span><small>Segundos</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Sobre el evento ===== -->
+  <section class="ev-section" id="evento">
+    <div class="ev-container ev-about">
+      <div class="reveal">
+        <span class="ev-tag">Sobre el evento</span>
+        <h2>Más que una <em>conferencia</em></h2>
+        <p class="ev-lead">El Nexus Summit es un espacio donde la tecnología, la
+          creatividad y el talento se unen para inspirar, aprender y crear
+          nuevas oportunidades. Durante tres días, podrás conocer a expertos,
+          participar en talleres y conectar con personas que, como tú, quieren
+          construir el futuro.</p>
+        <a class="ev-link" href="#agenda">Conoce más <span class="arrow">&rarr;</span></a>
+      </div>
+      <div class="ev-about-media reveal">
+        <div class="n-cut">
+          <img src="img/event-vr.jpg" alt="Persona usando un visor de realidad virtual" loading="lazy" />
+        </div>
+        <ul class="ev-stats">
+          <li><strong>12</strong><span>Ponentes</span></li>
+          <li><strong>15</strong><span>Actividades</span></li>
+          <li><strong>3</strong><span>Días de experiencia</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Agenda ===== -->
+  <section class="ev-section alt" id="agenda">
+    <div class="ev-container">
+      <span class="ev-tag">Agenda</span>
+      <h2>Cronograma del evento</h2>
+      <div class="ev-filters">
+        <button data-agenda-filter="todos" class="active">Todos</button>
+        <button data-agenda-filter="conferencia">Conferencias</button>
+        <button data-agenda-filter="taller">Talleres</button>
+        <button data-agenda-filter="networking">Networking</button>
+      </div>
+      <ul class="agenda" data-agenda></ul>
+    </div>
+  </section>
+
+  <!-- ===== Participantes ===== -->
+  <section class="ev-section" id="participantes">
+    <div class="ev-container">
+      <div class="ev-section-head">
+        <div>
+          <span class="ev-tag">Participantes</span>
+          <h2>Conoce a los protagonistas</h2>
+        </div>
+        <a class="ev-link" href="#participantes">Ver todos los participantes <span class="arrow">&rarr;</span></a>
+      </div>
+
+      <div class="people-track" data-people-track>
+        <article class="person reveal">
+          <img src="img/speaker-juan.jpg" alt="Juan Pérez" loading="lazy" />
+          <div class="person-body">
+            <h3>Juan Pérez</h3>
+            <p class="person-role">Ingeniero en IA · Google</p>
+            <p>Experto en inteligencia artificial y aprendizaje automático.</p>
+            <div class="person-social">
+              <a href="#" aria-label="Instagram de Juan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="#" aria-label="X de Juan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="person reveal">
+          <img src="img/speaker-maria.jpg" alt="María Gómez" loading="lazy" />
+          <div class="person-body">
+            <h3>María Gómez</h3>
+            <p class="person-role">Desarrolladora Full Stack</p>
+            <p>Apasionada por el desarrollo web y la tecnología educativa.</p>
+            <div class="person-social">
+              <a href="#" aria-label="Instagram de María"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="#" aria-label="X de María"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="person reveal">
+          <img src="img/speaker-carlos.jpg" alt="Carlos Ramírez" loading="lazy" />
+          <div class="person-body">
+            <h3>Carlos Ramírez</h3>
+            <p class="person-role">Especialista en Ciberseguridad</p>
+            <p>Consultor en seguridad informática y protección de datos.</p>
+            <div class="person-social">
+              <a href="#" aria-label="Instagram de Carlos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="#" aria-label="X de Carlos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="person reveal">
+          <img src="img/speaker-laura.jpg" alt="Laura Torres" loading="lazy" />
+          <div class="person-body">
+            <h3>Laura Torres</h3>
+            <p class="person-role">Emprendedora Tech</p>
+            <p>Creadora de startups y mentora de nuevos talentos.</p>
+            <div class="person-social">
+              <a href="#" aria-label="Instagram de Laura"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="#" aria-label="X de Laura"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="people-nav">
+        <button data-people-nav="prev" aria-label="Anterior">&larr;</button>
+        <button data-people-nav="next" aria-label="Siguiente">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== La experiencia ===== -->
+  <section class="ev-section exp">
+    <div class="ev-container">
+      <span class="ev-tag">La experiencia</span>
+      <h2>¿Qué te espera?</h2>
+      <p class="ev-lead">Un evento diseñado para que aprendas, conectes y
+        descubras nuevas oportunidades.</p>
+      <div class="exp-grid">
+        <div class="exp-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+          <h3>Aprende</h3>
+          <p>Conferencias y talleres con expertos de la industria.</p>
+        </div>
+        <div class="exp-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Conecta</h3>
+          <p>Haz networking con personas de todo el país y el mundo.</p>
+        </div>
+        <div class="exp-item reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <h3>Descubre</h3>
+          <p>Nuevas tendencias, proyectos y oportunidades.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Ubicación ===== -->
+  <section class="ev-section alt" id="ubicacion">
+    <div class="ev-container ev-location">
+      <div class="reveal">
+        <span class="ev-tag">Ubicación</span>
+        <h2>¿Dónde nos vemos?</h2>
+        <ul class="ev-meta stacked">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Centro de Convenciones, Santo Domingo, RD
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            25 – 27 de abril, 2027
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            8:00 a.m. – 6:00 p.m.
+          </li>
+        </ul>
+        <a class="ev-btn" href="https://www.openstreetmap.org/?mlat=18.4597&mlon=-69.9310#map=15/18.4597/-69.9310" target="_blank" rel="noopener">Cómo llegar <span class="arrow">&rarr;</span></a>
+      </div>
+      <div class="map-card reveal">
+        <iframe title="Mapa: Centro de Convenciones, Santo Domingo"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-69.9510%2C18.4497%2C-69.9110%2C18.4697&layer=mapnik&marker=18.4597%2C-69.9310"
+          loading="lazy"></iframe>
+        <div class="map-tag">Centro de Convenciones<br />Santo Domingo, RD</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Entradas ===== -->
+  <section class="ev-section" id="entradas">
+    <div class="ev-container">
+      <span class="ev-tag">Entradas</span>
+      <h2>Sé parte del evento</h2>
+      <div class="ticket-grid">
+        <article class="ticket reveal">
+          <h3>Entrada general</h3>
+          <p class="ticket-price">RD$ 2,500</p>
+          <ul>
+            <li>Acceso al evento</li>
+            <li>Todas las conferencias</li>
+            <li>Zona de networking</li>
+          </ul>
+          <a class="ev-btn ghost" href="#contacto">Registrarme</a>
+        </article>
+        <article class="ticket vip reveal">
+          <span class="ticket-badge">Más popular</span>
+          <h3>Experiencia VIP</h3>
+          <p class="ticket-price">RD$ 4,500</p>
+          <ul>
+            <li>Todo lo de la entrada general</li>
+            <li>Acceso a zona exclusiva</li>
+            <li>Meet &amp; greet con ponentes</li>
+          </ul>
+          <a class="ev-btn" href="#contacto">Obtener VIP</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Galería ===== -->
+  <section class="ev-section alt" id="galeria">
+    <div class="ev-container">
+      <div class="ev-section-head">
+        <div>
+          <span class="ev-tag">Galería</span>
+          <h2>Así se vive</h2>
+        </div>
+        <a class="ev-link" href="#galeria">Ver más fotos <span class="arrow">&rarr;</span></a>
+      </div>
+      <div class="gallery-grid">
+        <img class="g-tall" src="img/event-stage.jpg" alt="Ponente presentando en el escenario" loading="lazy" />
+        <img src="img/event-networking.jpg" alt="Asistentes haciendo networking" loading="lazy" />
+        <img src="img/event-workshop.jpg" alt="Taller práctico con laptops" loading="lazy" />
+        <img class="g-wide" src="img/event-crowd.jpg" alt="Público en el auditorio" loading="lazy" />
+        <img src="img/event-vr.jpg" alt="Zona de realidad virtual" loading="lazy" />
+        <img src="img/event-hero.jpg" alt="Escenario principal del evento" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="ev-section" id="faq">
+    <div class="ev-container narrow">
+      <span class="ev-tag">Preguntas frecuentes</span>
+      <h2>¿Tienes dudas?</h2>
+      <div class="faq" data-faq></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA final ===== -->
+  <section class="ev-cta" id="contacto">
+    <div class="ev-cta-inner">
+      <svg class="n-deco left" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28 L12 4 L16 4 L8 28 Z" fill="#168CFF" opacity="0.4"/><path d="M14 4 L18 4 L26 28 L22 28 Z" fill="#2CA6FF" opacity="0.4"/></svg>
+      <h2>Nos vemos en Nexus Summit</h2>
+      <p>El futuro no se espera. Se construye. Sé parte de esta experiencia.</p>
+      <a class="ev-btn" href="#entradas">Reservar mi lugar <span class="arrow">&rarr;</span></a>
+      <svg class="n-deco right" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28 L12 4 L16 4 L8 28 Z" fill="#168CFF" opacity="0.4"/><path d="M14 4 L18 4 L26 28 L22 28 Z" fill="#2CA6FF" opacity="0.4"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="ev-footer">
+    <div class="ev-container ev-footer-grid">
+      <div>
+        <a class="ev-logo" href="#inicio">
+          <svg class="n-mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M4 28 L12 4 L16 4 L8 28 Z" fill="#168CFF"/>
+            <path d="M14 4 L18 4 L26 28 L22 28 Z" fill="#2CA6FF"/>
+            <path d="M24 4 L28 4 L28 28 L24 28 Z" fill="#168CFF" opacity="0.55"/>
+          </svg>
+          <span class="ev-logo-text">NEXUS<small>SUMMIT</small></span>
+        </a>
+        <p class="ev-footer-tag">Ideas que conectan.<br />Personas que construyen el futuro.</p>
+      </div>
+      <ul class="ev-footer-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#evento">Evento</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#participantes">Participantes</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="ev-footer-right">
+        <div class="ev-socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.45 8.6.45 8.6.45s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-1.94 29 29 0 0 0 .46-5.26 29 29 0 0 0-.46-5.45z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48"/></svg></a>
+        </div>
+        <p class="ev-motto">Juntos hacia<br />el futuro</p>
+      </div>
+    </div>
+    <div class="ev-container ev-footer-bottom">
+      <p>&copy; 2027 Nexus Summit. Todos los derechos reservados. · Sitio de muestra creado por Vinci</p>
+      <div class="ev-legal">
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos y condiciones</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/event.js" defer></script>
+</body>
+</html>
