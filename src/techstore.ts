@@ -532,28 +532,14 @@
         return;
       }
       const mensaje = [fresh, extra].filter(Boolean).join("\n\n");
-      const text =
-        `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
-        `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +
-        `Método de contacto: ${metodo}${mensaje ? `\n\n${mensaje}` : ""}`;
-      const waLink = `https://wa.me/18298591920?text=${encodeURIComponent(text)}`;
-      const retry = done?.querySelector<HTMLAnchorElement>("[data-wa-retry]");
-      if (retry) retry.href = waLink;
-      const win = window.open(waLink, "_blank");
+      const resumen =
+        `Nombre: ${nombre} · Producto: ${prodLabel} · Cantidad: ${cantidad} · Contacto: ${metodo}` +
+        (mensaje ? `\n${mensaje}` : "");
+      // Demo site: the order is only simulated, nothing is sent anywhere.
       const note = done?.querySelector<HTMLElement>("[data-order-note]");
-      if (note) {
-        note.textContent = win
-          ? "Abrimos WhatsApp con tu pedido listo para enviar. Si no se abrió, usa el botón de abajo. Recuerda: pagas al recoger."
-          : "Tu navegador bloqueó la ventana de WhatsApp. Envía tu pedido con el botón de abajo. Recuerda: pagas al recoger.";
-      }
-      // The cart is only emptied when the customer confirms the message was sent.
-      done?.querySelector<HTMLButtonElement>("[data-order-clear]")?.addEventListener("click", (ev) => {
-        saveCart({});
-        updateBadge();
-        const b = ev.currentTarget as HTMLButtonElement;
-        b.textContent = "Carrito vaciado";
-        b.disabled = true;
-      });
+      if (note) note.textContent = resumen;
+      saveCart({});
+      updateBadge();
       form.classList.add("hidden");
       done?.classList.remove("hidden");
       done?.scrollIntoView({ block: "center", behavior: "smooth" });
