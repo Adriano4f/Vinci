@@ -27,8 +27,19 @@
     // normally and navigates to the services hub.
     const dropToggle = document.querySelector(".nav-drop");
     const dropParent = dropToggle === null || dropToggle === void 0 ? void 0 : dropToggle.closest(".has-dropdown");
-    const mobileQuery = window.matchMedia("(max-width: 640px)");
+    // Must match the navbar collapse breakpoint in main.css.
+    const mobileQuery = window.matchMedia("(max-width: 820px)");
     if (dropToggle && dropParent) {
+        // On desktop the menu opens via CSS :hover/:focus-within, so keep the
+        // announced state in sync with what is actually shown.
+        dropParent.addEventListener("pointerenter", () => {
+            if (!mobileQuery.matches)
+                dropToggle.setAttribute("aria-expanded", "true");
+        });
+        dropParent.addEventListener("pointerleave", () => {
+            if (!mobileQuery.matches)
+                dropToggle.setAttribute("aria-expanded", "false");
+        });
         dropToggle.addEventListener("click", (event) => {
             if (mobileQuery.matches && !dropParent.classList.contains("open")) {
                 event.preventDefault();

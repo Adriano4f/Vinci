@@ -120,6 +120,19 @@
             const option = new Option(PRODUCT_SERVICES[product], "product");
             typeSelect.add(option, 1);
             typeSelect.value = "product";
+            // The page speaks about websites by default; a product visitor gets the
+            // matching wording instead.
+            const title = document.querySelector("[data-web-title]");
+            if (title)
+                title.textContent = "Personalicemos tu producto";
+            const lead = document.querySelector("[data-web-lead]");
+            if (lead) {
+                lead.textContent =
+                    "Llena el formulario con tu idea y te respondemos con la propuesta.";
+            }
+            const typeLabel = document.querySelector("[data-web-type-label]");
+            if (typeLabel)
+                typeLabel.textContent = "¿Qué te interesa? *";
         }
     }
     syncBudgetVisibility();

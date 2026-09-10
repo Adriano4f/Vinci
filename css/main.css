@@ -712,7 +712,12 @@ svg {
   .section {
     padding: 56px 0;
   }
+}
 
+/* The navbar collapses earlier than the grids: with five items the row no
+   longer fits well below this width. Keep in sync with the media query used
+   by the dropdown in common.ts. */
+@media (max-width: 820px) {
   .nav-toggle {
     display: block;
   }
@@ -999,7 +1004,7 @@ svg {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 820px) {
   .dropdown {
     position: static;
     transform: none;
