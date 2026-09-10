@@ -401,9 +401,18 @@
   /* ---------- page: product detail ---------- */
   const initProduct = (): void => {
     const slug = new URLSearchParams(location.search).get("p") ?? "";
-    const p = product(slug) ?? PRODUCTS[0];
+    const p = product(slug);
     const root = document.querySelector<HTMLElement>("[data-product]");
     if (!root) return;
+    if (!p) {
+      document.title = "Producto no encontrado · ByteShop";
+      root.innerHTML = `<div class="ts-pd-info" style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
+        <h1>Producto no encontrado</h1>
+        <p class="ts-pd-desc">Ese producto no existe o ya no está disponible.</p>
+        <a class="ts-btn ts-btn-primary" href="techstore-productos.html">Ver catálogo</a>
+      </div>`;
+      return;
+    }
     document.title = `${p.name} · ByteShop`;
     root.innerHTML = `
       <div class="ts-pd-img reveal visible">
@@ -449,9 +458,41 @@
     }
     const form = document.querySelector<HTMLFormElement>("[data-order-form]");
     const done = document.querySelector<HTMLElement>("[data-order-done]");
-    form?.addEventListener("submit", (e) => {
+    if (!form) return;
+
+    // If the cart has items, carry them into the order: mark "Otro / varios"
+    // and prefill the message with the cart lines and total.
+    const cart = getCart();
+    const entries = Object.entries(cart).filter(([slug]) => product(slug));
+    const msg = form.querySelector<HTMLTextAreaElement>("#mensaje");
+    if (entries.length > 0) {
+      const lines = entries.map(([slug, qty]) => {
+        const p = product(slug) as Product;
+        return `${qty} x ${p.name} (${money(p.price)} c/u, subtotal ${money(p.price * qty)})`;
+      });
+      const total = entries.reduce((acc, [slug, qty]) => acc + (product(slug) as Product).price * qty, 0);
+      if (sel) sel.value = "otro";
+      if (msg) {
+        msg.value = `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
+      }
+    }
+
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
+      const nombre = (form.querySelector<HTMLInputElement>("#nombre")?.value ?? "").trim();
+      const prodSel = form.querySelector<HTMLSelectElement>("[data-product-select]");
+      const prodLabel = prodSel?.selectedOptions[0]?.textContent ?? "";
+      const cantidad = form.querySelector<HTMLInputElement>("#cantidad")?.value ?? "1";
+      const metodo = form.querySelector<HTMLSelectElement>("#contacto-met")?.value ?? "";
+      const mensaje = (msg?.value ?? "").trim();
+      const text =
+        `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
+        `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +
+        `Método de contacto: ${metodo}${mensaje ? `\n\n${mensaje}` : ""}`;
+      window.open(`https://wa.me/18298591920?text=${encodeURIComponent(text)}`, "_blank");
+      saveCart({});
+      updateBadge();
       form.classList.add("hidden");
       done?.classList.remove("hidden");
       done?.scrollIntoView({ block: "center", behavior: "smooth" });

@@ -368,12 +368,21 @@
     };
     /* ---------- page: product detail ---------- */
     const initProduct = () => {
-        var _a, _b, _c;
+        var _a, _b;
         const slug = (_a = new URLSearchParams(location.search).get("p")) !== null && _a !== void 0 ? _a : "";
-        const p = (_b = product(slug)) !== null && _b !== void 0 ? _b : PRODUCTS[0];
+        const p = product(slug);
         const root = document.querySelector("[data-product]");
         if (!root)
             return;
+        if (!p) {
+            document.title = "Producto no encontrado · ByteShop";
+            root.innerHTML = `<div class="ts-pd-info" style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
+        <h1>Producto no encontrado</h1>
+        <p class="ts-pd-desc">Ese producto no existe o ya no está disponible.</p>
+        <a class="ts-btn ts-btn-primary" href="techstore-productos.html">Ver catálogo</a>
+      </div>`;
+            return;
+        }
         document.title = `${p.name} · ByteShop`;
         root.innerHTML = `
       <div class="ts-pd-img reveal visible">
@@ -403,7 +412,7 @@
             if (val)
                 val.textContent = String(qty);
         }));
-        (_c = root.querySelector("[data-pd-add]")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => addToCart(p.slug, qty));
+        (_b = root.querySelector("[data-pd-add]")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => addToCart(p.slug, qty));
     };
     /* ---------- page: order ---------- */
     const initOrder = () => {
@@ -415,10 +424,42 @@
         }
         const form = document.querySelector("[data-order-form]");
         const done = document.querySelector("[data-order-done]");
-        form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
+        if (!form)
+            return;
+        // If the cart has items, carry them into the order: mark "Otro / varios"
+        // and prefill the message with the cart lines and total.
+        const cart = getCart();
+        const entries = Object.entries(cart).filter(([slug]) => product(slug));
+        const msg = form.querySelector("#mensaje");
+        if (entries.length > 0) {
+            const lines = entries.map(([slug, qty]) => {
+                const p = product(slug);
+                return `${qty} x ${p.name} (${money(p.price)} c/u, subtotal ${money(p.price * qty)})`;
+            });
+            const total = entries.reduce((acc, [slug, qty]) => acc + product(slug).price * qty, 0);
+            if (sel)
+                sel.value = "otro";
+            if (msg) {
+                msg.value = `Mi carrito:\n${lines.join("\n")}\nTotal: ${money(total)}`;
+            }
+        }
+        form.addEventListener("submit", (e) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             e.preventDefault();
             if (!form.reportValidity())
                 return;
+            const nombre = ((_b = (_a = form.querySelector("#nombre")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "").trim();
+            const prodSel = form.querySelector("[data-product-select]");
+            const prodLabel = (_d = (_c = prodSel === null || prodSel === void 0 ? void 0 : prodSel.selectedOptions[0]) === null || _c === void 0 ? void 0 : _c.textContent) !== null && _d !== void 0 ? _d : "";
+            const cantidad = (_f = (_e = form.querySelector("#cantidad")) === null || _e === void 0 ? void 0 : _e.value) !== null && _f !== void 0 ? _f : "1";
+            const metodo = (_h = (_g = form.querySelector("#contacto-met")) === null || _g === void 0 ? void 0 : _g.value) !== null && _h !== void 0 ? _h : "";
+            const mensaje = ((_j = msg === null || msg === void 0 ? void 0 : msg.value) !== null && _j !== void 0 ? _j : "").trim();
+            const text = `¡Hola ByteShop! Quiero hacer un pedido:\n\n` +
+                `Nombre: ${nombre}\nProducto: ${prodLabel}\nCantidad: ${cantidad}\n` +
+                `Método de contacto: ${metodo}${mensaje ? `\n\n${mensaje}` : ""}`;
+            window.open(`https://wa.me/18298591920?text=${encodeURIComponent(text)}`, "_blank");
+            saveCart({});
+            updateBadge();
             form.classList.add("hidden");
             done === null || done === void 0 ? void 0 : done.classList.remove("hidden");
             done === null || done === void 0 ? void 0 : done.scrollIntoView({ block: "center", behavior: "smooth" });
