@@ -11,7 +11,7 @@
  */
 
 // Fixed countdown values for this fictional demo event.
-const COUNTDOWN = { days: "676", hours: "07", minutes: "06", seconds: "07" };
+const COUNTDOWN = { days: "67", hours: "06", minutes: "07", seconds: "67" };
 
 interface ScheduleItem {
   time: string;
@@ -32,7 +32,7 @@ const SCHEDULE: ScheduleItem[] = [
 const FAQS: { q: string; a: string }[] = [
   {
     q: "¿Cuándo y dónde será el evento?",
-    a: "Del 25 al 27 de abril de 2027 en el Instituto Politécnico Loyola, San Cristóbal, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
+    a: "Del 17 al 19 de julio de 2028 en el Instituto Politécnico Loyola, San Cristóbal, RD. Puertas abiertas de 8:00 a.m. a 6:00 p.m. cada día.",
   },
   {
     q: "¿La entrada tiene algún costo?",
@@ -160,18 +160,12 @@ const FAQS: { q: string; a: string }[] = [
 
   // Active link underline on scroll (scroll-spy): marks the last section
   // whose top has passed the reading line (40% down the viewport).
-  // Sections without a nav entry (countdown, galeria, CTA) keep the
-  // nearest previous nav item highlighted; Entradas highlights the
-  // "Registrarme" button instead of a text link.
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>("section[id]")
+  );
   const navAnchors = Array.from(
     document.querySelectorAll<HTMLAnchorElement>(".ev-nav-links a[href^='#']")
   );
-  const navIds = new Set(
-    navAnchors.map((a) => a.getAttribute("href")?.slice(1) ?? "")
-  );
-  const sections = Array.from(
-    document.querySelectorAll<HTMLElement>("section[id]")
-  ).filter((s) => navIds.has(s.id));
   const updateSpy = (): void => {
     const line = window.scrollY + window.innerHeight * 0.4;
     let current = sections[0]?.id ?? "";
@@ -183,7 +177,8 @@ const FAQS: { q: string; a: string }[] = [
       document.documentElement.scrollHeight - 2;
     if (atBottom) current = sections[sections.length - 1]?.id ?? current;
     navAnchors.forEach((a) => {
-      a.classList.toggle("active", a.getAttribute("href") === `#${current}`);
+      const active = a.getAttribute("href") === `#${current}`;
+      if (!a.classList.contains("ev-btn")) a.classList.toggle("active", active);
     });
   };
   window.addEventListener("scroll", updateSpy, { passive: true });
