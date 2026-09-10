@@ -3,82 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Miga Dorada · plantilla demo de Vinci</title>
+  <title>La Miga Dorada · Panadería artesanal</title>
+  <meta name="description" content="Pan artesanal, masa madre y repostería recién horneada. La Miga Dorada." />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-  <link rel="stylesheet" href="../css/examples.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/bakery.css" />
 </head>
-<body class="theme-bakery">
+<body data-page="home">
 
-  <div class="demo-ribbon">
+  <div class="lmd-ribbon">
     <span>Plantilla demo de <strong>Vinci</strong>. Este es un sitio de muestra.</span>
     <a href="../templates.html">&larr; Volver a la galería</a>
   </div>
 
-  <nav class="demo-nav">
-    <span class="logo">La Miga <i>Dorada</i></span>
-    <ul>
+  <nav class="lmd-nav">
+    <a class="lmd-logo" href="bakery.html">
+      <span class="mark">M</span> La Miga <em>Dorada</em>
+    </a>
+    <ul class="lmd-nav-links">
+      <li><a href="#inicio">Inicio</a></li>
       <li><a href="#menu">Menú</a></li>
-      <li><a href="#about">Nosotros</a></li>
-      <li><a href="#visit">Visítanos</a></li>
+      <li><a href="#historia">Nuestra historia</a></li>
+      <li><a href="#panaderia">Panadería</a></li>
+      <li><a href="#visitanos">Visítanos</a></li>
     </ul>
+    <div class="lmd-nav-actions">
+      <a class="lmd-icon-btn" data-search href="bakery-menu.html" aria-label="Buscar en el menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </a>
+      <button class="lmd-icon-btn lmd-cart-btn" type="button" data-cart-open aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="lmd-cart-count is-empty" data-cart-count>0</span>
+      </button>
+      <a class="lmd-btn lmd-btn-primary lmd-btn-small" href="bakery-pedido.html">Pedir ahora</a>
+      <button class="lmd-burger" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
   </nav>
 
-  <section class="demo-hero">
-    <h1>Pan recién horneado, antes de la primera hora.</h1>
-    <p>Repostería y pan de masa madre en lotes pequeños, hechos por
-      estudiantes para estudiantes. Pide en línea y recoge en nuestro puesto
-      durante el recreo.</p>
-    <a class="demo-btn" href="#menu">Ver el menú de hoy</a>
+  <header class="lmd-hero" id="inicio">
+    <div class="lmd-container lmd-hero-inner">
+      <div>
+        <span class="lmd-hero-eyebrow">HORNEADO CADA MAÑANA</span>
+        <h1>El pan sabe mejor cuando todavía está <em>caliente</em>.</h1>
+        <p>Pan artesanal, masa madre y repostería hecha lentamente para que tú puedas disfrutarla recién salida del horno.</p>
+        <div class="lmd-hero-actions">
+          <a class="lmd-btn lmd-btn-ghost" href="#menu">Ver el menú</a>
+          <a class="lmd-btn lmd-btn-primary" href="bakery-pedido.html">Pedir ahora</a>
+        </div>
+      </div>
+      <div class="lmd-hero-visual">
+        <img src="img/lmd-hero.jpg" alt="Hogaza de masa madre recién cortada junto a croissants" />
+        <span class="lmd-chip c1">100% ARTESANAL</span>
+        <span class="lmd-chip c2">RECIÉN HORNEADO</span>
+        <span class="lmd-chip c3">DESDE 2026</span>
+      </div>
+    </div>
+    <div class="lmd-scroll-hint" aria-hidden="true">↓</div>
+  </header>
+
+  <div class="lmd-marquee" aria-hidden="true">
+    <div class="lmd-marquee-track">
+      PAN ARTESANAL · MASA MADRE · RECIÉN HORNEADO · HECHO CON TIEMPO · PAN ARTESANAL · MASA MADRE · RECIÉN HORNEADO · HECHO CON TIEMPO · PAN ARTESANAL · MASA MADRE · RECIÉN HORNEADO · HECHO CON TIEMPO ·
+    </div>
+  </div>
+
+  <section class="lmd-section" id="menu">
+    <div class="lmd-container">
+      <span class="lmd-kicker">Del horno</span>
+      <h2 class="lmd-h2">Lo horneado de hoy.</h2>
+      <p class="lmd-sub">Todo empieza temprano. Estos son los favoritos que salieron del horno esta mañana.</p>
+      <div class="lmd-grid" data-today-grid></div>
+      <div style="margin-top: 1.6rem; text-align: center;">
+        <a class="lmd-btn lmd-btn-ghost" href="bakery-menu.html">Ver el menú completo</a>
+      </div>
+    </div>
   </section>
 
-  <section class="demo-section" id="menu">
-    <div class="demo-container">
-      <h2>Lo horneado de hoy</h2>
-      <p class="sub">Todo hecho esta mañana, hasta agotar existencias.</p>
-      <div class="demo-grid">
-        <div class="demo-card">
-          <div class="demo-img"></div>
-          <h3>Croissant de mantequilla</h3>
-          <p>Hojaldrado, dorado, y se acaba en el segundo recreo.</p>
-          <span class="price">$1.50</span>
+  <section class="lmd-section alt">
+    <div class="lmd-container">
+      <span class="lmd-kicker">Categorías</span>
+      <h2 class="lmd-h2">Algo para cada antojo.</h2>
+      <div class="lmd-cats">
+        <a class="lmd-cat reveal" href="bakery-menu.html"><img src="img/lmd-panes.jpg" alt="Panes artesanales" /><span>PANES</span></a>
+        <a class="lmd-cat reveal" href="bakery-menu.html"><img src="img/lmd-croissant.jpg" alt="Croissants" /><span>CROISSANTS</span></a>
+        <a class="lmd-cat reveal" href="bakery-menu.html"><img src="img/lmd-dulces.jpg" alt="Dulces" /><span>DULCES</span></a>
+        <a class="lmd-cat reveal" href="bakery-menu.html"><img src="img/lmd-panchoco.jpg" alt="Especiales" /><span>ESPECIALES</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lmd-section" id="historia">
+    <div class="lmd-container lmd-story">
+      <div class="lmd-story-img reveal">
+        <img src="img/lmd-manos.jpg" alt="Manos amasando pan sobre una mesa con harina" />
+      </div>
+      <div class="reveal">
+        <span class="lmd-kicker">Nosotros</span>
+        <h2 class="lmd-h2">Todo comenzó con una masa.</h2>
+        <p class="lmd-sub">Somos tres compañeros que queríamos algo mejor que los muffins de siempre. Empezamos aprendiendo a mezclar, fermentar y hornear hasta convertir una pequeña idea en La Miga Dorada.</p>
+        <p class="lmd-story-quote">"No hacemos pan rápido. Hacemos pan que vale la pena esperar."</p>
+        <div class="lmd-stats">
+          <div><strong>48h</strong><span>Fermentación</span></div>
+          <div><strong>100%</strong><span>Hecho artesanalmente</span></div>
+          <div><strong>Cada día</strong><span>Horneado fresco</span></div>
         </div>
-        <div class="demo-card">
-          <div class="demo-img"></div>
-          <h3>Espiral de canela</h3>
-          <p>Canela cálida, centro suave, glaseado encima.</p>
-          <span class="price">$2.00</span>
+        <a class="lmd-btn lmd-btn-primary" href="bakery-nosotros.html">Conoce nuestra historia</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lmd-section alt" id="panaderia">
+    <div class="lmd-container">
+      <span class="lmd-kicker">El proceso</span>
+      <h2 class="lmd-h2">El secreto está en el tiempo.</h2>
+      <div class="lmd-steps">
+        <div class="lmd-step reveal">
+          <span class="lmd-step-num">01</span>
+          <h3>MEZCLAR</h3>
+          <p>Ingredientes simples y seleccionados.</p>
         </div>
-        <div class="demo-card">
-          <div class="demo-img"></div>
-          <h3>Pan de masa madre</h3>
-          <p>Fermentado 48 horas, corteza crujiente. Llévate uno a casa.</p>
-          <span class="price">$4.00</span>
+        <span class="lmd-step-arrow" aria-hidden="true">→</span>
+        <div class="lmd-step reveal">
+          <span class="lmd-step-num">02</span>
+          <h3>FERMENTAR</h3>
+          <p>Tiempo para desarrollar sabor y textura.</p>
+        </div>
+        <span class="lmd-step-arrow" aria-hidden="true">→</span>
+        <div class="lmd-step reveal">
+          <span class="lmd-step-num">03</span>
+          <h3>HORNEAR</h3>
+          <p>Calor, paciencia y el momento exacto.</p>
+        </div>
+      </div>
+
+      <div class="lmd-feature" style="margin-top: 4rem;">
+        <div class="lmd-feature-img reveal">
+          <img src="img/lmd-masamadre.jpg" alt="Hogaza de pan de masa madre" />
+        </div>
+        <div class="reveal">
+          <span class="lmd-kicker">Producto estrella</span>
+          <h2 class="lmd-h2">La hogaza que siempre vuelve.</h2>
+          <p class="lmd-sub"><strong>Pan de masa madre</strong> · 48 horas de fermentación</p>
+          <p class="lmd-feature-notes">Corteza crujiente · Interior suave · Sabor profundo</p>
+          <span class="lmd-card-price">$4.00</span>
+          <button class="lmd-btn lmd-btn-primary" type="button" data-add="masa-madre">Agregar al pedido</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="demo-section" id="about">
-    <div class="demo-container">
-      <h2>Sobre el puesto</h2>
-      <p class="sub">Somos tres compañeros cansados de los muffins de la
-        cafetería, así que aprendimos a hornear unos mejores. Cada venta
-        financia nuestro proyecto de emprendimiento.</p>
+  <section class="lmd-section">
+    <div class="lmd-container">
+      <div class="lmd-cta reveal">
+        <span class="lmd-kicker">Pedidos</span>
+        <h2>¿Lo quieres para mañana?</h2>
+        <p>Reserva tus panes y repostería antes de que salgan del horno. Nosotros los preparamos; tú solo vienes a recogerlos.</p>
+        <a class="lmd-btn lmd-btn-primary" href="bakery-pedido.html">Hacer un pedido</a>
+        <span class="small">Pedidos disponibles para recogida.</span>
+      </div>
     </div>
   </section>
 
-  <section class="demo-section" id="visit">
-    <div class="demo-container">
-      <h2>Encuéntranos</h2>
-      <p class="sub">Patio principal, puesto #4 · todos los días en la hora del
-        almuerzo · efectivo o tarjeta.</p>
-      <div style="text-align:center;"><a class="demo-btn" href="#">Pide para mañana</a></div>
+  <section class="lmd-section alt">
+    <div class="lmd-container">
+      <span class="lmd-kicker">Testimonios</span>
+      <h2 class="lmd-h2">Dicen que huele desde la esquina.</h2>
+      <div class="lmd-quotes">
+        <div class="lmd-quote reveal"><p>Ese croissant desapareció demasiado rápido.</p><span>Valeria</span></div>
+        <div class="lmd-quote reveal"><p>Mi desayuno favorito desde que descubrí el puesto.</p><span>Mateo</span></div>
+        <div class="lmd-quote reveal"><p>La masa madre está increíble.</p><span>Sofía</span></div>
+      </div>
     </div>
   </section>
 
-  <footer class="demo-footer">
-    La Miga Dorada · sitio de muestra hecho con la plantilla de panadería de Vinci.
+  <section class="lmd-section" id="visitanos">
+    <div class="lmd-container lmd-visit">
+      <div class="reveal">
+        <span class="lmd-kicker">Visítanos</span>
+        <h2 class="lmd-h2">Ven a buscar el tuyo.</h2>
+        <ul class="lmd-visit-list">
+          <li><span class="ico">📍</span> Patio principal, puesto #4</li>
+          <li><span class="ico">🕐</span> Todos los días durante la hora del almuerzo</li>
+          <li><span class="ico">💳</span> Efectivo o tarjeta</li>
+        </ul>
+        <a class="lmd-btn lmd-btn-ghost" href="bakery-visitanos.html">Cómo llegar</a>
+      </div>
+      <div class="lmd-map reveal">
+        <iframe title="Ubicación de La Miga Dorada" loading="lazy"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-70.1228%2C18.4060%2C-70.1028%2C18.4160&layer=mapnik&marker=18.4110%2C-70.1128"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lmd-footer">
+    <div class="lmd-container">
+      <div class="lmd-footer-inner">
+        <div>
+          <a class="lmd-logo" href="bakery.html"><span class="mark">M</span> La Miga <em>Dorada</em></a>
+          <span class="lmd-footer-tag">"Pan hecho con tiempo."</span>
+        </div>
+        <div>
+          <h4>Explorar</h4>
+          <ul>
+            <li><a href="bakery.html">Inicio</a></li>
+            <li><a href="bakery-menu.html">Menú</a></li>
+            <li><a href="bakery-nosotros.html">Nuestra historia</a></li>
+            <li><a href="bakery-visitanos.html">Visítanos</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ayuda</h4>
+          <ul>
+            <li><a href="bakery-nosotros.html">Preguntas frecuentes</a></li>
+            <li><a href="bakery-pedido.html">Pedidos</a></li>
+            <li><a href="../contact.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Síguenos</h4>
+          <div class="lmd-social">
+            <span class="lmd-icon-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="lmd-icon-btn" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2 1.8 3.4 3.9 3.6v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-3 6.3-6.4 6.3S4 18.4 4 15.3s2.6-5.6 5.9-5.4v3.1c-1.5-.3-2.9.6-2.9 2.2 0 1.5 1.2 2.6 2.7 2.6 1.8 0 2.9-1.4 2.9-3.1V3h4z"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="lmd-footer-bottom">
+        <span>© 2026 La Miga Dorada. Hecho con paciencia.</span>
+        <span class="lmd-fake">ESTA ES UNA PÁGINA FICTICIA, NINGUNA INFORMACIÓN MOSTRADA ES REAL. Muestra creada por Vinci.</span>
+      </div>
+    </div>
   </footer>
 
+  <script src="../js/bakery.js" defer></script>
 </body>
 </html>
