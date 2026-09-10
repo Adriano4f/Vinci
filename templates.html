@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plantillas y ejemplos — Vinci</title>
+  <meta name="description" content="Diseños de partida que podemos adaptar para tu negocio estudiantil: comida, tiendas, portafolios, servicios y más." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="container">
+      <a class="brand" href="index.html">Vinci<span>Web Studio</span></a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="templates.html">Plantillas</a></li>
+        <li><a href="contact.html" class="nav-cta">Contáctanos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="page-head">
+    <div class="container">
+      <h1>Plantillas y ejemplos</h1>
+      <p>Cada diseño es un punto de partida — lo reconstruimos en tus colores,
+        con tus productos y tu texto. Haz clic en una demo para explorarla.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <!-- Botones de filtro — funcionan gracias a js/gallery.js -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">Todas</button>
+        <button class="filter-btn" data-filter="food" aria-pressed="false">Comida y bebidas</button>
+        <button class="filter-btn" data-filter="shop" aria-pressed="false">Tiendas</button>
+        <button class="filter-btn" data-filter="portfolio" aria-pressed="false">Portafolio</button>
+        <button class="filter-btn" data-filter="services" aria-pressed="false">Servicios</button>
+        <button class="filter-btn" data-filter="events" aria-pressed="false">Eventos</button>
+      </div>
+
+      <div class="grid-3">
+
+        <!-- Tarjeta: demo en vivo -->
+        <article class="card template-card" data-category="food">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-bakery">
+              <i class="w-nav"></i>
+              <i class="w-hero"></i>
+              <div class="w-row"><i></i><i></i><i></i></div>
+              <i class="w-line"></i><i class="w-line short"></i>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Comida y bebidas</span>
+            <h3>Panadería y cafetería</h3>
+            <p>Una página cálida y apetitosa con menú, horarios e información
+              para apartar pedidos. Perfecta para repostería y puestos de
+              comida.</p>
+            <a class="card-link" href="examples/bakery.html">Ver demo en vivo &rarr;</a>
+          </div>
+        </article>
+
+        <article class="card template-card" data-category="shop">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-tech">
+              <i class="w-nav"></i>
+              <div class="w-row"><i></i><i></i><i></i></div>
+              <div class="w-row"><i></i><i></i><i></i></div>
+              <i class="w-line short"></i>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Tiendas</span>
+            <h3>Tienda de tecnología</h3>
+            <p>Una tienda oscura y elegante con cuadrícula de productos y
+              precios claros. Ideal para gadgets, merch o cualquier cosa que
+              se venda por artículo.</p>
+            <a class="card-link" href="examples/techstore.html">Ver demo en vivo &rarr;</a>
+          </div>
+        </article>
+
+        <article class="card template-card" data-category="portfolio">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-portfolio">
+              <i class="w-nav"></i>
+              <i class="w-hero"></i>
+              <div class="w-row"><i></i><i></i></div>
+              <div class="w-row"><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Portafolio</span>
+            <h3>Portafolio personal</h3>
+            <p>Una galería limpia que pone tu trabajo primero — fotos, arte,
+              manualidades o cualquier cosa visual que quieras mostrar.</p>
+            <a class="card-link" href="examples/portfolio.html">Ver demo en vivo &rarr;</a>
+          </div>
+        </article>
+
+        <article class="card template-card" data-category="food">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-food">
+              <i class="w-nav"></i>
+              <i class="w-hero"></i>
+              <i class="w-line"></i><i class="w-line"></i><i class="w-line short"></i>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Comida y bebidas</span>
+            <h3>Menú de restaurante</h3>
+            <p>Una página de menú elegante con secciones, precios y especiales
+              del día — hecha para leerse rápido desde un teléfono.</p>
+            <span class="soon">Demo completa muy pronto — pídenos un avance.</span>
+          </div>
+        </article>
+
+        <article class="card template-card" data-category="services">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-services">
+              <i class="w-nav"></i>
+              <i class="w-hero"></i>
+              <div class="w-row"><i></i><i></i></div>
+              <i class="w-line"></i><i class="w-line short"></i>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Servicios</span>
+            <h3>Tutorías y servicios</h3>
+            <p>Explica lo que ofreces, muestra tu disponibilidad y deja que los
+              clientes reserven — ideal para tutorías, reparaciones o servicios
+              creativos.</p>
+            <span class="soon">Demo completa muy pronto — pídenos un avance.</span>
+          </div>
+        </article>
+
+        <article class="card template-card" data-category="events">
+          <div class="preview">
+            <div class="chrome"><i></i><i></i><i></i></div>
+            <div class="wire theme-events">
+              <i class="w-nav"></i>
+              <i class="w-hero"></i>
+              <i class="w-line"></i><i class="w-line short"></i>
+              <div class="w-row"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="body">
+            <span class="tag">Eventos</span>
+            <h3>Página de evento</h3>
+            <p>Una sola página impactante con la fecha, el lugar y un botón
+              grande de registro — para conciertos, torneos o eventos de
+              clubes.</p>
+            <span class="soon">Demo completa muy pronto — pídenos un avance.</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="cta-band">
+        <h2>¿No ves tu idea aquí?</h2>
+        <p>Estas son solo ideas de partida — podemos diseñar algo completamente
+          nuevo alrededor de tu producto.</p>
+        <a class="btn btn-primary" href="contact.html">Cuéntanos tu idea</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Vinci</strong> — sitios web hechos por estudiantes, para negocios estudiantiles.</p>
+      <p>&copy; <span data-year>2026</span> Vinci Web Studio · Proyecto de emprendimiento escolar</p>
+    </div>
+  </footer>
+
+  <script src="js/common.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contáctanos — Vinci</title>
+  <meta name="description" content="Cuéntanos sobre tu negocio estudiantil y recibe una propuesta de diseño gratis del equipo Vinci." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="container">
+      <a class="brand" href="index.html">Vinci<span>Web Studio</span></a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="templates.html">Plantillas</a></li>
+        <li><a href="contact.html" class="nav-cta">Contáctanos</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="page-head">
+    <div class="container">
+      <h1>Construyamos tu sitio web</h1>
+      <p>Llena el formulario y te responderemos con una propuesta de diseño —
+        gratis y sin compromiso.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container contact-wrap">
+
+      <!-- ===== Formulario (lo valida js/contact.js) ===== -->
+      <div class="form-card">
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-name">Tu nombre *</label>
+              <input type="text" id="f-name" name="name" placeholder="Ada Lovelace" />
+              <p class="field-error" data-error-for="name"></p>
+            </div>
+            <div class="field">
+              <label for="f-business">Nombre del negocio / equipo</label>
+              <input type="text" id="f-business" name="business" placeholder="La Miga Dorada" />
+              <p class="field-error" data-error-for="business"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-email">Correo electrónico *</label>
+            <input type="email" id="f-email" name="email" placeholder="tu@escuela.edu" />
+            <p class="field-error" data-error-for="email"></p>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="f-type">¿Qué necesitas? *</label>
+              <select id="f-type" name="project-type">
+                <option value="">Elige una…</option>
+                <option value="one-page">Sitio de una página</option>
+                <option value="multi-page">Sitio de varias páginas</option>
+                <option value="shop">Tienda en línea</option>
+                <option value="portfolio">Portafolio</option>
+                <option value="other">Otra cosa / aún no lo sé</option>
+              </select>
+              <p class="field-error" data-error-for="project-type"></p>
+            </div>
+            <div class="field">
+              <label for="f-budget">Presupuesto aproximado</label>
+              <select id="f-budget" name="budget">
+                <option value="">Elige una…</option>
+                <option value="small">Lo más barato posible</option>
+                <option value="medium">Moderado — la calidad importa</option>
+                <option value="large">Queremos lo mejor que puedan hacer</option>
+              </select>
+              <p class="field-error" data-error-for="budget"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-message">Cuéntanos sobre tu proyecto *</label>
+            <textarea id="f-message" name="message"
+              placeholder="¿Qué vendes? ¿Para quién es? ¿Ya tienes nombre, logo o colores? ¿Cuál es tu fecha límite?"></textarea>
+            <p class="field-error" data-error-for="message"></p>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Enviar mensaje</button>
+        </form>
+
+        <!-- Se muestra en lugar del formulario tras un envío válido (contact.js) -->
+        <div id="form-success" hidden>
+          <h2>¡Mensaje listo!</h2>
+          <p>Tus datos se ven bien. Como este es un proyecto escolar sin
+            servidor, el botón de abajo abre tu aplicación de correo con todo
+            ya escrito — solo presiona enviar ahí.</p>
+          <p>
+            <a id="mailto-link" class="btn btn-primary" href="#">Abrir aplicación de correo</a>
+            <button id="form-reset" class="btn btn-ghost" type="button">Escribir otro</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== Barra lateral ===== -->
+      <aside>
+        <div class="info-card">
+          <h3>Qué sigue después</h3>
+          <ul>
+            <li>Respondemos en máximo <strong>2 días escolares</strong>.</li>
+            <li>Hacemos un boceto de tu sitio gratis.</li>
+            <li>Tú apruebas el diseño y el precio.</li>
+            <li>Lo construimos — y te quedas con el código.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>Cosas útiles para incluir</h3>
+          <ul>
+            <li>Qué vendes u ofreces</li>
+            <li>Tu nombre, logo y colores (si los tienes)</li>
+            <li>Tu fecha límite (¿fecha de la feria?)</li>
+            <li>Cualquier sitio web que te guste</li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Vinci</strong> — sitios web hechos por estudiantes, para negocios estudiantiles.</p>
+      <p>&copy; <span data-year>2026</span> Vinci Web Studio · Proyecto de emprendimiento escolar</p>
+    </div>
+  </footer>
+
+  <script src="js/common.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</body>
+</html>
