@@ -6,9 +6,9 @@
  * The site has no server, so instead of sending data anywhere the script:
  *   1. Checks every field and shows an inline error message when something
  *      is missing or invalid.
- *   2. On success, hides the form and shows a confirmation panel that
- *      contains a ready-made mailto: link, so pressing it opens the user's
- *      email app with the whole message already filled in.
+ *   2. On success, hides the form and shows a confirmation panel with a
+ *      ready-made WhatsApp deep link and a mailto: link, so pressing either
+ *      opens the user's app with the whole message already filled in.
  */
 (() => {
     const form = document.querySelector("#contact-form");
@@ -106,9 +106,16 @@
         ];
         const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}` +
             `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+        // WhatsApp deep link — opens a chat with our number, message prefilled.
+        const whatsappNumber = "18298591920"; // <- replace with your real number
+        const whatsapp = `https://wa.me/${whatsappNumber}?text=` +
+            encodeURIComponent(`${subject}\n\n${bodyLines.join("\n")}`);
         const successLink = document.querySelector("#mailto-link");
         if (successLink)
             successLink.href = mailto;
+        const whatsappLink = document.querySelector("#whatsapp-link");
+        if (whatsappLink)
+            whatsappLink.href = whatsapp;
         form.hidden = true;
         const panel = document.querySelector("#form-success");
         if (panel) {

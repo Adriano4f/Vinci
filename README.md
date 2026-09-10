@@ -118,16 +118,17 @@ npm run preview    # compila y sirve dist/
 | Cambiar textos, precios o secciones | El `.html` de esa página |
 | Cambiar colores / fuentes / espaciado | `css/main.css` — todos los colores son variables CSS en el bloque `:root` de arriba |
 | Agregar una tarjeta a la galería | Copia un bloque `<article class="card template-card">` en `templates.html` y ajusta su `data-category` |
-| Cambiar el correo del formulario | `recipient` cerca del final de `src/contact.ts` |
+| Cambiar el correo o el WhatsApp del formulario | `recipient` y `whatsappNumber` cerca del final de `src/contact.ts` (el número también aparece en `contact.html`) |
 | Cambiar cómo funciona la validación | `src/contact.ts` — cada regla es un pequeño `if` |
 | Agregar un nuevo sitio demo | Crea un archivo en `examples/` (copia uno existente) y agrega una tarjeta en `templates.html` |
 
 ## Notas
 
-- **No hay backend**: el formulario valida los datos y luego construye un
-  enlace `mailto:` que abre la aplicación de correo del visitante con el
-  mensaje ya escrito. Para una versión real podríamos agregar un servicio de
-  formularios después.
+- **No hay backend**: el formulario valida los datos y luego ofrece dos
+  botones — un enlace de WhatsApp (`wa.me`) que abre el chat con el mensaje
+  ya escrito, y un enlace `mailto:` que abre la aplicación de correo. Para
+  recibir mensajes directo en un inbox sin que el cliente haga nada más se
+  puede agregar un servicio como FormSubmit/Web3Forms con un correo real.
 - La configuración de TypeScript usa el modo `strict` — si `npm run build`
   marca un error, el mensaje te dice el archivo y la línea, igual que los
   errores de `g++`.

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contáctanos — Vinci</title>
-  <meta name="description" content="Cuéntanos sobre tu negocio estudiantil y recibe una propuesta de diseño gratis del equipo Vinci." />
+  <meta name="description" content="Cuéntanos sobre tu negocio y recibe una propuesta de diseño gratis del equipo Vinci." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -93,11 +93,13 @@
         <!-- Se muestra en lugar del formulario tras un envío válido (contact.js) -->
         <div id="form-success" hidden>
           <h2>¡Mensaje listo!</h2>
-          <p>Tus datos se ven bien. Como este es un proyecto escolar sin
-            servidor, el botón de abajo abre tu aplicación de correo con todo
-            ya escrito — solo presiona enviar ahí.</p>
+          <p>Tus datos se ven bien. Como el sitio no tiene servidor, elige
+            cómo enviárnoslo: WhatsApp abre un chat con el mensaje ya escrito
+            (llega al instante) y el correo abre tu aplicación de email con
+            todo lleno — solo presiona enviar.</p>
           <p>
-            <a id="mailto-link" class="btn btn-primary" href="#">Abrir aplicación de correo</a>
+            <a id="whatsapp-link" class="btn btn-primary" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+            <a id="mailto-link" class="btn btn-ghost" href="#">Enviar por correo</a>
             <button id="form-reset" class="btn btn-ghost" type="button">Escribir otro</button>
           </p>
         </div>
@@ -106,9 +108,17 @@
       <!-- ===== Barra lateral ===== -->
       <aside>
         <div class="info-card">
+          <h3>Otras formas de contactarnos</h3>
+          <ul>
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/18298591920" target="_blank" rel="noopener">+1 (829) 859-1920</a></li>
+            <li><strong>Discord:</strong> <code>64bitz</code></li>
+            <li>O llena el formulario y te llegamos por WhatsApp o correo.</li>
+          </ul>
+        </div>
+        <div class="info-card">
           <h3>Qué sigue después</h3>
           <ul>
-            <li>Respondemos en máximo <strong>2 días escolares</strong>.</li>
+            <li>Respondemos en máximo <strong>una semana</strong>.</li>
             <li>Hacemos un boceto de tu sitio gratis.</li>
             <li>Tú apruebas el diseño y el precio.</li>
             <li>Lo construimos — y te quedas con el código.</li>
@@ -119,7 +129,7 @@
           <ul>
             <li>Qué vendes u ofreces</li>
             <li>Tu nombre, logo y colores (si los tienes)</li>
-            <li>Tu fecha límite (¿fecha de la feria?)</li>
+            <li>Tu fecha límite</li>
             <li>Cualquier sitio web que te guste</li>
           </ul>
         </div>
@@ -130,8 +140,8 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p><strong>Vinci</strong> — sitios web hechos por estudiantes, para negocios estudiantiles.</p>
-      <p>&copy; <span data-year>2026</span> Vinci Web Studio · Proyecto de emprendimiento escolar</p>
+      <p><strong>Vinci</strong> — páginas web para negocios, y productos personalizados.</p>
+      <p>&copy; <span data-year>2026</span> Vinci Web Studio</p>
     </div>
   </footer>
 
