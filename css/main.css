@@ -737,3 +737,276 @@ svg {
     padding: 12px 14px;
   }
 }
+
+/* ---------- 10. Services dropdown (navbar) ---------- */
+.has-dropdown {
+  position: relative;
+}
+
+.has-dropdown .caret {
+  width: 10px;
+  height: 10px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  transition: transform 0.15s;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 300px;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 60;
+}
+
+.has-dropdown:hover .dropdown,
+.has-dropdown:focus-within .dropdown,
+.has-dropdown.open .dropdown {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.has-dropdown:hover .caret,
+.has-dropdown:focus-within .caret,
+.has-dropdown.open .caret {
+  transform: rotate(180deg);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px !important;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.dropdown a:hover {
+  background: var(--bg-card);
+  transform: translateX(3px);
+}
+
+.dropdown .dd-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: rgba(212, 164, 55, 0.12);
+  color: var(--accent-soft);
+}
+
+.dropdown .dd-name {
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.dropdown .dd-name small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.dropdown .dd-arrow {
+  margin-left: auto;
+  color: var(--accent-soft);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.dropdown a:hover .dd-arrow {
+  opacity: 1;
+}
+
+/* ---------- 11. Service pages ---------- */
+.section-head p {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.svc-back {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 22px;
+}
+
+.svc-back:hover {
+  color: var(--accent-soft);
+}
+
+.svc-card {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+.svc-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.4s;
+}
+
+.svc-card:hover img {
+  transform: scale(1.03);
+}
+
+.svc-card .body {
+  padding: 22px 24px 24px;
+}
+
+.svc-card .body h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.svc-card .body h3 svg {
+  flex-shrink: 0;
+  color: var(--accent-soft);
+  transition: transform 0.15s;
+}
+
+.svc-card:hover .body h3 svg {
+  transform: translateX(4px);
+}
+
+.svc-card .body p {
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.svc-figure {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.svc-figure img {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s;
+}
+
+.svc-figure:hover img {
+  transform: scale(1.03);
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip-list li {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Special block (bisutería) — different composition to stand out. */
+.hazla {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 40px;
+  align-items: center;
+  border: 1px solid rgba(212, 164, 55, 0.4);
+  border-radius: var(--radius);
+  padding: 48px;
+  background:
+    radial-gradient(80% 120% at 0% 50%, rgba(212, 164, 55, 0.14), transparent 70%),
+    var(--bg-card);
+}
+
+.hazla .tag-big {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--accent-soft);
+  line-height: 1.1;
+}
+
+.hazla p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* Reveal on scroll (service pages). */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .svc-card img, .svc-figure img { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .hazla {
+    grid-template-columns: 1fr;
+    padding: 32px 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dropdown {
+    position: static;
+    transform: none;
+    min-width: 0;
+    width: 100%;
+    margin-top: 4px;
+    box-shadow: none;
+    opacity: 1;
+    border-color: var(--line);
+  }
+
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown {
+    display: none;
+  }
+
+  .has-dropdown.open .dropdown {
+    display: block;
+    transform: none;
+  }
+}

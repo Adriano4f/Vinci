@@ -16,9 +16,18 @@
       <a class="brand" href="index.html">Vinci<span>Web Studio</span></a>
       <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
       <ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="templates.html">Plantillas</a></li>
-        <li><a href="contact.html" class="nav-cta">Contáctanos</a></li>
+        <li><a href="index.html" data-route="inicio">Inicio</a></li>
+        <li><a href="templates.html" data-route="plantillas">Plantillas</a></li>
+        <li class="has-dropdown">
+          <a href="servicios/index.html" class="nav-drop" data-route="servicios" aria-haspopup="true" aria-expanded="false">Otros servicios<svg class="caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 1 5 5 9 1"/></svg></a>
+          <ul class="dropdown">
+            <li><a href="servicios/posters.html"><span class="dd-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span><span class="dd-name">Posters personalizados<small>Con la imagen, frase o estilo que elijas.</small></span><svg class="dd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></li>
+            <li><a href="servicios/imanes.html"><span class="dd-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a6 6 0 0 0 12 0V3"/><line x1="6" y1="3" x2="6" y2="7"/><line x1="18" y1="3" x2="18" y2="7"/></svg></span><span class="dd-name">Imanes personalizados<small>Con tus fotos, frases, logos o arte.</small></span><svg class="dd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></li>
+            <li><a href="servicios/marcos.html"><span class="dd-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg></span><span class="dd-name">Marcos con estampado<small>Tu imagen favorita convertida en una pieza física.</small></span><svg class="dd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></li>
+            <li><a href="servicios/bisuteria.html"><span class="dd-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="2" y1="9" x2="22" y2="9"/><polyline points="8 3 12 9 16 3"/><polyline points="12 22 9 9"/></svg></span><span class="dd-name">Bisutería personalizada<small>Una pieza hecha a tu medida.</small></span><svg class="dd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></li>
+          </ul>
+        </li>
+        <li><a href="contact.html" class="nav-cta" data-route="contacto">Contáctanos</a></li>
       </ul>
     </div>
   </header>
@@ -172,48 +181,17 @@
     </div>
   </section>
 
-  <!-- ===== Otros productos y servicios ===== -->
+  <!-- ===== Otros servicios ===== -->
   <section class="section alt">
     <div class="container">
       <div class="section-head">
         <span class="kicker">Más que páginas web</span>
-        <h2>También vendemos productos personalizados</h2>
+        <h2>También hacemos productos personalizados</h2>
+        <p>Posters, imanes, marcos con estampado y bisutería, hechos a tu
+          medida.</p>
       </div>
-
-      <div class="grid-4">
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <h3>Posters personalizados</h3>
-          <p>Con la imagen, frase o estilo que elijas.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a6 6 0 0 0 12 0V3"/><line x1="6" y1="3" x2="6" y2="7"/><line x1="18" y1="3" x2="18" y2="7"/></svg>
-          </div>
-          <h3>Imanes personalizados</h3>
-          <p>Con tus fotos, frases, logos o arte.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
-          </div>
-          <h3>Marcos con estampado</h3>
-          <p>Cuadrados o rectangulares, por ejemplo con el álbum de tu artista
-            favorito y tu foto adentro.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="2" y1="9" x2="22" y2="9"/><polyline points="8 3 12 9 16 3"/><polyline points="12 22 9 9"/></svg>
-          </div>
-          <h3>Bisutería personalizada</h3>
-          <p>A tu medida, y el día del bazar podrás hacer la tuya con
-            nosotros.</p>
-        </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="servicios/index.html">Ver otros servicios</a>
       </div>
     </div>
   </section>

@@ -5,8 +5,10 @@
  *
  * Responsibilities:
  *   1. Mobile navigation toggle (hamburger menu).
- *   2. Marks the current page's link in the navbar.
- *   3. Fills the footer year automatically.
+ *   2. "Otros servicios" dropdown (tap-to-expand on mobile).
+ *   3. Marks the current page's link in the navbar (data-route attributes).
+ *   4. Fills the footer year automatically.
+ *   5. Reveal-on-scroll animation for elements with .reveal.
  */
 (() => {
     // --- 1. Mobile menu -------------------------------------------------------
@@ -18,21 +20,55 @@
             toggle.setAttribute("aria-expanded", String(isOpen));
         });
     }
-    // --- 2. Highlight the link of the page we are on --------------------------
-    // Compares the file name in the URL (e.g. "contact.html") with each link.
-    const currentFile = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll(".nav-links a").forEach((link) => {
-        var _a;
-        const linkFile = (_a = link.getAttribute("href")) === null || _a === void 0 ? void 0 : _a.split("/").pop();
-        if (linkFile === currentFile) {
+    // --- 2. "Otros servicios" dropdown -----------------------------------------
+    // Desktop opens it on hover/focus (pure CSS). On mobile there is no hover,
+    // so the first tap expands the submenu instead of following the link.
+    const dropToggle = document.querySelector(".nav-drop");
+    const dropParent = dropToggle === null || dropToggle === void 0 ? void 0 : dropToggle.closest(".has-dropdown");
+    const mobileQuery = window.matchMedia("(max-width: 640px)");
+    if (dropToggle && dropParent) {
+        dropToggle.addEventListener("click", (event) => {
+            if (mobileQuery.matches) {
+                event.preventDefault();
+                const isOpen = dropParent.classList.toggle("open");
+                dropToggle.setAttribute("aria-expanded", String(isOpen));
+            }
+        });
+    }
+    // --- 3. Highlight the link of the page we are on ---------------------------
+    // Each top-level nav link carries data-route; the current route is derived
+    // from the path so nested service pages still mark "Otros servicios".
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    let route = "inicio";
+    if (segments[0] === "servicios")
+        route = "servicios";
+    else if (segments[0] === "templates.html")
+        route = "plantillas";
+    else if (segments[0] === "contact.html")
+        route = "contacto";
+    document.querySelectorAll("[data-route]").forEach((link) => {
+        if (link.dataset.route === route)
             link.classList.add("active");
-        }
     });
-    // --- 3. Footer year -------------------------------------------------------
-    // Any element with data-year gets the current year, so the footer never
-    // needs to be edited by hand.
+    // --- 4. Footer year --------------------------------------------------------
     document.querySelectorAll("[data-year]").forEach((el) => {
         el.textContent = String(new Date().getFullYear());
     });
+    // --- 5. Reveal on scroll ----------------------------------------------------
+    const revealEls = document.querySelectorAll(".reveal");
+    if (revealEls.length > 0 && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach((el) => observer.observe(el));
+    }
+    else {
+        revealEls.forEach((el) => el.classList.add("visible"));
+    }
 })();
 //# sourceMappingURL=common.js.map
