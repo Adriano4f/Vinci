@@ -10,8 +10,8 @@
  *   - sticky header state, mobile nav, scroll reveal
  */
 
-// Event date: opening day at 8:00 a.m. local time.
-const EVENT_DATE = new Date("2027-04-25T08:00:00");
+// Fixed countdown values for this fictional demo event.
+const COUNTDOWN = { days: "67", hours: "06", minutes: "07", seconds: "67" };
 
 interface ScheduleItem {
   time: string;
@@ -95,23 +95,10 @@ const FAQS: { q: string; a: string }[] = [
   ["days", "hours", "minutes", "seconds"].forEach((u) => {
     units[u] = document.querySelector<HTMLElement>(`[data-count="${u}"]`);
   });
-
-  const pad = (n: number): string => String(n).padStart(2, "0");
-
-  const tick = (): void => {
-    let diff = EVENT_DATE.getTime() - Date.now();
-    if (diff < 0) diff = 0;
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-    if (units.days) units.days.textContent = pad(days);
-    if (units.hours) units.hours.textContent = pad(hours);
-    if (units.minutes) units.minutes.textContent = pad(minutes);
-    if (units.seconds) units.seconds.textContent = pad(seconds);
-  };
-  tick();
-  window.setInterval(tick, 1000);
+  if (units.days) units.days.textContent = COUNTDOWN.days;
+  if (units.hours) units.hours.textContent = COUNTDOWN.hours;
+  if (units.minutes) units.minutes.textContent = COUNTDOWN.minutes;
+  if (units.seconds) units.seconds.textContent = COUNTDOWN.seconds;
 
   // --- Participants arrows --------------------------------------------------
 
@@ -171,28 +158,31 @@ const FAQS: { q: string; a: string }[] = [
     }
   });
 
-  // Active link underline on scroll (simple scroll-spy).
+  // Active link underline on scroll (scroll-spy): marks the last section
+  // whose top has passed the reading line (40% down the viewport).
   const sections = Array.from(
     document.querySelectorAll<HTMLElement>("section[id]")
   );
   const navAnchors = Array.from(
     document.querySelectorAll<HTMLAnchorElement>(".ev-nav-links a[href^='#']")
   );
-  const spy = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        navAnchors.forEach((a) => {
-          a.classList.toggle(
-            "active",
-            a.getAttribute("href") === `#${entry.target.id}`
-          );
-        });
-      });
-    },
-    { rootMargin: "-40% 0px -55% 0px" }
-  );
-  sections.forEach((s) => spy.observe(s));
+  const updateSpy = (): void => {
+    const line = window.scrollY + window.innerHeight * 0.4;
+    let current = sections[0]?.id ?? "";
+    sections.forEach((s) => {
+      if (s.offsetTop <= line) current = s.id;
+    });
+    const atBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 2;
+    if (atBottom) current = sections[sections.length - 1]?.id ?? current;
+    navAnchors.forEach((a) => {
+      const active = a.getAttribute("href") === `#${current}`;
+      if (!a.classList.contains("ev-btn")) a.classList.toggle("active", active);
+    });
+  };
+  window.addEventListener("scroll", updateSpy, { passive: true });
+  updateSpy();
 
   // --- Scroll reveal ---------------------------------------------------------
 

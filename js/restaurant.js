@@ -504,18 +504,28 @@ const MENU = [
         }
     });
     // Scroll-spy: underline the nav link of the section currently in view.
+    // Marks the last section whose top has passed the reading line (40% down
+    // the viewport), so every section is covered, tall or short.
     const spySections = Array.from(document.querySelectorAll("section[id]"));
     const spyAnchors = Array.from(document.querySelectorAll(".rest-nav-links a[href^='#']:not(.rest-btn)"));
-    const spy = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting)
-                return;
-            spyAnchors.forEach((a) => {
-                a.classList.toggle("active", a.getAttribute("href") === `#${entry.target.id}`);
-            });
+    const updateSpy = () => {
+        var _a, _b, _c, _d;
+        const line = window.scrollY + window.innerHeight * 0.4;
+        let current = (_b = (_a = spySections[0]) === null || _a === void 0 ? void 0 : _a.id) !== null && _b !== void 0 ? _b : "";
+        spySections.forEach((s) => {
+            if (s.offsetTop <= line)
+                current = s.id;
         });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    spySections.forEach((s) => spy.observe(s));
+        const atBottom = window.innerHeight + window.scrollY >=
+            document.documentElement.scrollHeight - 2;
+        if (atBottom)
+            current = (_d = (_c = spySections[spySections.length - 1]) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : current;
+        spyAnchors.forEach((a) => {
+            a.classList.toggle("active", a.getAttribute("href") === `#${current}`);
+        });
+    };
+    window.addEventListener("scroll", updateSpy, { passive: true });
+    updateSpy();
     // --- Scroll reveal --------------------------------------------------------
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
