@@ -160,6 +160,8 @@
         }
     };
     const saveFavs = (favs) => setItem(FAV_KEY, JSON.stringify(favs));
+    // Total items = sum of quantities for slugs still in the catalog.
+    // `[, q]` skips the key; only the qty is destructured out of the pair.
     const cartCount = () => Object.entries(getCart())
         .filter(([slug]) => product(slug))
         .reduce((t, [, q]) => t + q, 0);
@@ -198,6 +200,7 @@
         document.body.appendChild(wrap);
         wrap.querySelectorAll("[data-cart-close]").forEach((el) => el.addEventListener("click", closeCart));
     };
+    // Full re-render from state each change — simple and fast at this size.
     const renderCart = () => {
         const list = document.querySelector("[data-cart-list]");
         const totalEl = document.querySelector("[data-cart-total]");
@@ -243,7 +246,7 @@
                 delete cart[slug];
             saveCart(cart);
             renderCart();
-            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh();
+            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh(); // pedido page's hook: re-render its summary too
         }));
         list.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => {
             const cart = getCart();
@@ -327,6 +330,9 @@
         observeReveals(root);
     };
     /* ---------- reveal on scroll ---------- */
+    // IntersectionObserver fires the callback when an observed element
+    // crosses the threshold. unobserve() detaches so the callback can't
+    // re-fire — each element animates exactly once.
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
             if (e.isIntersecting) {
@@ -372,6 +378,8 @@
             const sections = Array.from(document.querySelectorAll("section[id], header[id]")).filter((s) => navIds.has(s.id));
             const updateSpy = () => {
                 var _a, _b, _c, _d;
+                // The "reading line" sits 40% down the viewport: a section becomes
+                // active when its top edge passes above that line.
                 const line = window.scrollY + window.innerHeight * 0.4;
                 let current = (_b = (_a = sections[0]) === null || _a === void 0 ? void 0 : _a.id) !== null && _b !== void 0 ? _b : "";
                 sections.forEach((s) => {
@@ -412,6 +420,7 @@
         if (!grid)
             return;
         let cat = "all";
+        // apply() closes over the DOM refs above; every handler calls it.
         const apply = () => {
             var _a;
             const q = ((_a = search === null || search === void 0 ? void 0 : search.value) !== null && _a !== void 0 ? _a : "").trim().toLowerCase();
@@ -494,6 +503,8 @@
         renderSummary();
         form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
             e.preventDefault();
+            // reportValidity() triggers the browser's built-in constraint
+            // validation bubbles (required fields, type=email, etc.).
             if (!form.reportValidity())
                 return;
             // Re-read the cart: it may have been emptied from the drawer meanwhile.

@@ -173,6 +173,8 @@
   };
   const saveFavs = (favs: string[]): void => setItem(FAV_KEY, JSON.stringify(favs));
 
+  // Total items = sum of quantities for slugs still in the catalog.
+  // `[, q]` skips the key; only the qty is destructured out of the pair.
   const cartCount = (): number =>
     Object.entries(getCart())
       .filter(([slug]) => product(slug))
@@ -216,6 +218,7 @@
     );
   };
 
+  // Full re-render from state each change — simple and fast at this size.
   const renderCart = (): void => {
     const list = document.querySelector<HTMLElement>("[data-cart-list]");
     const totalEl = document.querySelector<HTMLElement>("[data-cart-total]");
@@ -259,7 +262,7 @@
         if (cart[slug] <= 0) delete cart[slug];
         saveCart(cart);
         renderCart();
-        orderRefresh?.();
+        orderRefresh?.(); // pedido page's hook: re-render its summary too
       })
     );
     list.querySelectorAll<HTMLButtonElement>("[data-remove]").forEach((b) =>
@@ -347,6 +350,9 @@
   };
 
   /* ---------- reveal on scroll ---------- */
+  // IntersectionObserver fires the callback when an observed element
+  // crosses the threshold. unobserve() detaches so the callback can't
+  // re-fire — each element animates exactly once.
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -403,6 +409,8 @@
         navIds.has(s.id)
       );
       const updateSpy = (): void => {
+        // The "reading line" sits 40% down the viewport: a section becomes
+        // active when its top edge passes above that line.
         const line = window.scrollY + window.innerHeight * 0.4;
         let current = sections[0]?.id ?? "";
         sections.forEach((s) => {
@@ -443,6 +451,7 @@
     if (!grid) return;
 
     let cat = "all";
+    // apply() closes over the DOM refs above; every handler calls it.
     const apply = (): void => {
       const q = (search?.value ?? "").trim().toLowerCase();
       let list = PRODUCTS.filter(
@@ -528,6 +537,8 @@
 
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
+      // reportValidity() triggers the browser's built-in constraint
+      // validation bubbles (required fields, type=email, etc.).
       if (!form.reportValidity()) return;
       // Re-read the cart: it may have been emptied from the drawer meanwhile.
       if (Object.keys(getCart()).filter((slug) => product(slug)).length === 0) {

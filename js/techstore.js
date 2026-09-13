@@ -159,6 +159,8 @@
         badge.classList.add("bump");
     };
     /* ---------- cart drawer (injected on every page) ---------- */
+    // createElement builds a detached DOM node; appendChild inserts it into
+    // the live document. innerHTML parses the template string into elements.
     const buildCart = () => {
         const wrap = document.createElement("div");
         wrap.innerHTML = `
@@ -178,6 +180,8 @@
         document.body.appendChild(wrap);
         wrap.querySelectorAll("[data-cart-close]").forEach((el) => el.addEventListener("click", closeCart));
     };
+    // Rebuilds the whole drawer from current state each time — simpler than
+    // diffing individual DOM nodes, and fast enough for a small cart.
     const renderCart = () => {
         const list = document.querySelector("[data-cart-list]");
         const totalEl = document.querySelector("[data-cart-total]");
@@ -194,6 +198,10 @@
         }
         foot.classList.remove("hidden");
         let total = 0;
+        // .map runs the callback for each entry and returns an array of the
+        // results (here: HTML strings); .join("") concatenates them into one
+        // string for innerHTML. `as Product` is safe: entries were filtered
+        // through product() so every slug resolves.
         list.innerHTML = entries
             .map(([slug, qty]) => {
             const p = product(slug);
@@ -215,6 +223,9 @@
         })
             .join("");
         totalEl.textContent = money(total);
+        // Handlers are rebound on every render since innerHTML replaced the
+        // nodes. Each arrow function closes over `b` — the button it was
+        // attached to — so dataset access stays local to that button.
         list.querySelectorAll("[data-qty]").forEach((b) => b.addEventListener("click", () => {
             var _a;
             const cart2 = getCart();
@@ -249,6 +260,8 @@
         bumpBadge();
         toast(`Agregado: ${product(slug).name}`);
     };
+    // requestAnimationFrame defers the .show class to the next paint — without
+    // it the browser may batch the add+class and skip the CSS transition.
     const toast = (msg) => {
         const t = document.createElement("div");
         t.className = "ts-toast";
@@ -280,6 +293,9 @@
       </div>
     </article>`;
     };
+    // ParentNode is the DOM interface shared by Document and Element — both
+    // have querySelectorAll. dataset.bound marks already-wired buttons so
+    // re-rendering a grid doesn't double-attach click handlers.
     const bindCards = (root) => {
         root.querySelectorAll("[data-add]").forEach((b) => {
             if (b.dataset.bound)
@@ -383,6 +399,9 @@
         if (!grid)
             return;
         let priceBand = "all";
+        // apply() closes over the DOM refs above (closure) so every input
+        // handler just calls apply() instead of re-querying. `search?.value ?? ""`
+        // = value if the element exists, else empty string.
         const apply = () => {
             var _a, _b;
             const q = ((_a = search === null || search === void 0 ? void 0 : search.value) !== null && _a !== void 0 ? _a : "").trim().toLowerCase();
@@ -393,6 +412,9 @@
                 list = list.filter((p) => p.price > 5 && p.price <= 8);
             if (priceBand === "high")
                 list = list.filter((p) => p.price > 8);
+            // [...list] makes a shallow copy — Array.prototype.sort() mutates
+            // in place, and `list` may still be the filtered result other code
+            // relies on; sorting a copy keeps each filter result independent.
             const s = (_b = sort === null || sort === void 0 ? void 0 : sort.value) !== null && _b !== void 0 ? _b : "featured";
             if (s === "price-asc")
                 list = [...list].sort((a, b) => a.price - b.price);
@@ -426,6 +448,8 @@
     /* ---------- page: product detail ---------- */
     const initProduct = () => {
         var _a, _b;
+        // location.search is the "?p=cable-usb-c" part of the URL;
+        // URLSearchParams.get("p") extracts the slug, `?? ""` covers missing.
         const slug = (_a = new URLSearchParams(location.search).get("p")) !== null && _a !== void 0 ? _a : "";
         const p = product(slug);
         const root = document.querySelector("[data-product]");
@@ -507,6 +531,8 @@
         form.addEventListener("submit", (e) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j;
             e.preventDefault();
+            // reportValidity() runs the browser's built-in constraint validation
+            // (required, type=email, etc.) and shows its native error bubbles.
             if (!form.reportValidity())
                 return;
             const nombre = ((_b = (_a = form.querySelector("#nombre")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "").trim();
