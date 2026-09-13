@@ -1,6 +1,24 @@
 "use strict";
 /* ByteShop demo · shared script for all techstore pages.
-   Page behavior is selected via <body data-page="home|products|product|why|order">. */
+   Page behavior is selected via <body data-page="home|products|product|why|order">.
+
+   TYPE NOTES:
+   - `"use strict"` — a directive prologue: puts the script in ECMAScript
+     strict mode (assignments to undeclared variables throw, `this` in plain
+     function calls is undefined, some legacy syntax is rejected).
+   - `interface Product` / `tag?: string` — structural type + optional field;
+     erased at compile, no runtime existence.
+   - `x as T` — assertion only; `JSON.parse(...) as string[]` trusts the
+     stored shape (unchecked at runtime).
+   - `Object.entries(obj)` → [key, value][] pairs; `[slug, qty]` destructures
+     each pair in the callback parameter.
+   - `.reduce((acc, el) => ..., 0)` — folds the array into one value, acc
+     starts at 0.
+   - `localStorage`/`sessionStorage` — Web Storage API: persistent vs per-tab
+     string key-value store; getItem/setItem can throw (quota, blocked).
+   - `void badge.offsetWidth` — `void` discards the value; reading offsetWidth
+     forces a synchronous layout/reflow so the CSS animation can restart.
+*/
 (() => {
     "use strict";
     var _a;
@@ -62,13 +80,20 @@
             extras: ["Contenido sorpresa", "Vale más que su precio", "Edición de la feria"],
         },
     ];
+    // `Array.find` → first match or undefined. `Product | undefined` is the
+    // honest return type — callers must handle the miss.
     const product = (slug) => PRODUCTS.find((p) => p.slug === slug);
     const money = (n) => `$${n}`;
     /* ---------- cart state ---------- */
     const CART_KEY = "byteshop-cart";
     const FAV_KEY = "byteshop-favs";
     /* Storage access can throw (blocked storage, quota). Keep an in-memory
-       copy so cart/fav actions still work for the rest of the session. */
+       copy so cart/fav actions still work for the rest of the session.
+       Record<string, string> is an object type: any string key → string value.
+       `localStorage.getItem ?? memStore[key] ?? null` — chained `??` picks the
+       first non-nullish value (getItem returns null on miss; memStore[key]
+       returns undefined on miss; the last ?? converts undefined to null so the
+       function's declared `string | null` return type holds). */
     const memStore = {};
     const getItem = (key) => {
         var _a, _b, _c;
@@ -112,6 +137,9 @@
         }
     };
     const saveFavs = (favs) => setItem(FAV_KEY, JSON.stringify(favs));
+    // Object.entries returns [key, value] pairs; the callback destructures
+    // each pair into [slug, qty]. `[, qty]` skips the first element (the slug)
+    // when only the quantity is needed. reduce folds them into the total.
     const cartCount = () => Object.entries(getCart())
         .filter(([slug]) => product(slug))
         .reduce((total, [, qty]) => total + qty, 0);

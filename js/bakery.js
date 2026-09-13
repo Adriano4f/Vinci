@@ -1,6 +1,21 @@
 "use strict";
 /* La Miga Dorada demo · shared script for all bakery pages.
-   Page behavior is selected via <body data-page="home|menu|nosotros|visitanos|pedido">. */
+   Page behavior is selected via <body data-page="home|menu|nosotros|visitanos|pedido">.
+
+   TYPE NOTES:
+   - `"use strict"` — ECMAScript strict-mode directive: undeclared-variable
+     assignment throws, `this` in bare function calls is undefined, etc.
+   - `interface Product`, `tag?:`, `out?:` — structural types with optional
+     fields; erased at compile, no runtime existence.
+   - `let orderRefresh: (() => void) | undefined` — a variable whose type is
+     "a zero-arg function returning nothing, or undefined". `orderRefresh?.()`
+     calls it only when assigned (optional call).
+   - `Object.entries(obj)` → [key, value][] pairs; destructured as [slug, qty].
+   - `localStorage`/`sessionStorage` — Web Storage API: persistent vs per-tab;
+     both may throw SecurityError → try/catch + in-memory fallback.
+   - `x as T` — compile-time-only assertion; `as Product` after .find() on a
+     filtered array tells the checker "this exists" without checking at runtime.
+*/
 (() => {
     "use strict";
     var _a;
@@ -91,8 +106,11 @@
         },
     ];
     const product = (slug) => PRODUCTS.find((p) => p.slug === slug);
+    // toFixed(2) returns a STRING like "4.00" — a string, not a rounded number.
     const money = (n) => `$${n.toFixed(2)}`;
-    /* Called whenever the cart changes; the pedido page hooks in its summary. */
+    /* Called whenever the cart changes; the pedido page hooks in its summary.
+       The type `(() => void) | undefined` is a function-or-absent union;
+       `orderRefresh?.()` is an optional call — runs only when assigned. */
     let orderRefresh;
     const cartChanged = () => {
         updateBadge();

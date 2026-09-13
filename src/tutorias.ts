@@ -4,16 +4,65 @@
  *
  * The page is a fictional demo: there is no backend, so reservations,
  * contact messages and diagnostics are simulated in the browser only.
+ *
+ * ---------------------------------------------------------------------------
+ * READING GUIDE (for someone coming from C++)
+ *
+ * TypeScript is JavaScript plus a static type system that exists ONLY at
+ * compile time. `tsc` checks the types, erases every annotation, and emits
+ * plain JavaScript — the emitted js/tutorias.js contains zero type info and
+ * runs identically in any browser. Nothing in the type system has a runtime
+ * cost or a runtime existence.
+ *
+ *   - `interface X { ... }`   — structural type declaration. Erased at
+ *                               compile. Objects match by shape, not by name.
+ *   - `x as T`                — type assertion. Zero runtime effect; it only
+ *                               silences/overrides the checker.
+ *   - `fn<T>(...)`            — a generic. The type argument is compile-time
+ *                               only; the emitted code is the plain call.
+ *   - `a ?? b`                — nullish coalescing: yields b iff a is null or
+ *                               undefined. Unlike ||, keeps 0/""/false.
+ *   - `a?.b`                  — optional chaining: evaluates to undefined if a
+ *                               is null/undefined instead of throwing.
+ *   - `const f = (x) => ...`  — arrow function: a function VALUE assigned to a
+ *                               const. Unlike `function`, it has no own `this`
+ *                               (this is captured from the enclosing scope).
+ *   - `el.addEventListener("click", f)` — registers f; the browser's event
+ *                               loop calls it later when a click is
+ *                               dispatched. Nothing runs at registration time.
+ *   - DOM queries return `| null` because the element may not exist; under
+ *                               `strict` TS forces you to handle the null case
+ *                               before dereferencing.
+ * ---------------------------------------------------------------------------
  */
 
+// An Immediately Invoked Function Expression: the outer parens turn the arrow
+// function into an expression and the trailing () calls it. Classic scripts
+// share one global scope, so this wrapper keeps every variable below private
+// to this file — no name leaks into (or collides with) window.
 (() => {
-  // --- Safe storage (falls back to memory if storage is blocked) -------------
+
+  // --- Safe storage ----------------------------------------------------------
+  // localStorage can throw a SecurityError (storage disabled, private mode,
+  // sandboxed iframe). The try/catch pairs below fall back to an in-memory
+  // Map so the page keeps working for the session.
+  //
+  // `new Map<string, string>()` — generic built-in: an ordered key→value
+  // collection; the <string, string> is a compile-time constraint only.
   const memStore = new Map<string, string>();
+
+  // Object literal with two method shorthand properties (equivalent to
+  // writing `get: function(k) {...}` but with no own `this`).
   const store = {
     get: (k: string) => {
+      // `: string` on the parameter is an erased annotation.
       try {
+        // window.localStorage.getItem returns `string | null`
+        // (null when the key is absent).
         return window.localStorage.getItem(k);
       } catch {
+        // `memStore.get(k)` is `string | undefined`; `?? null` converts
+        // the undefined case to null so the return type is `string | null`.
         return memStore.get(k) ?? null;
       }
     },
@@ -26,16 +75,35 @@
     },
   };
 
+  // `$` is a tiny alias for document.querySelector.
+  // `<T extends HTMLElement>` is a generic parameter constrained to subtypes
+  // of HTMLElement; `(sel: string): T | null` is the signature. The arrow body
+  // is the single expression returned. At runtime this is just
+  // `sel => document.querySelector(sel)` — generics and annotations erased.
   const $ = <T extends HTMLElement>(sel: string): T | null =>
     document.querySelector<T>(sel);
 
   // --- 1. Theme toggle ---------------------------------------------------------
   const themeBtn = $("#nx-theme");
+  // `(dark: boolean) => { ... }` — arrow function parameter with a
+  // compile-time type. The body uses `document.documentElement` (the <html>
+  // element) and `dataset`, a DOMStringMap that reflects `data-*` attributes:
+  // `dataset.theme = "dark"` writes the attribute `data-theme="dark"`; ""
+  // removes visual effect because the CSS only keys on [data-theme="dark"].
   const applyTheme = (dark: boolean) => {
     document.documentElement.dataset.theme = dark ? "dark" : "";
+    // `dark ? "☀️" : "🌙"` — ternary expression, same semantics as C++'s ?:.
+    // `themeBtn.textContent` — DOM property; assigning a string replaces all
+    // child text nodes of the button.
     if (themeBtn) themeBtn.textContent = dark ? "☀️" : "🌙";
   };
+  // store.get returns string | null; the `=== "dark"` comparison converts it
+  // to boolean, then applyTheme applies the persisted choice on page load.
   applyTheme(store.get("nexum-theme") === "dark");
+  // `themeBtn?.addEventListener` — optional call: registers the listener only
+  // if themeBtn is not null; if null the whole expression evaluates to
+  // undefined. The arrow closure captures `store` and `themeBtn` BY REFERENCE
+  // to their bindings (a closure keeps the lexical environment alive).
   themeBtn?.addEventListener("click", () => {
     const dark = document.documentElement.dataset.theme !== "dark";
     applyTheme(dark);
@@ -46,109 +114,103 @@
   const toggle = $("#nx-toggle");
   const links = $("#nx-links");
   toggle?.addEventListener("click", () => {
+    // classList is a DOMTokenList live view of the class attribute.
+    // .toggle("open") adds it if absent / removes it if present and RETURNS
+    // the resulting state as a boolean (per the DOM spec).
+    // `?.` on links: if links is null the expression is undefined; `?? false`
+    // supplies the default so `open` is always boolean.
     const open = links?.classList.toggle("open") ?? false;
+    // String(open) — global String() performs ToString coercion → "true"|"false".
     toggle.setAttribute("aria-expanded", String(open));
   });
+  // `links?.addEventListener("click", (e) => ...)` — `e` is inferred as the
+  // Event object the browser passes to listeners. `e.target` is the innermost
+  // element the click hit (EventTarget | null; may be null or a non-Element,
+  // hence the `as HTMLElement` assertion below).
   links?.addEventListener("click", (e) => {
     if ((e.target as HTMLElement).tagName === "A") links.classList.remove("open");
   });
 
+  // Scroll-spy: on every scroll event, find the last section whose top edge
+  // has scrolled past a 120px line under the navbar and mark its link active.
   const spyIds = ["inicio", "materias", "tutores", "precios", "recursos", "faq"];
   const spyLinks = document.querySelectorAll<HTMLAnchorElement>("[data-nx]");
   const spy = () => {
     let current = "inicio";
+    // for...of iterates the array's values (like C++11 range-for).
     for (const id of spyIds) {
+      // getElementById returns HTMLElement | null.
       const el = document.getElementById(id);
+      // getBoundingClientRect().top is the element's distance in px below the
+      // top of the viewport; <= 120 means "its start passed the navbar".
       if (el && el.getBoundingClientRect().top <= 120) current = id;
     }
+    // spyLinks is a NodeList; .forEach iterates it. `a.dataset.nx` reads the
+    // data-nx attribute (string | undefined).
     spyLinks.forEach((a) =>
       a.classList.toggle("nx-active", a.dataset.nx === current)
+      // classList.toggle(name, force): adds when force is true, removes when
+      // false — a two-state setter in one call.
     );
   };
+  // `{ passive: true }` tells the browser the listener will never call
+  // preventDefault(), letting it scroll without waiting for our callback.
   window.addEventListener("scroll", spy, { passive: true });
   spy();
 
   // --- 3. Animated counters -----------------------------------------------------
+  // Elements with data-count animate from 0 to that value when revealed.
   const counters = document.querySelectorAll<HTMLElement>("[data-count]");
   const animateCount = (el: HTMLElement) => {
+    // dataset.count is `string | undefined`; `?? "0"` gives a default.
+    // parseFloat parses a leading numeric prefix, returning a JS number
+    // (IEEE-754 double — JS has no int/float distinction).
     const target = parseFloat(el.dataset.count ?? "0");
+    // parseInt's second argument is the radix; 10 = decimal.
     const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+    // performance.now(): high-resolution monotonic timestamp in ms (never
+    // goes backwards, unlike Date which follows the wall clock).
     const t0 = performance.now();
     const dur = 1200;
     const step = (t: number) => {
+      // p is progress 0..1; Math.min clamps the upper bound.
       const p = Math.min(1, (t - t0) / dur);
+      // toFixed(n) returns a STRING with n decimals.
+      // `+` here is string concatenation because the left operand is a string.
       el.textContent = (target * p).toFixed(decimals) + (p === 1 && target > 50 ? "+" : "");
+      // requestAnimationFrame schedules `step` before the next repaint with a
+      // new timestamp — a frame-synced animation loop driven by the browser,
+      // not a busy loop.
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
   };
 
-  // --- 4. Reveal on scroll ------------------------------------------------------
-  const revealEls = document.querySelectorAll<HTMLElement>(".nx-reveal");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (!en.isIntersecting) return;
-          en.target.classList.add("visible");
-          io.unobserve(en.target);
-          if (en.target instanceof HTMLElement && en.target.dataset.count) {
-            animateCount(en.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    revealEls.forEach((el) => io.observe(el));
-    counters.forEach((el) => io.observe(el));
-    const bar = $("#prog-bar");
-    if (bar) {
-      io.observe(bar.parentElement ?? bar);
-    }
-  } else {
-    revealEls.forEach((el) => el.classList.add("visible"));
-    counters.forEach(animateCount);
-  }
-
-  // Progress bar animates when visible
-  const progCard = $("#prog-bar")?.closest(".nx-card");
-  if (progCard && "IntersectionObserver" in window) {
-    const io2 = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) {
-          const bar = $("#prog-bar");
-          const pct = $("#prog-pct");
-          if (bar) bar.style.width = `${bar.dataset.w ?? 0}%`;
-          if (pct) pct.textContent = `${bar?.dataset.w ?? 0}%`;
-          io2.unobserve(en.target);
-        }
-      });
-    });
-    io2.observe(progCard);
-  } else {
-    const bar = $("#prog-bar");
-    const pct = $("#prog-pct");
-    if (bar) bar.style.width = `${bar.dataset.w ?? 0}%`;
-    if (pct) pct.textContent = `${bar?.dataset.w ?? 0}%`;
-  }
-
   // --- 5. Modal helper ------------------------------------------------------------
   const modal = $("#nx-modal");
   const modalContent = $("#nx-modal-content");
   const openModal = (html: string) => {
+    // innerHTML setter runs the HTML parser on the string and replaces all
+    // children of the element with the parsed nodes.
     if (modalContent) modalContent.innerHTML = html;
     modal?.classList.add("open");
   };
   const closeModal = () => modal?.classList.remove("open");
   $("#nx-modal-close")?.addEventListener("click", closeModal);
+  // Clicking the dimmed backdrop (the modal root itself) closes it; clicks on
+  // children bubble up but have a different target, so they're ignored.
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
+  // Escape key listener on the whole document.
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
 
   // --- 6. Data --------------------------------------------------------------------
+  // `interface` declares a structural type: any object with these properties
+  // of these types is assignable to Subject. It exists only for the checker —
+  // `tsc` emits nothing for it. `string[]` is an array of strings.
   interface Subject {
     name: string;
     desc: string;
@@ -156,6 +218,8 @@
     topics: string[];
     icon: string;
   }
+  // Record<K, V> is a built-in mapped type: an object whose keys are K and
+  // values V — the type-level version of a string-keyed dictionary.
   const ICONS: Record<string, string> = {
     sum: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 4H6l7 8-7 8h12"/></svg>',
     deriv: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18c4-10 8-14 9-14s5 4 9 14"/></svg>',
@@ -165,6 +229,7 @@
     alg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4h10M7 20h10M17 4L7 20"/></svg>',
   };
 
+  // `Subject[]` — array whose elements must match the Subject shape.
   const SUBJECTS: Subject[] = [
     { name: "Matemáticas", desc: "Álgebra, ecuaciones, funciones, polinomios y problemas matemáticos.", level: "Todos los niveles", icon: "sum",
       topics: ["Operaciones con polinomios", "Ecuaciones de primer y segundo grado", "Funciones y sus gráficas", "Problemas verbales", "Factorización", "Fracciones y porcentajes"] },
@@ -203,6 +268,12 @@
   // --- 7. Subjects grid + topics modal -------------------------------------------
   const subjectGrid = $("#nx-subjects");
   if (subjectGrid) {
+    // Array.prototype.map runs the callback on every element and returns a new
+    // array of results; .join("") concatenates them into one string. The
+    // callback `(s, i) => ...` receives the element and its index.
+    //
+    // The backtick `...` string is a TEMPLATE LITERAL: it may span lines and
+    // `${expr}` embeds the expression's ToString result into the string.
     subjectGrid.innerHTML = SUBJECTS.map(
       (s, i) => `
       <div class="nx-card nx-subject nx-reveal">
@@ -213,9 +284,15 @@
         <button class="nx-btn nx-btn-ghost nx-btn-sm" data-subject="${i}">Ver temas</button>
       </div>`
     ).join("");
+    // Event delegation: ONE listener on the grid handles every card button.
+    // Clicks BUBBLE from the target up through ancestors; e.target is the
+    // deepest element hit, and .closest("[data-subject]") walks upward to the
+    // nearest matching ancestor (returns null if none — e.g. a click on a gap).
     subjectGrid.addEventListener("click", (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-subject]");
       if (!btn) return;
+      // dataset.subject is the string in data-subject; Number() coerces
+      // "3" → 3. Arrays are indexed with it.
       const s = SUBJECTS[Number(btn.dataset.subject)];
       openModal(`
         <h3>${s.name}</h3>
@@ -227,6 +304,7 @@
   }
 
   // --- 8. Levels -------------------------------------------------------------------
+  // Nested object literal type: each level key maps to { text, chips[] }.
   const LEVEL_REC: Record<string, { text: string; chips: string[] }> = {
     secundaria: { text: "Para secundaria recomendamos reforzar:", chips: ["Matemáticas", "Álgebra", "Geometría"] },
     bachillerato: { text: "Para bachillerato recomendamos:", chips: ["Álgebra", "Trigonometría", "Física", "Geometría"] },
@@ -237,6 +315,8 @@
   $("#nx-levels")?.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-level]");
     if (!btn) return;
+    // querySelectorAll without a type arg returns NodeListOf<Element>;
+    // classList is available on every Element so no generic is needed.
     document.querySelectorAll(".nx-level-btn").forEach((b) => b.classList.remove("sel"));
     btn.classList.add("sel");
     const rec = LEVEL_REC[btn.dataset.level ?? ""];
@@ -247,6 +327,8 @@
 
   // --- 9. Tutors -------------------------------------------------------------------
   const tutorGrid = $("#nx-tutors");
+  // String.prototype.repeat(n) returns the string repeated n times.
+  // "★".repeat(4) + "☆".repeat(1) → "★★★★☆".
   const stars = (r: number) => "★".repeat(Math.round(r)) + "☆".repeat(5 - Math.round(r));
   if (tutorGrid) {
     tutorGrid.innerHTML = TUTORS.map(
@@ -276,15 +358,25 @@
         </ul>
         <button class="nx-btn nx-btn-primary nx-btn-sm" style="margin-top:20px" id="tmodal-book">Reservar con este tutor</button>
       `);
+      // The button above was just inserted by innerHTML, so it exists now and
+      // can be wired up directly.
       $("#tmodal-book")?.addEventListener("click", () => {
         closeModal();
         const sub = $("#bk-subject") as HTMLSelectElement | null;
         const tut = $("#bk-tutor") as HTMLSelectElement | null;
         if (sub && tut) {
           sub.value = t.subjects[0];
+          // dispatchEvent fires listeners synchronously, right now — this
+          // makes the booking form behave as if the user picked the subject
+          // (refills the tutor list) without needing a real click.
           sub.dispatchEvent(new Event("change"));
           tut.value = t.name;
+          // The synthetic change above already ran syncSummary() before the
+          // tutor was assigned, so refresh it once more here.
+          syncSummary();
         }
+        // scrollIntoView with behavior:"smooth" asks the browser to animate
+        // the scroll to the booking section.
         document.getElementById("reserva")?.scrollIntoView({ behavior: "smooth" });
       });
     });
@@ -297,6 +389,8 @@
   const bkTutor = $("#bk-tutor") as HTMLSelectElement | null;
 
   if (bkSubject) {
+    // `<option>` strings built with map+join, then assigned to innerHTML to
+    // become real option elements.
     bkSubject.innerHTML =
       '<option value="">Elige una…</option>' +
       SUBJECTS.map((s) => `<option>${s.name}</option>`).join("");
@@ -304,6 +398,10 @@
   const fillTutors = () => {
     if (!bkTutor || !bkSubject) return;
     const sub = bkSubject.value;
+    // Array.prototype.filter returns a new array with only the elements for
+    // which the callback returned true.
+    // `sub ? A : B` — a non-empty string is truthy in JS, so this selects the
+    // filtered list when a subject was chosen, otherwise all tutors.
     const list = sub
       ? TUTORS.filter((t) => t.subjects.includes(sub))
       : TUTORS;
@@ -317,18 +415,27 @@
   });
   fillTutors();
 
+  // Helper reading a field's current `.value` (always a string) or "".
+  // The union `HTMLInputElement | HTMLSelectElement | null` means the value
+  // may be any of those types; `?.` yields undefined on null, `?? ""` maps it.
   const bkVal = (id: string) =>
     (document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null)?.value ?? "";
 
   const bookingPrice = (): number | null => {
     const dur = Number(bkVal("bk-duration"));
+    // `!dur` is true when dur is 0 or NaN — Number("") === 0, and both are
+    // falsy. NaN is also falsy, which covers unparseable input.
     if (!dur) return null;
     let price = dur * PRICE_PER_MIN;
     if (bkVal("bk-mode") === "Presencial") price *= 1.1;
+    // Round to the nearest multiple of 10 (pesos).
     return Math.round(price / 10) * 10;
   };
 
   const syncSummary = () => {
+    // Nested arrow function `set` is a closure over nothing mutable — just a
+    // local shorthand. It writes text, or "—" when v is an empty string
+    // (`v || "—"` uses truthiness: "" is falsy).
     const set = (id: string, v: string) => {
       const el = document.getElementById(id);
       if (el) el.textContent = v || "—";
@@ -342,36 +449,58 @@
     set("sm-time", bkVal("bk-time"));
     const price = bookingPrice();
     const priceEl = $("#sm-price");
+    // toLocaleString("es-DO") formats the number with locale separators
+    // (2500 → "2,500").
     if (priceEl) priceEl.textContent = price ? `RD$${price.toLocaleString("es-DO")}` : "RD$ —";
   };
+  // "change" fires when a control commits a new value (select choice, date
+  // pick, input blur); "input" fires on every keystroke. Listening to both
+  // keeps the summary live.
   bkForm?.addEventListener("change", syncSummary);
   bkForm?.addEventListener("input", syncSummary);
 
-  // Min date = tomorrow
+  // Min date = tomorrow. Build YYYY-MM-DD from LOCAL date components —
+  // toISOString() would convert to UTC and, in UTC−4 evenings, roll the
+  // calendar day forward, wrongly blocking tomorrow.
   const dateInput = document.getElementById("bk-date") as HTMLInputElement | null;
+  let minDateStr = "";
   if (dateInput) {
-    const t = new Date();
-    t.setDate(t.getDate() + 1);
-    dateInput.min = t.toISOString().split("T")[0];
+    const t = new Date();          // now, in the user's local time
+    t.setDate(t.getDate() + 1);    // advance one local calendar day
+    const pad = (n: number) => String(n).padStart(2, "0");
+    minDateStr = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+    // The `min` attribute of a date input compares against the entered
+    // date — but only natively; we also enforce it in submit validation.
+    dateInput.min = minDateStr;
   }
 
+  // Regular expression literals: the /.../ syntax creates a RegExp object.
+  // .test(s) returns whether the pattern matches anywhere in s.
+  //   EMAIL: one-or-more non-space/@ chars, "@", more chars, ".", 2+ chars.
+  //   PHONE: starts with + ( ) or digit, then 7+ phone chars.
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const PHONE_RE = /^[+()0-9][0-9()\-\s]{6,}$/;
   const bkErr = (id: string, msg: string) => {
+    // The attribute selector [data-err="id"] finds the error slot.
     const slot = document.querySelector(`[data-err="${id}"]`);
     const field = document.getElementById(id);
     if (slot) slot.textContent = msg;
     if (field) field.classList.toggle("invalid", msg !== "");
   };
 
+  // Clear a field's error as soon as the user edits it.
   bkForm?.addEventListener("input", (e) => {
     const id = (e.target as HTMLElement).id;
     if (id) bkErr(id, "");
   });
 
   bkForm?.addEventListener("submit", (e) => {
+    // preventDefault() cancels the browser's default action — for submit,
+    // reloading the page and navigating to the form's action URL. The event
+    // still propagates, but no navigation occurs.
     e.preventDefault();
     let ok = true;
+    // Local helper: marks the field invalid and records failure.
     const req = (id: string, msg: string) => {
       if (!bkVal(id)) {
         bkErr(id, msg);
@@ -383,6 +512,12 @@
     req("bk-mode", "Elige la modalidad.");
     req("bk-duration", "Elige la duración.");
     req("bk-date", "Elige una fecha.");
+    // ISO date strings compare correctly with < ; reject anything before the
+    // computed local minimum (the `min` attribute alone doesn't block submit).
+    if (bkVal("bk-date") && minDateStr && bkVal("bk-date") < minDateStr) {
+      bkErr("bk-date", "Elige una fecha futura.");
+      ok = false;
+    }
     req("bk-time", "Elige una hora.");
     if (bkVal("bk-name").length < 2) { bkErr("bk-name", "Escribe tu nombre."); ok = false; }
     if (bkVal("bk-last").length < 2) { bkErr("bk-last", "Escribe tu apellido."); ok = false; }
@@ -391,6 +526,8 @@
     req("bk-level", "Elige tu nivel académico.");
     req("bk-topic", "Cuéntanos qué tema necesitas.");
     if (!ok) return;
+    // `hidden` is a DOM boolean property reflecting the HTML hidden attribute;
+    // true hides the element entirely (like display:none).
     if (bkForm) bkForm.hidden = true;
     document.querySelector<HTMLElement>(".nx-summary")?.setAttribute("hidden", "");
     const s = $("#bk-success");
@@ -399,6 +536,7 @@
       s.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   });
+  // "Hacer otra reserva": reset the form and bring the form + summary back.
   $("#bk-again")?.addEventListener("click", () => {
     bkForm?.reset();
     fillTutors();
@@ -411,6 +549,7 @@
 
   // --- 11. Calculator ----------------------------------------------------------------
   const calc = () => {
+    // `Number(x) || 0` — if coercion yields 0 or NaN (both falsy), use 0.
     const n = Number(bkVal("calc-n")) || 0;
     const min = Number(bkVal("calc-min")) || 0;
     const mode = bkVal("calc-mode");
@@ -422,6 +561,7 @@
     if (out) out.textContent = `RD$${total.toLocaleString("es-DO")}`;
     if (desc) desc.textContent = `${n} sesiones × ${min} minutos · ${bkVal("calc-subject")}`;
   };
+  // forEach over a plain array of id strings; `?.` skips ids not in the page.
   ["calc-n", "calc-min", "calc-mode", "calc-subject"].forEach((id) =>
     document.getElementById(id)?.addEventListener("change", calc)
   );
@@ -444,6 +584,9 @@
     const q = QUIZ[quizIdx];
     const stepEl = $("#quiz-step"), qEl = $("#quiz-q"), optsEl = $("#quiz-opts");
     if (!qEl || !optsEl || !stepEl) return;
+    // Re-render always clears the "answered" marker so a repeated attempt
+    // (via Repetir + Comenzar) accepts answers again.
+    delete optsEl.dataset.done;
     stepEl.textContent = `Pregunta ${quizIdx + 1} de ${QUIZ.length} · ${q.topic}`;
     qEl.textContent = q.q;
     optsEl.innerHTML = q.opts
@@ -453,10 +596,15 @@
 
   $("#quiz-opts")?.addEventListener("click", (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(".nx-quiz-opt");
+    // Guard: ignore clicks after an answer was recorded for this question
+    // (dataset.done set) or clicks that miss a button entirely.
     if (!btn || btn.parentElement?.dataset.done) return;
     const q = QUIZ[quizIdx];
     const i = Number(btn.dataset.i);
+    // `!` after parentElement is TS's NON-NULL ASSERTION: compile-time only —
+    // it tells the checker "this is not null" (we just checked btn exists).
     btn.parentElement!.dataset.done = "1";
+    // Highlight the correct option green for feedback.
     document.querySelectorAll<HTMLButtonElement>(".nx-quiz-opt").forEach((b, bi) => {
       if (bi === q.ok) b.classList.add("correct");
     });
@@ -464,18 +612,24 @@
       btn.classList.add("wrong");
       quizWrong.push(q.topic);
     }
+    // setTimeout(cb, 700) schedules cb on the event loop after ~700ms — the
+    // code keeps running; the delay only defers the callback (like a timer
+    // queue, not a sleep).
     setTimeout(() => {
       quizIdx++;
       if (quizIdx < QUIZ.length) {
         showQ();
-        delete (document.getElementById("quiz-opts") as HTMLElement).dataset.done;
       } else {
         const score = QUIZ.length - quizWrong.length;
         const level = score >= 4 ? "Nivel avanzado" : score >= 3 ? "Nivel intermedio" : "Nivel inicial";
+        // `[...new Set(quizWrong)]`: Set removes duplicates; the spread `...`
+        // expands its elements into a fresh array (Set is iterable).
         const weak = [...new Set(quizWrong)];
         if (quizBody) quizBody.hidden = true;
         if (quizResult) {
           quizResult.hidden = false;
+          // Nested template literals inside ${ } are legal — the parser matches
+          // backtick pairs by structure.
           quizResult.innerHTML = `
             <h3>Resultado: ${level}</h3>
             <p style="color:var(--nx-muted);margin:10px 0 16px">${
@@ -509,6 +663,7 @@
   });
 
   // --- 13. Resources --------------------------------------------------------------------
+  // Inline object type in the array annotation: { name, content: {...}[] }[].
   const RESOURCES: { name: string; content: { label: string; val: string }[] }[] = [
     { name: "Fórmulas de derivadas", content: [
       { label: "Potencia", val: "d/dx xⁿ = n·xⁿ⁻¹" },
@@ -598,6 +753,7 @@
 
   // --- 14. Exercise generator -----------------------------------------------------------
   interface Ex { e: string; hint: string; sol: string; }
+  // A two-level dictionary: BANK[subject][difficulty] → array of exercises.
   const BANK: Record<string, Record<string, Ex[]>> = {
     algebra: {
       facil: [
@@ -644,10 +800,15 @@
   };
   const genCard = $("#gen-card");
   const genNew = () => {
+    // `|| "algebra"` — if the select is empty, falsy "" falls back.
     const s = bkVal("gen-subject") || "algebra";
     const d = bkVal("gen-diff") || "intermedio";
+    // `BANK[s]?.[d]` — optional chaining on computed access: if BANK has no
+    // key s, the expression is undefined instead of throwing on [d].
     const pool = BANK[s]?.[d] ?? [];
     if (!pool.length) return;
+    // Math.random() returns a pseudo-random double in [0,1); floor gives a
+    // valid index.
     const ex = pool[Math.floor(Math.random() * pool.length)];
     const tag = $("#gen-tag"), expr = $("#gen-expr"), h = $("#gen-hint-out"), so = $("#gen-sol-out");
     const names: Record<string, string> = { algebra: "Álgebra", calculo: "Cálculo", trigonometria: "Trigonometría" };
@@ -665,7 +826,9 @@
 
   // --- 15. Domina el concepto (x² slider) --------------------------------------------------
   const slider = document.getElementById("nx-slider") as HTMLInputElement | null;
+  // "input" fires on every slider move.
   slider?.addEventListener("input", () => {
+    // slider.value is a string; parseFloat converts it to a number.
     const x = parseFloat(slider.value);
     const y = x * x;
     const xEl = $("#nx-x"), yEl = $("#nx-y"), pt = $("#nx-pt");
@@ -674,6 +837,8 @@
     // Map x in [-4,4] to svg coords: curve goes through (100,140) vertex
     // svg: x_pix = 100 + x*20, y_pix = 140 - y*10 (clamped)
     if (pt) {
+      // setAttribute writes a DOM attribute directly (cx/cy position the
+      // <circle> on the SVG curve).
       pt.setAttribute("cx", String(100 + x * 20));
       pt.setAttribute("cy", String(Math.max(10, 140 - y * 10)));
     }
@@ -730,6 +895,7 @@
     if (ctVal("ct-phone") && !PHONE_RE.test(ctVal("ct-phone"))) { ctErr("ct-phone", "Ese número no parece correcto."); ok = false; }
     if (ctVal("ct-msg").length < 10) { ctErr("ct-msg", "Cuéntanos un poco más (mínimo 10 caracteres)."); ok = false; }
     if (!ok) return;
+    // Replace the entire form with the simulated-confirmation markup.
     ctForm.innerHTML = `
       <div class="nx-success">
         <div class="ok">✓</div>
@@ -741,4 +907,69 @@
   // --- 18. Footer year -----------------------------------------------------------------------
   const yearEl = $("#nx-year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  // --- 19. Reveal on scroll + progress bar ----------------------------------------------
+  // IMPORTANT: this block runs LAST so the generated grids (subjects, tutors,
+  // resources) already exist in the DOM — querySelectorAll takes a one-time
+  // static snapshot, it does not update as nodes are added later.
+  //
+  // IntersectionObserver is an async browser API: after observe(el), the
+  // browser calls our callback on a later task whenever each element's
+  // intersection ratio with the viewport crosses `threshold` (0.12 = 12%).
+  // This avoids scroll-event polling and is far cheaper.
+  const revealEls = document.querySelectorAll<HTMLElement>(".nx-reveal");
+  if ("IntersectionObserver" in window) {
+    // `"X" in window` — property existence check on the global object; true
+    // when the browser implements the API (feature detection).
+    const io = new IntersectionObserver(
+      (entries) => {
+        // `entries` is a batched array of IntersectionObserverEntry.
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          en.target.classList.add("visible");
+          // unobserve: stop watching — each element reveals only once.
+          io.unobserve(en.target);
+          // `instanceof HTMLElement` is a runtime prototype-chain check; the
+          // counter elements also carry data-count to trigger the number anim.
+          if (en.target instanceof HTMLElement && en.target.dataset.count) {
+            animateCount(en.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach((el) => io.observe(el));
+    counters.forEach((el) => io.observe(el));
+    const bar = $("#prog-bar");
+    if (bar) {
+      io.observe(bar.parentElement ?? bar);
+    }
+  } else {
+    // No observer support: mark everything visible and animate immediately.
+    revealEls.forEach((el) => el.classList.add("visible"));
+    counters.forEach(animateCount);
+  }
+
+  // Progress bar animates when its card becomes visible.
+  const progCard = $("#prog-bar")?.closest(".nx-card");
+  if (progCard && "IntersectionObserver" in window) {
+    const io2 = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          const bar = $("#prog-bar");
+          const pct = $("#prog-pct");
+          // element.style writes inline CSS; data-w holds the target width %.
+          if (bar) bar.style.width = `${bar.dataset.w ?? 0}%`;
+          if (pct) pct.textContent = `${bar?.dataset.w ?? 0}%`;
+          io2.unobserve(en.target);
+        }
+      });
+    });
+    io2.observe(progCard);
+  } else {
+    const bar = $("#prog-bar");
+    const pct = $("#prog-pct");
+    if (bar) bar.style.width = `${bar.dataset.w ?? 0}%`;
+    if (pct) pct.textContent = `${bar?.dataset.w ?? 0}%`;
+  }
 })();
