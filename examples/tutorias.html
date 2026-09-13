@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUM ACADEMY | Tutorías de Matemáticas, Cálculo y Física</title>
+  <meta name="description" content="Aprende matemáticas, cálculo, álgebra y física con tutorías personalizadas, recursos educativos y herramientas interactivas." />
+  <meta property="og:title" content="NEXUM ACADEMY | Entiende. Practica. Domina." />
+  <meta property="og:description" content="Tutorías personalizadas de matemáticas y ciencias, presenciales y virtuales." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="../img/tutorias/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tutorias.css" />
+</head>
+<body>
+
+  <!-- ===== Barra de navegación ===== -->
+  <header class="nx-nav">
+    <div class="nx-container">
+      <a class="nx-brand" href="#inicio">
+        <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(255,255,255,0.08)"/><path d="M16 46V18l20 28V18" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="18" r="3.5" fill="#8b5cf6"/><circle cx="36" cy="18" r="3.5" fill="#38bdf8"/><circle cx="48" cy="32" r="3.5" fill="#3b82f6"/><path d="M36 46h14" stroke="#8b5cf6" stroke-width="5" stroke-linecap="round"/></svg>
+        NEXUM<em>ACADEMY</em>
+      </a>
+      <ul class="nx-links" id="nx-links">
+        <li><a href="#inicio" data-nx="inicio">Inicio</a></li>
+        <li><a href="#materias" data-nx="materias">Materias</a></li>
+        <li><a href="#tutores" data-nx="tutores">Tutores</a></li>
+        <li><a href="#precios" data-nx="precios">Precios</a></li>
+        <li><a href="#recursos" data-nx="recursos">Recursos</a></li>
+        <li><a href="#faq" data-nx="faq">FAQ</a></li>
+        <li><a href="#reserva" class="nx-cta-nav">Reservar tutoría</a></li>
+      </ul>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="nx-theme-btn" id="nx-theme" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">🌙</button>
+        <button class="nx-toggle" id="nx-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="nx-hero" id="inicio">
+    <div class="nx-container">
+      <div>
+        <span class="nx-kicker">Plataforma de tutorías</span>
+        <h1>NEXUM ACADEMY</h1>
+        <p class="slogan">Entiende. Practica. Domina.</p>
+        <p class="lead">Tutorías personalizadas para convertir los problemas difíciles en conceptos que realmente puedes entender.</p>
+        <div class="nx-hero-actions">
+          <a class="nx-btn nx-btn-primary" href="#reserva">Reservar una tutoría</a>
+          <a class="nx-btn nx-btn-ghost" href="#materias">Explorar materias</a>
+        </div>
+        <div class="nx-stats">
+          <div><b data-count="120">0</b><span>estudiantes atendidos</span></div>
+          <div><b data-count="480">0</b><span>sesiones completadas</span></div>
+          <div><b data-count="4.9" data-decimals="1">0</b><span>calificación promedio</span></div>
+        </div>
+      </div>
+      <img class="nx-hero-img" src="../img/tutorias/nexum-hero.jpg" alt="Ilustración de funciones, fórmulas y gráficas matemáticas" />
+    </div>
+  </section>
+
+  <!-- ===== Por qué NEXUM ===== -->
+  <section class="nx-section" id="por-que">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Por qué NEXUM</span>
+        <h2>Más que una clase, un sistema</h2>
+      </div>
+      <div class="nx-grid nx-grid-5">
+        <div class="nx-card nx-reveal">
+          <div class="nx-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg></div>
+          <h3>Tutorías personalizadas</h3>
+          <p>Cada sesión se adapta al nivel y las dificultades del estudiante.</p>
+        </div>
+        <div class="nx-card nx-reveal">
+          <div class="nx-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4h20v13H2z"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+          <h3>Explicaciones claras</h3>
+          <p>No memorizamos procedimientos: entendemos por qué funcionan.</p>
+        </div>
+        <div class="nx-card nx-reveal">
+          <div class="nx-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 3l4 4-4 4"/><path d="M21 7H8"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h13"/></svg></div>
+          <h3>Modalidad flexible</h3>
+          <p>Clases virtuales o presenciales, según te quede mejor.</p>
+        </div>
+        <div class="nx-card nx-reveal">
+          <div class="nx-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/></svg></div>
+          <h3>Material complementario</h3>
+          <p>Ejercicios, resúmenes y práctica después de cada sesión.</p>
+        </div>
+        <div class="nx-card nx-reveal">
+          <div class="nx-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+          <h3>Seguimiento académico</h3>
+          <p>Registramos tu progreso y detectamos los temas a reforzar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Materias ===== -->
+  <section class="nx-section alt" id="materias">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Materias</span>
+        <h2>Encuentra la materia que necesitas dominar</h2>
+      </div>
+      <div class="nx-grid nx-grid-3" id="nx-subjects"><!-- se genera desde tutorias.js --></div>
+    </div>
+  </section>
+
+  <!-- ===== Niveles ===== -->
+  <section class="nx-section" id="niveles">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Niveles</span>
+        <h2>¿En qué punto estás?</h2>
+      </div>
+      <div class="nx-levels" id="nx-levels">
+        <button class="nx-level-btn" data-level="secundaria">Secundaria</button>
+        <button class="nx-level-btn" data-level="bachillerato">Bachillerato</button>
+        <button class="nx-level-btn" data-level="universidad">Universidad</button>
+        <button class="nx-level-btn" data-level="examen">Preparación para exámenes</button>
+      </div>
+      <div class="nx-level-out" id="nx-level-out">
+        <p>Elige tu nivel y te mostramos qué materias te convienen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tutores ===== -->
+  <section class="nx-section alt" id="tutores">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">El equipo</span>
+        <h2>Conoce a nuestros tutores</h2>
+      </div>
+      <div class="nx-grid nx-grid-4" id="nx-tutors"><!-- se genera desde tutorias.js --></div>
+    </div>
+  </section>
+
+  <!-- ===== Domina el concepto ===== -->
+  <section class="nx-section" id="juega">
+    <div class="nx-container">
+      <div class="nx-play nx-reveal">
+        <div>
+          <h3>Domina el concepto</h3>
+          <p>Arrastra el control para modificar x y observa cómo cambia x² en la gráfica.</p>
+          <div class="expr">f(x) = x²</div>
+          <input type="range" id="nx-slider" min="-4" max="4" step="0.5" value="2" aria-label="Valor de x" />
+          <div class="val">x = <b id="nx-x">2</b> · f(x) = <b id="nx-y">4</b></div>
+        </div>
+        <svg viewBox="0 0 200 160" role="img" aria-label="Gráfica de la función x al cuadrado">
+          <line class="axis" x1="10" y1="140" x2="190" y2="140"/>
+          <line class="axis" x1="100" y1="10" x2="100" y2="150"/>
+          <path class="curve" d="M 20 10 Q 100 260 180 10" fill="none"/>
+          <circle class="pt" id="nx-pt" cx="140" cy="96.25" r="6"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Reserva ===== -->
+  <section class="nx-section alt" id="reserva">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Reserva</span>
+        <h2>Reserva tu próxima tutoría</h2>
+      </div>
+      <div class="nx-booking">
+        <form class="nx-card" id="nx-book-form" novalidate>
+          <div class="nx-form-grid">
+            <div class="nx-field">
+              <label for="bk-subject">Materia *</label>
+              <select id="bk-subject" name="bk-subject"><option value="">Elige una…</option></select>
+              <span class="nx-err" data-err="bk-subject"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-tutor">Tutor *</label>
+              <select id="bk-tutor" name="bk-tutor"><option value="">Elige primero la materia</option></select>
+              <span class="nx-err" data-err="bk-tutor"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-mode">Modalidad *</label>
+              <select id="bk-mode" name="bk-mode">
+                <option value="">Elige una…</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Presencial">Presencial</option>
+              </select>
+              <span class="nx-err" data-err="bk-mode"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-duration">Duración *</label>
+              <select id="bk-duration" name="bk-duration">
+                <option value="">Elige una…</option>
+                <option value="30">30 minutos</option>
+                <option value="60">60 minutos</option>
+                <option value="90">90 minutos</option>
+                <option value="120">120 minutos</option>
+              </select>
+              <span class="nx-err" data-err="bk-duration"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-date">Fecha *</label>
+              <input type="date" id="bk-date" name="bk-date" />
+              <span class="nx-err" data-err="bk-date"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-time">Hora *</label>
+              <select id="bk-time" name="bk-time">
+                <option value="">Elige una…</option>
+                <option>8:00 AM</option><option>10:00 AM</option><option>12:00 PM</option>
+                <option>2:00 PM</option><option>4:00 PM</option><option>6:00 PM</option>
+              </select>
+              <span class="nx-err" data-err="bk-time"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-name">Nombre *</label>
+              <input type="text" id="bk-name" name="bk-name" placeholder="Camila" />
+              <span class="nx-err" data-err="bk-name"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-last">Apellido *</label>
+              <input type="text" id="bk-last" name="bk-last" placeholder="García" />
+              <span class="nx-err" data-err="bk-last"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-email">Correo electrónico *</label>
+              <input type="email" id="bk-email" name="bk-email" placeholder="tu@correo.com" />
+              <span class="nx-err" data-err="bk-email"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-phone">Teléfono</label>
+              <input type="tel" id="bk-phone" name="bk-phone" placeholder="+1 (809) 000-0000" />
+              <span class="nx-err" data-err="bk-phone"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-level">Nivel académico *</label>
+              <select id="bk-level" name="bk-level">
+                <option value="">Elige uno…</option>
+                <option>Secundaria</option><option>Bachillerato</option>
+                <option>Universidad</option><option>Preparación para exámenes</option>
+              </select>
+              <span class="nx-err" data-err="bk-level"></span>
+            </div>
+            <div class="nx-field">
+              <label for="bk-topic">Tema que necesitas *</label>
+              <input type="text" id="bk-topic" name="bk-topic" placeholder="Ej. derivadas de funciones" />
+              <span class="nx-err" data-err="bk-topic"></span>
+            </div>
+            <div class="nx-field full">
+              <label for="bk-notes">Comentario adicional</label>
+              <textarea id="bk-notes" name="bk-notes" rows="3" placeholder="Algo más que debamos saber…"></textarea>
+            </div>
+          </div>
+        </form>
+        <div class="nx-card nx-summary">
+          <h3>Tu reserva</h3>
+          <dl>
+            <dt>Materia:</dt><dd id="sm-subject">—</dd>
+            <dt>Tutor:</dt><dd id="sm-tutor">—</dd>
+            <dt>Modalidad:</dt><dd id="sm-mode">—</dd>
+            <dt>Duración:</dt><dd id="sm-duration">—</dd>
+            <dt>Fecha:</dt><dd id="sm-date">—</dd>
+            <dt>Hora:</dt><dd id="sm-time">—</dd>
+            <dt>Precio:</dt><dd class="price" id="sm-price">RD$ —</dd>
+          </dl>
+          <button class="nx-btn nx-btn-primary" id="bk-confirm" type="submit" form="nx-book-form" style="width:100%">Confirmar reserva</button>
+        </div>
+      </div>
+      <div class="nx-card nx-success" id="bk-success" hidden>
+        <div class="ok">✓</div>
+        <h3>¡Reserva realizada correctamente!</h3>
+        <p style="color:var(--nx-muted);margin-top:8px;">Te contactaremos para confirmar los detalles. (Esta es una página de muestra: la reserva es una simulación.)</p>
+        <button class="nx-btn nx-btn-ghost" id="bk-again" style="margin-top:18px">Hacer otra reserva</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Precios ===== -->
+  <section class="nx-section" id="precios">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Precios</span>
+        <h2>Planes diseñados para diferentes necesidades</h2>
+        <p>Todos los precios en pesos dominicanos (RD$).</p>
+      </div>
+      <div class="nx-grid nx-grid-4">
+        <div class="nx-card nx-price nx-reveal">
+          <h3>Sesión individual</h3>
+          <div class="amount">RD$500 <small>· 60 min</small></div>
+          <ul><li>1 tutoría</li><li>Material de práctica</li><li>Sin compromiso</li></ul>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+        </div>
+        <div class="nx-card nx-price featured nx-reveal">
+          <span class="nx-badge">Más elegido</span>
+          <h3>Plan Básico</h3>
+          <div class="amount">RD$1,800</div>
+          <ul><li>4 tutorías de 60 minutos</li><li>Material complementario</li><li>Seguimiento básico</li></ul>
+          <a class="nx-btn nx-btn-primary nx-btn-sm" href="#reserva">Elegir</a>
+        </div>
+        <div class="nx-card nx-price nx-reveal">
+          <h3>Plan Intensivo</h3>
+          <div class="amount">RD$3,200</div>
+          <ul><li>8 tutorías de 60 minutos</li><li>Material personalizado</li><li>Seguimiento académico</li><li>Prioridad para reservas</li></ul>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+        </div>
+        <div class="nx-card nx-price nx-reveal">
+          <h3>Preparación de examen</h3>
+          <div class="amount">RD$4,500</div>
+          <ul><li>10 tutorías</li><li>Plan de estudio personalizado</li><li>Simulacros de examen</li><li>Seguimiento del progreso</li></ul>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Calculadora ===== -->
+  <section class="nx-section alt" id="calculadora">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Herramienta</span>
+        <h2>Calcula tu inversión</h2>
+      </div>
+      <div class="nx-calc">
+        <div class="nx-card">
+          <div class="nx-form-grid" style="grid-template-columns:1fr 1fr">
+            <div class="nx-field">
+              <label for="calc-n">Número de sesiones</label>
+              <select id="calc-n"><option>1</option><option selected>4</option><option>8</option><option>10</option><option>12</option></select>
+            </div>
+            <div class="nx-field">
+              <label for="calc-min">Duración por sesión</label>
+              <select id="calc-min"><option value="30">30 minutos</option><option value="60" selected>60 minutos</option><option value="90">90 minutos</option><option value="120">120 minutos</option></select>
+            </div>
+            <div class="nx-field">
+              <label for="calc-mode">Modalidad</label>
+              <select id="calc-mode"><option value="virtual">Virtual</option><option value="presencial">Presencial (+10%)</option></select>
+            </div>
+            <div class="nx-field">
+              <label for="calc-subject">Materia</label>
+              <select id="calc-subject"><option>Matemáticas</option><option>Cálculo</option><option>Física</option><option>Álgebra</option><option>Geometría</option><option>Trigonometría</option></select>
+            </div>
+          </div>
+        </div>
+        <div class="nx-calc-out">
+          <p id="calc-desc">4 sesiones × 60 minutos</p>
+          <div class="big" id="calc-total">RD$2,000</div>
+          <p>Estimado aproximado · precios en pesos dominicanos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Diagnóstico ===== -->
+  <section class="nx-section" id="diagnostico">
+    <div class="nx-container" style="max-width:640px">
+      <div class="nx-head">
+        <span class="nx-kicker">Diagnóstico</span>
+        <h2>¿No sabes qué necesitas estudiar?</h2>
+        <p>Realiza una prueba diagnóstica rápida y descubre qué áreas necesitas reforzar.</p>
+      </div>
+      <div class="nx-card" id="nx-quiz">
+        <div id="quiz-start">
+          <p style="color:var(--nx-muted);margin-bottom:20px;">5 preguntas cortas sobre álgebra, funciones, trigonometría, cálculo y matemáticas básicas.</p>
+          <button class="nx-btn nx-btn-primary" id="quiz-begin">Comenzar diagnóstico</button>
+        </div>
+        <div id="quiz-body" hidden>
+          <p class="nx-quiz-step" id="quiz-step"></p>
+          <p class="nx-quiz-q" id="quiz-q"></p>
+          <div id="quiz-opts"></div>
+        </div>
+        <div id="quiz-result" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Recursos ===== -->
+  <section class="nx-section alt" id="recursos">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Gratis</span>
+        <h2>Centro de recursos</h2>
+      </div>
+      <div class="nx-grid nx-grid-4" id="nx-resources"><!-- se genera desde tutorias.js --></div>
+    </div>
+  </section>
+
+  <!-- ===== Generador de ejercicios ===== -->
+  <section class="nx-section" id="generador">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Practica</span>
+        <h2>Generador de ejercicios</h2>
+      </div>
+      <div class="nx-gen">
+        <div class="nx-gen-controls">
+          <select id="gen-subject" aria-label="Materia">
+            <option value="algebra">Álgebra</option>
+            <option value="calculo">Cálculo</option>
+            <option value="trigonometria">Trigonometría</option>
+          </select>
+          <select id="gen-diff" aria-label="Dificultad">
+            <option value="facil">Fácil</option>
+            <option value="intermedio" selected>Intermedio</option>
+            <option value="dificil">Difícil</option>
+          </select>
+          <button class="nx-btn nx-btn-primary nx-btn-sm" id="gen-new">Generar ejercicio</button>
+        </div>
+        <div class="nx-gen-card" id="gen-card" hidden>
+          <p style="color:var(--nx-muted);font-size:0.85rem" id="gen-tag"></p>
+          <p class="expr" id="gen-expr"></p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button class="nx-btn nx-btn-ghost nx-btn-sm" id="gen-hint">Mostrar pista</button>
+            <button class="nx-btn nx-btn-ghost nx-btn-sm" id="gen-sol">Mostrar solución</button>
+            <button class="nx-btn nx-btn-ghost nx-btn-sm" id="gen-again">Nuevo ejercicio</button>
+          </div>
+          <p class="hint" id="gen-hint-out" hidden></p>
+          <p class="sol" id="gen-sol-out" hidden></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Progreso ===== -->
+  <section class="nx-section alt" id="progreso">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Panel de estudiante</span>
+        <h2>Tu progreso</h2>
+        <p>Vista de ejemplo de cómo se vería tu panel con una cuenta real.</p>
+      </div>
+      <div class="nx-progress-wrap">
+        <div class="nx-card">
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:8px"><b>Progreso general</b><b id="prog-pct">0%</b></div>
+          <div class="nx-bar"><i id="prog-bar" data-w="72"></i></div>
+          <div style="margin-top:24px">
+            <div class="nx-mini"><span>Tutorías completadas</span><b>18</b></div>
+            <div class="nx-mini"><span>Horas estudiadas</span><b>21.5 h</b></div>
+            <div class="nx-mini"><span>Temas dominados</span><b>9</b></div>
+            <div class="nx-mini"><span>Temas pendientes</span><b>4</b></div>
+            <div class="nx-mini"><span>Promedio de ejercicios</span><b>87%</b></div>
+            <div class="nx-mini"><span>Próxima tutoría</span><b>Jueves 4:00 PM</b></div>
+          </div>
+        </div>
+        <div class="nx-card">
+          <h3 style="margin-bottom:14px">Sesiones por semana</h3>
+          <svg viewBox="0 0 240 120" style="width:100%" role="img" aria-label="Gráfica de sesiones por semana">
+            <polyline points="10,100 45,80 80,85 115,55 150,60 185,30 220,20" fill="none" stroke="var(--nx-blue)" stroke-width="2.5"/>
+            <circle cx="220" cy="20" r="4" fill="var(--nx-violet)"/>
+            <g fill="var(--nx-muted)" font-size="8"><text x="8" y="115">S1</text><text x="43" y="115">S2</text><text x="78" y="115">S3</text><text x="113" y="115">S4</text><text x="148" y="115">S5</text><text x="183" y="115">S6</text><text x="218" y="115">S7</text></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Testimonios ===== -->
+  <section class="nx-section" id="testimonios">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Testimonios</span>
+        <h2>Lo que dicen nuestros estudiantes</h2>
+      </div>
+      <div class="nx-grid nx-grid-5">
+        <div class="nx-card nx-testi nx-reveal">
+          <p class="quote">"Antes no entendía nada de derivadas. Después de unas pocas sesiones pude resolver ejercicios por mi cuenta."</p>
+          <div class="who"><span class="ava">C</span><div><b>Camila</b><small>Bachillerato</small><span class="nx-stars">★★★★★</span></div></div>
+        </div>
+        <div class="nx-card nx-testi nx-reveal">
+          <p class="quote">"El seguimiento hace la diferencia. Me mandaron ejercicios justo de los temas donde fallaba."</p>
+          <div class="who"><span class="ava">J</span><div><b>José</b><small>Universidad</small><span class="nx-stars">★★★★★</span></div></div>
+        </div>
+        <div class="nx-card nx-testi nx-reveal">
+          <p class="quote">"Pasé de repetir física a sacar una A. Las explicaciones son otra cosa."</p>
+          <div class="who"><span class="ava">M</span><div><b>Mariel</b><small>Preparación de examen</small><span class="nx-stars">★★★★★</span></div></div>
+        </div>
+        <div class="nx-card nx-testi nx-reveal">
+          <p class="quote">"Las clases virtuales me salvaron el horario. Mismo nivel que presencial, cero estrés."</p>
+          <div class="who"><span class="ava">D</span><div><b>Diego</b><small>Secundaria</small><span class="nx-stars">★★★★☆</span></div></div>
+        </div>
+        <div class="nx-card nx-testi nx-reveal">
+          <p class="quote">"La prueba diagnóstica me dijo exactamente qué estudiar. Aprobé cálculo a la primera."</p>
+          <div class="who"><span class="ava">A</span><div><b>Ana</b><small>Universidad</small><span class="nx-stars">★★★★★</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="nx-section alt" id="faq">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Dudas</span>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="nx-faq" id="nx-faq"><!-- se genera desde tutorias.js --></div>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section class="nx-section" id="contacto">
+    <div class="nx-container">
+      <div class="nx-head">
+        <span class="nx-kicker">Contacto</span>
+        <h2>¿Tienes alguna pregunta?</h2>
+      </div>
+      <div class="nx-contact">
+        <form class="nx-card" id="nx-contact-form" novalidate>
+          <div class="nx-form-grid">
+            <div class="nx-field">
+              <label for="ct-name">Nombre *</label>
+              <input type="text" id="ct-name" name="ct-name" />
+              <span class="nx-err" data-err="ct-name"></span>
+            </div>
+            <div class="nx-field">
+              <label for="ct-email">Correo *</label>
+              <input type="email" id="ct-email" name="ct-email" />
+              <span class="nx-err" data-err="ct-email"></span>
+            </div>
+            <div class="nx-field">
+              <label for="ct-phone">Teléfono</label>
+              <input type="tel" id="ct-phone" name="ct-phone" />
+              <span class="nx-err" data-err="ct-phone"></span>
+            </div>
+            <div class="nx-field">
+              <label for="ct-subject">Materia</label>
+              <select id="ct-subject" name="ct-subject">
+                <option value="">General</option><option>Matemáticas</option><option>Cálculo</option><option>Física</option><option>Álgebra</option><option>Geometría</option><option>Trigonometría</option>
+              </select>
+            </div>
+            <div class="nx-field full">
+              <label for="ct-msg">Mensaje *</label>
+              <textarea id="ct-msg" name="ct-msg" rows="4"></textarea>
+              <span class="nx-err" data-err="ct-msg"></span>
+            </div>
+          </div>
+          <button class="nx-btn nx-btn-primary" type="submit" style="margin-top:8px">Enviar mensaje</button>
+        </form>
+        <div class="nx-contact-methods">
+          <div class="nx-method"><span class="nx-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2h-4l-5 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><b>WhatsApp</b><span>+1 (809) 555-0100</span></div></div>
+          <div class="nx-method"><span class="nx-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg></span><div><b>Correo</b><span>hola@nexumacademy.do</span></div></div>
+          <div class="nx-method"><span class="nx-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span><div><b>Instagram</b><span>@nexum.academy</span></div></div>
+          <div class="nx-method"><span class="nx-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span><div><b>Horario</b><span>Lunes a sábado · 8:00 AM – 8:00 PM</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="nx-footer">
+    <div class="nx-container">
+      <div class="cols">
+        <div>
+          <span class="nx-brand" style="font-size:1.2rem">NEXUM<em>ACADEMY</em></span>
+          <p class="slogan">Entiende. Practica. Domina.</p>
+          <div class="nx-socials" aria-label="Redes sociales">
+            <span title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span>
+            <span title="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span title="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4c1 2 2.5 3 5 3"/></svg></span>
+            <span title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2h-4l-5 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          </div>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#reserva">Tutorías</a></li>
+            <li><a href="#materias">Materias</a></li>
+            <li><a href="#tutores">Tutores</a></li>
+            <li><a href="#precios">Precios</a></li>
+            <li><a href="#recursos">Recursos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li>Términos y condiciones</li>
+            <li>Política de privacidad</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom">
+        <span>© <span id="nx-year">2026</span> NEXUM ACADEMY. Todos los derechos reservados.</span>
+        <span class="fake">ESTA ES UNA PÁGINA FICTICIA, NINGUNA INFORMACIÓN MOSTRADA ES REAL.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Modal genérico ===== -->
+  <div class="nx-modal" id="nx-modal" role="dialog" aria-modal="true">
+    <div class="nx-modal-box">
+      <button class="nx-modal-close" id="nx-modal-close" aria-label="Cerrar">✕</button>
+      <div id="nx-modal-content"></div>
+    </div>
+  </div>
+
+  <script src="../js/tutorias.js" defer></script>
+</body>
+</html>
