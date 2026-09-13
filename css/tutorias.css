@@ -164,6 +164,12 @@ img { max-width: 100%; display: block; }
 }
 .nx-head p { color: var(--nx-muted); }
 
+/* Grid and flex items default to min-width:auto, so a 1fr track cannot
+   shrink below its content's min-content width and the page overflows
+   horizontally on narrow screens. min-width: 0 lets tracks shrink. */
+.nx-grid > *, .nx-form-grid > *, .nx-calc > *, .nx-booking > *,
+.nx-contact > *, .nx-play > *, .nx-progress-wrap > * { min-width: 0; }
+
 .nx-grid { display: grid; gap: 20px; }
 .nx-grid-5 { grid-template-columns: repeat(5, 1fr); }
 .nx-grid-4 { grid-template-columns: repeat(4, 1fr); }
@@ -432,7 +438,9 @@ img { max-width: 100%; display: block; }
   .nx-summary { position: static; }
   .nx-footer .cols { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 640px) {
+/* The full nav row needs ~900px before it wraps and stretches the page,
+   so it collapses into the hamburger menu below that width. */
+@media (max-width: 900px) {
   .nx-toggle { display: block; }
   .nx-links {
     position: absolute; top: var(--nx-nav-h); left: 0; right: 0;
@@ -443,6 +451,8 @@ img { max-width: 100%; display: block; }
   .nx-links.open { display: flex; }
   .nx-links a { padding: 12px 10px; }
   .nx-cta-nav { text-align: center; margin-top: 8px; }
+}
+@media (max-width: 640px) {
   .nx-grid-5, .nx-grid-4, .nx-grid-3, .nx-grid-2, .nx-form-grid { grid-template-columns: 1fr; }
   .nx-hero { padding: 56px 0 70px; }
   .nx-stats { gap: 24px; }

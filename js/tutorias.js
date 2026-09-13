@@ -128,8 +128,12 @@
     // element the click hit (EventTarget | null; may be null or a non-Element,
     // hence the `as HTMLElement` assertion below).
     links === null || links === void 0 ? void 0 : links.addEventListener("click", (e) => {
-        if (e.target.tagName === "A")
+        if (e.target.tagName === "A") {
             links.classList.remove("open");
+            // The visual state and the ARIA state must stay in sync: screen
+            // readers announce aria-expanded, not the CSS class.
+            toggle === null || toggle === void 0 ? void 0 : toggle.setAttribute("aria-expanded", "false");
+        }
     });
     // Scroll-spy: on every scroll event, find the last section whose top edge
     // has scrolled past a 120px line under the navbar and mark its link active.
@@ -844,13 +848,16 @@
             xEl.textContent = String(x);
         if (yEl)
             yEl.textContent = String(y);
-        // Map x in [-4,4] to svg coords: curve goes through (100,140) vertex
-        // svg: x_pix = 100 + x*20, y_pix = 140 - y*10 (clamped)
+        // The drawn curve is the quadratic Bezier "M 20 10 Q 100 260 180 10".
+        // Expanding it: X(t) = 20 + 160t, Y(t) = 10 + 500t(1 - t).
+        // Mapping math x in [-4,4] to X gives t = 0.5 + x/8, and substituting
+        // into Y yields Y = 135 - 7.8125 x^2. Using those exact coefficients
+        // keeps the marker exactly on the rendered curve.
         if (pt) {
             // setAttribute writes a DOM attribute directly (cx/cy position the
             // <circle> on the SVG curve).
             pt.setAttribute("cx", String(100 + x * 20));
-            pt.setAttribute("cy", String(Math.max(10, 140 - y * 10)));
+            pt.setAttribute("cy", String(135 - 7.8125 * y));
         }
     });
     // --- 16. FAQ ------------------------------------------------------------------------------
