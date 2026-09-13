@@ -251,16 +251,16 @@
     subjects: string[]; hours: string;
   }
   const TUTORS: Tutor[] = [
-    { name: "Alejandro Martínez", spec: "Matemáticas y Álgebra", years: 5, level: "Secundaria y Bachillerato", rating: 4.9, students: 45, img: "../img/tutorias/nexum-tutor-alejandro.jpg",
+    { name: "James Carter", spec: "Matemáticas y Álgebra", years: 5, level: "Secundaria y Bachillerato", rating: 4.9, students: 45, img: "../img/tutorias/nexum-tutor-james.jpg",
       bio: "Ingeniero con pasión por hacer las matemáticas simples. Lleva 5 años ayudando a estudiantes que 'odiaban los números' a aprobar con buenas notas.",
       subjects: ["Matemáticas", "Álgebra"], hours: "Lun–Vie · 2:00–8:00 PM" },
-    { name: "Valeria Rodríguez", spec: "Cálculo y Trigonometría", years: 4, level: "Bachillerato y Universidad", rating: 4.8, students: 38, img: "../img/tutorias/nexum-tutor-valeria.jpg",
+    { name: "Elena Sokolova", spec: "Cálculo y Trigonometría", years: 4, level: "Bachillerato y Universidad", rating: 4.8, students: 38, img: "../img/tutorias/nexum-tutor-elena.jpg",
       bio: "Licenciada en Matemáticas. Especialista en derivadas, integrales y en explicar el 'por qué' detrás de cada fórmula.",
       subjects: ["Cálculo", "Trigonometría"], hours: "Lun–Sáb · 8:00 AM–4:00 PM" },
-    { name: "Daniel Herrera", spec: "Física", years: 6, level: "Bachillerato y Universidad", rating: 4.9, students: 52, img: "../img/tutorias/nexum-tutor-daniel.jpg",
+    { name: "Kenji Tanaka", spec: "Física", years: 6, level: "Bachillerato y Universidad", rating: 4.9, students: 52, img: "../img/tutorias/nexum-tutor-kenji.jpg",
       bio: "Físico con 6 años de experiencia docente. Convierte problemas de cinemática y electricidad en algo que por fin tiene sentido.",
       subjects: ["Física", "Matemáticas"], hours: "Lun–Vie · 4:00–8:00 PM" },
-    { name: "Sofía Ramírez", spec: "Matemáticas universitarias", years: 3, level: "Universidad", rating: 4.7, students: 29, img: "../img/tutorias/nexum-tutor-sofia.jpg",
+    { name: "Lena Fischer", spec: "Matemáticas universitarias", years: 3, level: "Universidad", rating: 4.7, students: 29, img: "../img/tutorias/nexum-tutor-lena.jpg",
       bio: "Estudiante avanzada de matemáticas puras y tutora certificada. Enfocada en cálculo, álgebra lineal y preparación de exámenes.",
       subjects: ["Cálculo", "Álgebra", "Geometría"], hours: "Mié–Dom · 10:00 AM–6:00 PM" },
   ];
