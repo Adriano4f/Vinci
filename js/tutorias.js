@@ -519,6 +519,27 @@
     // <select> silently selects nothing and would leave the field empty.
     if (planSelect && planParam && planBySlug(planParam))
         planSelect.value = planParam;
+    // The pricing cards keep their full `tutorias.html?plan=…#reserva` href so
+    // they still work from other pages, copied links, or a middle-click new
+    // tab. But on this same page a normal click would reload the document,
+    // flash the top, and then jump back to #reserva — so we intercept it:
+    // select the plan, rewrite the URL without navigating, and smooth-scroll.
+    document
+        .querySelectorAll('a[href^="tutorias.html?plan="]')
+        .forEach((a) => {
+        a.addEventListener("click", (e) => {
+            var _a, _b;
+            e.preventDefault();
+            const slug = (_a = new URL(a.href).searchParams.get("plan")) !== null && _a !== void 0 ? _a : "";
+            if (planSelect && planBySlug(slug))
+                planSelect.value = slug;
+            syncSummary();
+            // replaceState updates the visible URL (and future reloads/back
+            // entries stay consistent) without triggering navigation.
+            history.replaceState(null, "", `?plan=${slug}#reserva`);
+            (_b = document.getElementById("reserva")) === null || _b === void 0 ? void 0 : _b.scrollIntoView({ behavior: "smooth" });
+        });
+    });
     const tutorParam = bkParams.get("tutor");
     if (tutorParam) {
         const t = TUTORS.find((x) => x.slug === tutorParam);
