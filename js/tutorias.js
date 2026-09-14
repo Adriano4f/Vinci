@@ -238,20 +238,10 @@
         { name: "Álgebra", desc: "Ecuaciones, sistemas, factorización, matrices y expresiones algebraicas.", level: "Todos los niveles", icon: "alg",
             topics: ["Expresiones algebraicas", "Sistemas de ecuaciones", "Factorización", "Desigualdades", "Matrices y determinantes", "Funciones cuadráticas"] },
     ];
-    const TUTORS = [
-        { name: "James Carter", spec: "Matemáticas y Álgebra", years: 5, level: "Secundaria y Bachillerato", rating: 4.9, students: 45, img: "../img/tutorias/nexum-tutor-james.jpg",
-            bio: "Ingeniero con pasión por hacer las matemáticas simples. Lleva 5 años ayudando a estudiantes que 'odiaban los números' a aprobar con buenas notas.",
-            subjects: ["Matemáticas", "Álgebra"], hours: "Lun–Vie · 2:00–8:00 PM" },
-        { name: "Elena Sokolova", spec: "Cálculo y Trigonometría", years: 4, level: "Bachillerato y Universidad", rating: 4.8, students: 38, img: "../img/tutorias/nexum-tutor-elena.jpg",
-            bio: "Licenciada en Matemáticas. Especialista en derivadas, integrales y en explicar el 'por qué' detrás de cada fórmula.",
-            subjects: ["Cálculo", "Trigonometría"], hours: "Lun–Sáb · 8:00 AM–4:00 PM" },
-        { name: "Kenji Tanaka", spec: "Física", years: 6, level: "Bachillerato y Universidad", rating: 4.9, students: 52, img: "../img/tutorias/nexum-tutor-kenji.jpg",
-            bio: "Físico con 6 años de experiencia docente. Convierte problemas de cinemática y electricidad en algo que por fin tiene sentido.",
-            subjects: ["Física", "Matemáticas"], hours: "Lun–Vie · 4:00–8:00 PM" },
-        { name: "Lena Fischer", spec: "Matemáticas universitarias", years: 3, level: "Universidad", rating: 4.7, students: 29, img: "../img/tutorias/nexum-tutor-lena.jpg",
-            bio: "Estudiante avanzada de matemáticas puras y tutora certificada. Enfocada en cálculo, álgebra lineal y preparación de exámenes.",
-            subjects: ["Cálculo", "Álgebra", "Geometría"], hours: "Mié–Dom · 10:00 AM–6:00 PM" },
-    ];
+    // Tutors now live in src/tutors-data.ts, loaded by a separate <script>
+    // before this one. With `module: "none"` both files share one global
+    // scope, so NEXUM_TUTORS and the NxTutor type are visible here directly.
+    const TUTORS = NEXUM_TUTORS;
     // --- 7. Subjects grid + topics modal -------------------------------------------
     const subjectGrid = $("#nx-subjects");
     if (subjectGrid) {
@@ -312,64 +302,39 @@
         }
     });
     // --- 9. Tutors -------------------------------------------------------------------
+    // The home page shows a preview of the roster; each card links to that
+    // tutor's own page (tutorias-tutor.html?t=<slug>), which reads the same
+    // static catalog. No modal duplicates the profile any more.
     const tutorGrid = $("#nx-tutors");
     // String.prototype.repeat(n) returns the string repeated n times.
     // "★".repeat(4) + "☆".repeat(1) → "★★★★☆".
     const stars = (r) => "★".repeat(Math.round(r)) + "☆".repeat(5 - Math.round(r));
     if (tutorGrid) {
-        tutorGrid.innerHTML = TUTORS.map((t, i) => `
+        // .slice(0, 4) returns a shallow copy of the first four entries — the
+        // preview — without mutating TUTORS.
+        tutorGrid.innerHTML = TUTORS.slice(0, 4)
+            .map((t) => `
       <div class="nx-card nx-tutor nx-reveal">
         <img src="${t.img}" alt="Foto de ${t.name}" />
         <h3>${t.name}</h3>
         <div class="spec">${t.spec}</div>
         <div class="meta">${t.years} años de experiencia · ${t.level}<br/><span class="nx-stars">${stars(t.rating)}</span> ${t.rating}</div>
-        <button class="nx-btn nx-btn-ghost nx-btn-sm" data-tutor="${i}">Ver perfil</button>
-      </div>`).join("");
-        tutorGrid.addEventListener("click", (e) => {
-            var _a;
-            const btn = e.target.closest("[data-tutor]");
-            if (!btn)
-                return;
-            const t = TUTORS[Number(btn.dataset.tutor)];
-            openModal(`
-        <img class="tmodal" src="${t.img}" alt="Foto de ${t.name}" />
-        <h3>${t.name}</h3>
-        <p class="sub">${t.spec} · ${t.years} años de experiencia · <span class="nx-stars">${stars(t.rating)}</span> ${t.rating}</p>
-        <p style="font-size:0.92rem;margin-bottom:16px">${t.bio}</p>
-        <ul class="topics">
-          <li>Materias: ${t.subjects.join(", ")}</li>
-          <li>Imparte: ${t.level}</li>
-          <li>Horarios: ${t.hours}</li>
-          <li>Estudiantes atendidos: ${t.students}</li>
-        </ul>
-        <button class="nx-btn nx-btn-primary nx-btn-sm" style="margin-top:20px" id="tmodal-book">Reservar con este tutor</button>
-      `);
-            // The button above was just inserted by innerHTML, so it exists now and
-            // can be wired up directly.
-            (_a = $("#tmodal-book")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
-                var _a;
-                closeModal();
-                const sub = $("#bk-subject");
-                const tut = $("#bk-tutor");
-                if (sub && tut) {
-                    sub.value = t.subjects[0];
-                    // dispatchEvent fires listeners synchronously, right now — this
-                    // makes the booking form behave as if the user picked the subject
-                    // (refills the tutor list) without needing a real click.
-                    sub.dispatchEvent(new Event("change"));
-                    tut.value = t.name;
-                    // The synthetic change above already ran syncSummary() before the
-                    // tutor was assigned, so refresh it once more here.
-                    syncSummary();
-                }
-                // scrollIntoView with behavior:"smooth" asks the browser to animate
-                // the scroll to the booking section.
-                (_a = document.getElementById("reserva")) === null || _a === void 0 ? void 0 : _a.scrollIntoView({ behavior: "smooth" });
-            });
-        });
+        <div class="nx-tutor-actions">
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="tutorias-tutor.html?t=${t.slug}">Ver perfil</a>
+          <a class="nx-btn nx-btn-primary nx-btn-sm" href="tutorias-tutor.html?t=${t.slug}#reservar">Reservar</a>
+        </div>
+      </div>`)
+            .join("");
     }
     // --- 10. Booking ------------------------------------------------------------------
     const PRICE_PER_MIN = 500 / 60; // RD$500 per 60-min session
+    const PLANS = [
+        { slug: "individual", name: "Sesión individual", sessions: 1, price: null },
+        { slug: "basico", name: "Plan Básico", sessions: 4, price: 1800 },
+        { slug: "intensivo", name: "Plan Intensivo", sessions: 8, price: 3200 },
+        { slug: "examen", name: "Preparación de examen", sessions: 10, price: 4500 },
+    ];
+    const planBySlug = (slug) => PLANS.find((p) => p.slug === slug);
     const bkForm = $("#nx-book-form");
     const bkSubject = $("#bk-subject");
     const bkTutor = $("#bk-tutor");
@@ -405,6 +370,11 @@
     // may be any of those types; `?.` yields undefined on null, `?? ""` maps it.
     const bkVal = (id) => { var _a, _b; return (_b = (_a = document.getElementById(id)) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : ""; };
     const bookingPrice = () => {
+        // A multi-session package has a flat published price, so duration and
+        // modality do not change it.
+        const plan = planBySlug(bkVal("bk-plan"));
+        if (plan && plan.price !== null)
+            return plan.price;
         const dur = Number(bkVal("bk-duration"));
         // `!dur` is true when dur is 0 or NaN — Number("") === 0, and both are
         // falsy. NaN is also falsy, which covers unparseable input.
@@ -425,6 +395,8 @@
             if (el)
                 el.textContent = v || "—";
         };
+        const plan = planBySlug(bkVal("bk-plan"));
+        set("sm-plan", plan ? `${plan.name}${plan.sessions > 1 ? ` · ${plan.sessions} sesiones` : ""}` : "");
         set("sm-subject", bkVal("bk-subject"));
         set("sm-tutor", bkVal("bk-tutor"));
         set("sm-mode", bkVal("bk-mode"));
@@ -493,6 +465,7 @@
                 ok = false;
             }
         };
+        req("bk-plan", "Elige un plan.");
         req("bk-subject", "Por favor, selecciona una materia.");
         req("bk-tutor", "Por favor, selecciona un tutor.");
         req("bk-mode", "Elige la modalidad.");
@@ -536,6 +509,26 @@
             s.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     });
+    // Deep links into the booking form. The pricing cards send ?plan=<slug>
+    // and the tutor pages send ?tutor=<slug>&subject=<name>, so a click on
+    // "Elegir" or "Reservar" lands on a form that is already filled in.
+    const bkParams = new URLSearchParams(window.location.search);
+    const planParam = bkParams.get("plan");
+    const planSelect = $("#bk-plan");
+    // Only accept a slug that exists in PLANS: assigning an unknown value to a
+    // <select> silently selects nothing and would leave the field empty.
+    if (planSelect && planParam && planBySlug(planParam))
+        planSelect.value = planParam;
+    const tutorParam = bkParams.get("tutor");
+    if (tutorParam) {
+        const t = TUTORS.find((x) => x.slug === tutorParam);
+        if (t && bkSubject && bkTutor) {
+            bkSubject.value = t.subjects[0];
+            fillTutors(); // refill the tutor list for that subject
+            bkTutor.value = t.name;
+        }
+    }
+    syncSummary();
     // "Hacer otra reserva": reset the form and bring the form + summary back.
     (_c = $("#bk-again")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
         var _a;
