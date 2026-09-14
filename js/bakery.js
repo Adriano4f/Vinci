@@ -1,6 +1,21 @@
 "use strict";
 /* La Miga Dorada demo · shared script for all bakery pages.
-   Page behavior is selected via <body data-page="home|menu|nosotros|visitanos|pedido">. */
+   Page behavior is selected via <body data-page="home|menu|nosotros|visitanos|pedido">.
+
+   TYPE NOTES:
+   - `"use strict"` — ECMAScript strict-mode directive: undeclared-variable
+     assignment throws, `this` in bare function calls is undefined, etc.
+   - `interface Product`, `tag?:`, `out?:` — structural types with optional
+     fields; erased at compile, no runtime existence.
+   - `let orderRefresh: (() => void) | undefined` — a variable whose type is
+     "a zero-arg function returning nothing, or undefined". `orderRefresh?.()`
+     calls it only when assigned (optional call).
+   - `Object.entries(obj)` → [key, value][] pairs; destructured as [slug, qty].
+   - `localStorage`/`sessionStorage` — Web Storage API: persistent vs per-tab;
+     both may throw SecurityError → try/catch + in-memory fallback.
+   - `x as T` — compile-time-only assertion; `as Product` after .find() on a
+     filtered array tells the checker "this exists" without checking at runtime.
+*/
 (() => {
     "use strict";
     var _a;
@@ -91,8 +106,11 @@
         },
     ];
     const product = (slug) => PRODUCTS.find((p) => p.slug === slug);
+    // toFixed(2) returns a STRING like "4.00" — a string, not a rounded number.
     const money = (n) => `$${n.toFixed(2)}`;
-    /* Called whenever the cart changes; the pedido page hooks in its summary. */
+    /* Called whenever the cart changes; the pedido page hooks in its summary.
+       The type `(() => void) | undefined` is a function-or-absent union;
+       `orderRefresh?.()` is an optional call — runs only when assigned. */
     let orderRefresh;
     const cartChanged = () => {
         updateBadge();
@@ -142,6 +160,8 @@
         }
     };
     const saveFavs = (favs) => setItem(FAV_KEY, JSON.stringify(favs));
+    // Total items = sum of quantities for slugs still in the catalog.
+    // `[, q]` skips the key; only the qty is destructured out of the pair.
     const cartCount = () => Object.entries(getCart())
         .filter(([slug]) => product(slug))
         .reduce((t, [, q]) => t + q, 0);
@@ -180,6 +200,7 @@
         document.body.appendChild(wrap);
         wrap.querySelectorAll("[data-cart-close]").forEach((el) => el.addEventListener("click", closeCart));
     };
+    // Full re-render from state each change — simple and fast at this size.
     const renderCart = () => {
         const list = document.querySelector("[data-cart-list]");
         const totalEl = document.querySelector("[data-cart-total]");
@@ -225,7 +246,7 @@
                 delete cart[slug];
             saveCart(cart);
             renderCart();
-            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh();
+            orderRefresh === null || orderRefresh === void 0 ? void 0 : orderRefresh(); // pedido page's hook: re-render its summary too
         }));
         list.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => {
             const cart = getCart();
@@ -309,6 +330,9 @@
         observeReveals(root);
     };
     /* ---------- reveal on scroll ---------- */
+    // IntersectionObserver fires the callback when an observed element
+    // crosses the threshold. unobserve() detaches so the callback can't
+    // re-fire — each element animates exactly once.
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
             if (e.isIntersecting) {
@@ -354,6 +378,8 @@
             const sections = Array.from(document.querySelectorAll("section[id], header[id]")).filter((s) => navIds.has(s.id));
             const updateSpy = () => {
                 var _a, _b, _c, _d;
+                // The "reading line" sits 40% down the viewport: a section becomes
+                // active when its top edge passes above that line.
                 const line = window.scrollY + window.innerHeight * 0.4;
                 let current = (_b = (_a = sections[0]) === null || _a === void 0 ? void 0 : _a.id) !== null && _b !== void 0 ? _b : "";
                 sections.forEach((s) => {
@@ -394,6 +420,7 @@
         if (!grid)
             return;
         let cat = "all";
+        // apply() closes over the DOM refs above; every handler calls it.
         const apply = () => {
             var _a;
             const q = ((_a = search === null || search === void 0 ? void 0 : search.value) !== null && _a !== void 0 ? _a : "").trim().toLowerCase();
@@ -476,6 +503,8 @@
         renderSummary();
         form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
             e.preventDefault();
+            // reportValidity() triggers the browser's built-in constraint
+            // validation bubbles (required fields, type=email, etc.).
             if (!form.reportValidity())
                 return;
             // Re-read the cart: it may have been emptied from the drawer meanwhile.

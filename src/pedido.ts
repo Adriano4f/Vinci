@@ -6,6 +6,14 @@
  * the fields and then shows a confirmation panel with a WhatsApp deep link
  * and a mailto: link carrying the whole message. Product pages link here
  * with ?servicio=<slug> to preselect the matching product.
+ *
+ * TYPE NOTES:
+ *   - `form.elements.namedItem(name)` is `RadioNodeList | Element | null`;
+ *     instanceof narrows it with a real runtime check (prototype chain).
+ *   - `?.` optional chaining: evaluates to undefined on null/undefined.
+ *   - `??` nullish coalescing: right side only for null/undefined.
+ *   - `||` logical OR: right side for ANY falsy value ("" , 0, false, null…).
+ *   - Generics and `: type` annotations are erased by tsc — zero runtime cost.
  */
 
 (() => {
@@ -26,9 +34,12 @@
     return "";
   };
 
+  // For a <select>: returns the visible text of the chosen option (""
+  // when the placeholder is selected); other fields fall back to valueOf.
   const labelOf = (name: string): string => {
     const field = form.elements.namedItem(name);
     if (field instanceof HTMLSelectElement) {
+      // selectedOptions[0] is `HTMLOptionElement | undefined`.
       const option = field.selectedOptions[0];
       return option && option.value !== "" ? option.textContent.trim() : "";
     }
@@ -36,6 +47,7 @@
   };
 
   const setError = (name: string, message: string): void => {
+    // Attribute selector built by template-literal interpolation.
     const slot = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
     const field = form.querySelector<HTMLElement>(`[name="${name}"]`);
     if (slot) slot.textContent = message;
@@ -47,8 +59,13 @@
 
   // --- Preselect the product the visitor came from ---------------------------
 
+  // namedItem("product") → RadioNodeList | Element | null.
   const productSelect = form.elements.namedItem("product");
+  // URLSearchParams parses "?servicio=posters" into a query map;
+  // .get returns the first value or null.
   const product = new URLSearchParams(window.location.search).get("servicio");
+  // instanceof narrows the union; then .value = selects that option.
+  // Unknown slugs simply select nothing — the browser keeps "" selected.
   if (productSelect instanceof HTMLSelectElement && product) {
     productSelect.value = product;
   }
@@ -72,6 +89,7 @@
       setError("email", "");
     }
 
+    // Phone is optional: only validate when the user typed something.
     if (valueOf("phone") !== "" && !PHONE_PATTERN.test(valueOf("phone"))) {
       setError("phone", "Ese número no parece correcto.");
       ok = false;
@@ -96,6 +114,8 @@
     return ok;
   };
 
+  // One delegated listener on the form clears a field's error on each
+  // keystroke ("input" events bubble up from each control).
   form.addEventListener("input", (event) => {
     const target = event.target;
     if (target instanceof HTMLElement && target.getAttribute("name")) {
@@ -106,6 +126,7 @@
   // --- Submit ----------------------------------------------------------------
 
   form.addEventListener("submit", (event) => {
+    // Cancel the default navigation/reload — this demo never sends anything.
     event.preventDefault();
     if (!validate()) return;
 
@@ -119,6 +140,7 @@
       "",
       valueOf("message"),
     ];
+    // Percent-encode both pieces so spaces/&/newlines survive inside the URI.
     const mailto =
       `mailto:${recipient}?subject=${encodeURIComponent(subject)}` +
       `&body=${encodeURIComponent(bodyLines.join("\n"))}`;

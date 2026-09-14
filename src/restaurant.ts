@@ -4,8 +4,21 @@
  *
  * The whole menu lives in the MENU data structure below, so adding or
  * removing a dish only means editing this array — the HTML renders itself.
+ *
+ * TYPE NOTES:
+ *   - `field?: T` inside an interface marks the property OPTIONAL — the
+ *     object may or may not have it; reading it gives `T | undefined`.
+ *   - `Dish | undefined` — a union type: either a Dish or undefined.
+ *   - `x as T` — type assertion, compile-time only, no runtime check.
+ *   - `.map`/`.filter`/`.find`/`.some`/`.reduce` — Array methods that take a
+ *     callback; the callback is a closure invoked per element.
+ *   - Template literals `${...}` interpolate via ToString.
+ *   - `?.` short-circuits to undefined on null/undefined; `??` supplies the
+ *     fallback only for null/undefined.
  */
 
+// Structural type: an object is a Dish iff it has these properties.
+// `?` marks optional fields — they may be absent entirely.
 interface Dish {
   name: string;
   description: string;
@@ -20,7 +33,7 @@ interface Category {
   id: string;
   name: string;
   tagline: string;
-  dishes: Dish[];
+  dishes: Dish[];   // array of Dish
 }
 
 // The 4 "house favorites" rendered as big photo cards before the menu.
@@ -289,15 +302,20 @@ const MENU: Category[] = [
   },
 ];
 
+// IIFE: all names stay file-local.
 (() => {
   const root = document.querySelector<HTMLElement>("[data-menu-root]");
   if (!root) return; // Not on the restaurant demo page.
 
   // --- Render ---------------------------------------------------------------
 
+  // Arrow function shorthand: `(tag: string): string => \`...\`` — the body
+  // is a single expression, so it returns it implicitly (no `return` needed).
   const tagBadge = (tag: string): string =>
     `<span class="dish-tag">${tag}</span>`;
 
+  // Builds one <li> per dish. `dish.tags ? " " + ... : ""` — optional tags:
+  // when the array is absent the ternary yields "".
   const dishRow = (dish: Dish, index: number, catId: string): string => `
     <li class="dish reveal" data-dish="${catId}:${index}" tabindex="0" role="button"
         aria-haspopup="dialog" aria-label="Ver detalles de ${dish.name}">
@@ -311,12 +329,20 @@ const MENU: Category[] = [
 
   const categorySection = (cat: Category): string => {
     // Split dishes into sub-groups when they carry one (Bebidas).
+    // Map<string, Dish[]> — generic collection: keys are group names, values
+    // are arrays of dishes. Type args are compile-time only.
     const groups = new Map<string, Dish[]>();
     cat.dishes.forEach((d) => {
+      // `d.group ?? ""` — absent group becomes the "" key.
       const key = d.group ?? "";
+      // `groups.get(key)?.push(d)` — optional call: skips when absent (first
+      // entry is created by the line above, so this always runs in practice).
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key)?.push(d);
     });
+    // `[...groups.entries()]` — spread expands the Map's [key, value] pairs
+    // into a real Array. The map callback destructures each pair:
+    // `([group, dishes]) =>` is array destructuring on the parameter.
     const lists = [...groups.entries()]
       .map(([group, dishes]) => `
         ${group ? `<h4 class="dish-group">${group}</h4>` : ""}
@@ -338,6 +364,8 @@ const MENU: Category[] = [
   // visually different sections further down the page.
   const drinksRoot = document.querySelector<HTMLElement>("[data-menu-drinks]");
   const dessertsRoot = document.querySelector<HTMLElement>("[data-menu-desserts]");
+  // `el: HTMLElement | null` — a union type: either an element or null.
+  // `filter` keeps only categories whose id is in `ids`; map+join renders them.
   const renderInto = (el: HTMLElement | null, ids: string[]): void => {
     if (!el) return;
     el.innerHTML = MENU.filter((c) => ids.includes(c.id))
@@ -371,8 +399,13 @@ const MENU: Category[] = [
 
   // --- Helpers --------------------------------------------------------------
 
+  // Return type `Dish | undefined`: find() and array indexing can miss.
   const findDish = (ref: string): Dish | undefined => {
+    // ref is "carnes:2". String.split(":") → ["carnes","2"]; the [a, b]
+    // pattern is ARRAY DESTRUCTURING — assigns elements to two names at once.
     const [catId, indexStr] = ref.split(":");
+    // Array.find returns the first element matching the predicate, or
+    // undefined. Number("2") coerces the index string to a number.
     const cat = MENU.find((c) => c.id === catId);
     return cat ? cat.dishes[Number(indexStr)] : undefined;
   };
@@ -387,6 +420,8 @@ const MENU: Category[] = [
   let activeFilter = "all";
 
   const applyFilters = (): void => {
+    // `(searchInput?.value ?? "")` — optional chaining + nullish fallback
+    // produces a definite string even when the input is absent.
     const query = (searchInput?.value ?? "").trim().toLowerCase();
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>(".menu-category")
@@ -398,18 +433,27 @@ const MENU: Category[] = [
       const inCategory = activeFilter === "all" || catId === activeFilter;
       let visibleDishes = 0;
 
+      // For each dish row: hide it unless it matches both the active
+      // category and the search text. `hidden` is a boolean DOM property.
       section.querySelectorAll<HTMLElement>(".dish").forEach((row) => {
+        // textContent is `string | null`; toLowerCase needs a string, so
+        // `?.` + `?? ""` normalizes.
         const text = row.textContent?.toLowerCase() ?? "";
         const match = inCategory && (query === "" || text.includes(query));
         row.hidden = !match;
         if (match) visibleDishes += 1;
       });
 
+      // Hide empty sub-group headings (Bebidas groups). Walk siblings until
+      // the next heading, checking each dish-list for any unhidden row.
       section.querySelectorAll<HTMLElement>(".dish-group").forEach((h) => {
+        // nextElementSibling walks the DOM's next sibling element (null at end).
         let el = h.nextElementSibling;
         let groupHasVisible = false;
         while (el && !el.classList.contains("dish-group")) {
           if (el instanceof HTMLElement && el.classList.contains("dish-list")) {
+            // Array.some: true if ANY element satisfies the predicate —
+            // short-circuits on the first match.
             groupHasVisible = Array.from(el.querySelectorAll<HTMLElement>(".dish"))
               .some((r) => !r.hidden);
           }
@@ -449,6 +493,8 @@ const MENU: Category[] = [
   const modalPrice = document.querySelector<HTMLElement>("#dish-modal-price");
   const modalTags = document.querySelector<HTMLElement>("#dish-modal-tags");
   const modalIngs = document.querySelector<HTMLElement>("#dish-modal-ings");
+  // Track who opened the modal so focus can be restored on close (a11y).
+  // `HTMLElement | null` — starts null, later holds a reference.
   let lastFocused: HTMLElement | null = null;
 
   const openModal = (dish: Dish, trigger: HTMLElement): void => {
@@ -488,6 +534,10 @@ const MENU: Category[] = [
     lastFocused?.focus();
   };
 
+  // One document-level click handler covers every dish row AND featured card:
+  // clicks bubble to document, and closest() walks to the nearest row.
+  // `event.target as HTMLElement` is a type assertion — the compiler accepts
+  // it without checking; the DOM guarantees the click target is an element.
   document.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
     const row = target.closest<HTMLElement>("[data-dish],[data-fav]");
@@ -498,6 +548,7 @@ const MENU: Category[] = [
       if (dish) openModal(dish, row);
       return;
     }
+    // Clicks on the close button or the dimmed backdrop close the modal.
     if (target.closest(".modal-close") || target === modal) closeModal();
   });
 

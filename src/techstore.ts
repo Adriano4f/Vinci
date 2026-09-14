@@ -1,8 +1,27 @@
 /* ByteShop demo · shared script for all techstore pages.
-   Page behavior is selected via <body data-page="home|products|product|why|order">. */
+   Page behavior is selected via <body data-page="home|products|product|why|order">.
+
+   TYPE NOTES:
+   - `"use strict"` — a directive prologue: puts the script in ECMAScript
+     strict mode (assignments to undeclared variables throw, `this` in plain
+     function calls is undefined, some legacy syntax is rejected).
+   - `interface Product` / `tag?: string` — structural type + optional field;
+     erased at compile, no runtime existence.
+   - `x as T` — assertion only; `JSON.parse(...) as string[]` trusts the
+     stored shape (unchecked at runtime).
+   - `Object.entries(obj)` → [key, value][] pairs; `[slug, qty]` destructures
+     each pair in the callback parameter.
+   - `.reduce((acc, el) => ..., 0)` — folds the array into one value, acc
+     starts at 0.
+   - `localStorage`/`sessionStorage` — Web Storage API: persistent vs per-tab
+     string key-value store; getItem/setItem can throw (quota, blocked).
+   - `void badge.offsetWidth` — `void` discards the value; reading offsetWidth
+     forces a synchronous layout/reflow so the CSS animation can restart.
+*/
 (() => {
   "use strict";
 
+  // `slug`, `name`, ... — required fields; `tag?` is optional (may be absent).
   interface Product {
     slug: string;
     name: string;
@@ -73,6 +92,8 @@
     },
   ];
 
+  // `Array.find` → first match or undefined. `Product | undefined` is the
+  // honest return type — callers must handle the miss.
   const product = (slug: string): Product | undefined => PRODUCTS.find((p) => p.slug === slug);
 
   const money = (n: number): string => `$${n}`;
@@ -82,7 +103,12 @@
   const FAV_KEY = "byteshop-favs";
 
   /* Storage access can throw (blocked storage, quota). Keep an in-memory
-     copy so cart/fav actions still work for the rest of the session. */
+     copy so cart/fav actions still work for the rest of the session.
+     Record<string, string> is an object type: any string key → string value.
+     `localStorage.getItem ?? memStore[key] ?? null` — chained `??` picks the
+     first non-nullish value (getItem returns null on miss; memStore[key]
+     returns undefined on miss; the last ?? converts undefined to null so the
+     function's declared `string | null` return type holds). */
   const memStore: Record<string, string> = {};
   const getItem = (key: string): string | null => {
     try {
@@ -124,6 +150,9 @@
   };
   const saveFavs = (favs: string[]): void => setItem(FAV_KEY, JSON.stringify(favs));
 
+  // Object.entries returns [key, value] pairs; the callback destructures
+  // each pair into [slug, qty]. `[, qty]` skips the first element (the slug)
+  // when only the quantity is needed. reduce folds them into the total.
   const cartCount = (): number =>
     Object.entries(getCart())
       .filter(([slug]) => product(slug))
@@ -146,6 +175,8 @@
   };
 
   /* ---------- cart drawer (injected on every page) ---------- */
+  // createElement builds a detached DOM node; appendChild inserts it into
+  // the live document. innerHTML parses the template string into elements.
   const buildCart = (): void => {
     const wrap = document.createElement("div");
     wrap.innerHTML = `
@@ -168,6 +199,8 @@
     );
   };
 
+  // Rebuilds the whole drawer from current state each time — simpler than
+  // diffing individual DOM nodes, and fast enough for a small cart.
   const renderCart = (): void => {
     const list = document.querySelector<HTMLElement>("[data-cart-list]");
     const totalEl = document.querySelector<HTMLElement>("[data-cart-total]");
@@ -183,6 +216,10 @@
     }
     foot.classList.remove("hidden");
     let total = 0;
+    // .map runs the callback for each entry and returns an array of the
+    // results (here: HTML strings); .join("") concatenates them into one
+    // string for innerHTML. `as Product` is safe: entries were filtered
+    // through product() so every slug resolves.
     list.innerHTML = entries
       .map(([slug, qty]) => {
         const p = product(slug) as Product;
@@ -204,6 +241,9 @@
       })
       .join("");
     totalEl.textContent = money(total);
+    // Handlers are rebound on every render since innerHTML replaced the
+    // nodes. Each arrow function closes over `b` — the button it was
+    // attached to — so dataset access stays local to that button.
     list.querySelectorAll<HTMLButtonElement>("[data-qty]").forEach((b) =>
       b.addEventListener("click", () => {
         const cart2 = getCart();
@@ -242,6 +282,8 @@
     toast(`Agregado: ${(product(slug) as Product).name}`);
   };
 
+  // requestAnimationFrame defers the .show class to the next paint — without
+  // it the browser may batch the add+class and skip the CSS transition.
   const toast = (msg: string): void => {
     const t = document.createElement("div");
     t.className = "ts-toast";
@@ -275,6 +317,9 @@
     </article>`;
   };
 
+  // ParentNode is the DOM interface shared by Document and Element — both
+  // have querySelectorAll. dataset.bound marks already-wired buttons so
+  // re-rendering a grid doesn't double-attach click handlers.
   const bindCards = (root: ParentNode): void => {
     root.querySelectorAll<HTMLButtonElement>("[data-add]").forEach((b) => {
       if (b.dataset.bound) return;
@@ -388,6 +433,9 @@
     if (!grid) return;
 
     let priceBand = "all";
+    // apply() closes over the DOM refs above (closure) so every input
+    // handler just calls apply() instead of re-querying. `search?.value ?? ""`
+    // = value if the element exists, else empty string.
     const apply = (): void => {
       const q = (search?.value ?? "").trim().toLowerCase();
       let list = PRODUCTS.filter(
@@ -396,6 +444,9 @@
       if (priceBand === "low") list = list.filter((p) => p.price <= 5);
       if (priceBand === "mid") list = list.filter((p) => p.price > 5 && p.price <= 8);
       if (priceBand === "high") list = list.filter((p) => p.price > 8);
+      // [...list] makes a shallow copy — Array.prototype.sort() mutates
+      // in place, and `list` may still be the filtered result other code
+      // relies on; sorting a copy keeps each filter result independent.
       const s = sort?.value ?? "featured";
       if (s === "price-asc") list = [...list].sort((a, b) => a.price - b.price);
       if (s === "price-desc") list = [...list].sort((a, b) => b.price - a.price);
@@ -428,6 +479,8 @@
 
   /* ---------- page: product detail ---------- */
   const initProduct = (): void => {
+    // location.search is the "?p=cable-usb-c" part of the URL;
+    // URLSearchParams.get("p") extracts the slug, `?? ""` covers missing.
     const slug = new URLSearchParams(location.search).get("p") ?? "";
     const p = product(slug);
     const root = document.querySelector<HTMLElement>("[data-product]");
@@ -509,6 +562,8 @@
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      // reportValidity() runs the browser's built-in constraint validation
+      // (required, type=email, etc.) and shows its native error bubbles.
       if (!form.reportValidity()) return;
       const nombre = (form.querySelector<HTMLInputElement>("#nombre")?.value ?? "").trim();
       const prodSel = form.querySelector<HTMLSelectElement>("[data-product-select]");
