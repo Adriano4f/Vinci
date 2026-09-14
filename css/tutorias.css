@@ -464,3 +464,54 @@ img { max-width: 100%; display: block; }
   .nx-reveal { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ===== Subpáginas de tutores (directorio y perfil) ===== */
+.nx-subhero {
+  padding: calc(var(--nx-nav-h) + 60px) 0 40px;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), transparent);
+}
+.nx-subhero h1 { font-family: var(--nx-font-display); font-size: clamp(2rem, 4vw, 3rem); margin: 6px 0 12px; }
+.nx-subhero .lead { color: var(--nx-muted); max-width: 620px; }
+
+.nx-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
+.nx-chip {
+  border: 1px solid var(--nx-line);
+  background: var(--nx-card);
+  color: var(--nx-text);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.nx-chip:hover { border-color: var(--nx-blue); color: var(--nx-blue); }
+.nx-chip.active { background: var(--nx-blue); border-color: var(--nx-blue); color: #fff; }
+
+.nx-dir-count { text-align: center; color: var(--nx-muted); font-size: 0.88rem; margin-bottom: 26px; }
+.nx-tutor-bio { font-size: 0.88rem; color: var(--nx-muted); margin: 0 0 16px; }
+.nx-tutor-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+.nx-profile-head { display: grid; grid-template-columns: 260px 1fr; gap: 36px; align-items: start; }
+.nx-profile-head > * { min-width: 0; }
+.nx-profile-head img { width: 100%; border-radius: 20px; aspect-ratio: 1 / 1; object-fit: cover; }
+.nx-profile-head h1 { font-family: var(--nx-font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin: 4px 0 10px; }
+.nx-profile-head .lead { color: var(--nx-muted); margin-bottom: 22px; }
+.nx-profile-meta { display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.88rem; color: var(--nx-muted); margin-bottom: 16px; }
+.nx-profile-facts { margin-top: 44px; }
+.nx-tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.nx-tags li {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--nx-blue);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+[data-theme="dark"] .nx-tags li { color: var(--nx-cyan); background: rgba(34, 211, 238, 0.12); }
+
+@media (max-width: 760px) {
+  .nx-profile-head { grid-template-columns: 1fr; }
+  .nx-profile-head img { max-width: 240px; }
+}

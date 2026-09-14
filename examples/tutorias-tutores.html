@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutores | NEXUM ACADEMY</title>
+  <meta name="description" content="Conoce a los tutores de NEXUM ACADEMY, filtra por materia y reserva con el que prefieras." />
+  <link rel="icon" type="image/svg+xml" href="../img/tutorias/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tutorias.css" />
+</head>
+<body>
+
+  <!-- ===== Barra de navegación ===== -->
+  <header class="nx-nav">
+    <div class="nx-container">
+      <a class="nx-brand" href="tutorias.html">
+        <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(255,255,255,0.08)"/><path d="M16 46V18l20 28V18" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="18" r="3.5" fill="#8b5cf6"/><circle cx="36" cy="18" r="3.5" fill="#38bdf8"/><circle cx="48" cy="32" r="3.5" fill="#3b82f6"/><path d="M36 46h14" stroke="#8b5cf6" stroke-width="5" stroke-linecap="round"/></svg>
+        NEXUM<em>ACADEMY</em>
+      </a>
+      <ul class="nx-links" id="nx-links">
+        <li><a href="tutorias.html">Inicio</a></li>
+        <li><a href="tutorias.html#materias">Materias</a></li>
+        <li><a href="tutorias-tutores.html" class="active">Tutores</a></li>
+        <li><a href="tutorias.html#precios">Precios</a></li>
+        <li><a href="tutorias.html#recursos">Recursos</a></li>
+        <li><a href="tutorias.html#faq">FAQ</a></li>
+        <li><a href="tutorias.html#reserva" class="nx-cta-nav">Reservar tutoría</a></li>
+      </ul>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="nx-theme-btn" id="nx-theme" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">🌙</button>
+        <button class="nx-toggle" id="nx-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ===== Directorio de tutores ===== -->
+  <section class="nx-subhero">
+    <div class="nx-container">
+      <span class="nx-kicker">El equipo</span>
+      <h1>Nuestros tutores</h1>
+      <p class="lead">Elige por materia, revisa el perfil completo de cada tutor y reserva directamente con quien prefieras.</p>
+    </div>
+  </section>
+
+  <section class="nx-section">
+    <div class="nx-container">
+      <div class="nx-chips" id="nx-dir-filter"></div>
+      <p class="nx-dir-count" id="nx-dir-count"></p>
+      <div class="nx-grid nx-grid-4" id="nx-dir-grid"></div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="nx-footer">
+    <div class="nx-container">
+      <div class="cols">
+        <div>
+          <span class="nx-brand" style="font-size:1.2rem">NEXUM<em>ACADEMY</em></span>
+          <p class="slogan">Entiende. Practica. Domina.</p>
+          <div class="nx-socials" aria-label="Redes sociales">
+            <span title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span>
+            <span title="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span title="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4c1 2 2.5 3 5 3"/></svg></span>
+            <span title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2h-4l-5 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          </div>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="tutorias.html">Inicio</a></li>
+            <li><a href="tutorias.html#reserva">Tutorías</a></li>
+            <li><a href="tutorias.html#materias">Materias</a></li>
+            <li><a href="tutorias-tutores.html">Tutores</a></li>
+            <li><a href="tutorias.html#precios">Precios</a></li>
+            <li><a href="tutorias.html#recursos">Recursos</a></li>
+            <li><a href="tutorias.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li>Términos y condiciones</li>
+            <li>Política de privacidad</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom">
+        <span>© <span id="nx-year">2026</span> NEXUM ACADEMY. Todos los derechos reservados.</span>
+        <span class="fake">ESTA ES UNA PÁGINA FICTICIA, NINGUNA INFORMACIÓN MOSTRADA ES REAL.</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="../js/tutors-data.js" defer></script>
+  <script src="../js/tutorias-pages.js" defer></script>
+</body>
+</html>

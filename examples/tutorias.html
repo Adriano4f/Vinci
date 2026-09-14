@@ -26,7 +26,7 @@
       <ul class="nx-links" id="nx-links">
         <li><a href="#inicio" data-nx="inicio">Inicio</a></li>
         <li><a href="#materias" data-nx="materias">Materias</a></li>
-        <li><a href="#tutores" data-nx="tutores">Tutores</a></li>
+        <li><a href="tutorias-tutores.html">Tutores</a></li>
         <li><a href="#precios" data-nx="precios">Precios</a></li>
         <li><a href="#recursos" data-nx="recursos">Recursos</a></li>
         <li><a href="#faq" data-nx="faq">FAQ</a></li>
@@ -136,6 +136,9 @@
         <h2>Conoce a nuestros tutores</h2>
       </div>
       <div class="nx-grid nx-grid-4" id="nx-tutors"><!-- se genera desde tutorias.js --></div>
+      <p style="text-align:center;margin-top:32px;">
+        <a class="nx-btn nx-btn-ghost" href="tutorias-tutores.html">Ver los 8 tutores y filtrar por materia</a>
+      </p>
     </div>
   </section>
 
@@ -170,6 +173,17 @@
       <div class="nx-booking">
         <form class="nx-card" id="nx-book-form" novalidate>
           <div class="nx-form-grid">
+            <div class="nx-field full">
+              <label for="bk-plan">Plan *</label>
+              <select id="bk-plan" name="bk-plan">
+                <option value="">Elige un plan…</option>
+                <option value="individual">Sesión individual · RD$500 por 60 min</option>
+                <option value="basico">Plan Básico · 4 tutorías · RD$1,800</option>
+                <option value="intensivo">Plan Intensivo · 8 tutorías · RD$3,200</option>
+                <option value="examen">Preparación de examen · 10 tutorías · RD$4,500</option>
+              </select>
+              <span class="nx-err" data-err="bk-plan"></span>
+            </div>
             <div class="nx-field">
               <label for="bk-subject">Materia *</label>
               <select id="bk-subject" name="bk-subject"><option value="">Elige una…</option></select>
@@ -257,6 +271,7 @@
         <div class="nx-card nx-summary">
           <h3>Tu reserva</h3>
           <dl>
+            <dt>Plan:</dt><dd id="sm-plan">—</dd>
             <dt>Materia:</dt><dd id="sm-subject">—</dd>
             <dt>Tutor:</dt><dd id="sm-tutor">—</dd>
             <dt>Modalidad:</dt><dd id="sm-mode">—</dd>
@@ -290,26 +305,26 @@
           <h3>Sesión individual</h3>
           <div class="amount">RD$500 <small>· 60 min</small></div>
           <ul><li>1 tutoría</li><li>Material de práctica</li><li>Sin compromiso</li></ul>
-          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="tutorias.html?plan=individual#reserva">Elegir este plan</a>
         </div>
         <div class="nx-card nx-price featured nx-reveal">
           <span class="nx-badge">Más elegido</span>
           <h3>Plan Básico</h3>
           <div class="amount">RD$1,800</div>
           <ul><li>4 tutorías de 60 minutos</li><li>Material complementario</li><li>Seguimiento básico</li></ul>
-          <a class="nx-btn nx-btn-primary nx-btn-sm" href="#reserva">Elegir</a>
+          <a class="nx-btn nx-btn-primary nx-btn-sm" href="tutorias.html?plan=basico#reserva">Elegir este plan</a>
         </div>
         <div class="nx-card nx-price nx-reveal">
           <h3>Plan Intensivo</h3>
           <div class="amount">RD$3,200</div>
           <ul><li>8 tutorías de 60 minutos</li><li>Material personalizado</li><li>Seguimiento académico</li><li>Prioridad para reservas</li></ul>
-          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="tutorias.html?plan=intensivo#reserva">Elegir este plan</a>
         </div>
         <div class="nx-card nx-price nx-reveal">
           <h3>Preparación de examen</h3>
           <div class="amount">RD$4,500</div>
           <ul><li>10 tutorías</li><li>Plan de estudio personalizado</li><li>Simulacros de examen</li><li>Seguimiento del progreso</li></ul>
-          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="#reserva">Elegir</a>
+          <a class="nx-btn nx-btn-ghost nx-btn-sm" href="tutorias.html?plan=examen#reserva">Elegir este plan</a>
         </div>
       </div>
     </div>
@@ -596,6 +611,7 @@
     </div>
   </div>
 
+  <script src="../js/tutors-data.js" defer></script>
   <script src="../js/tutorias.js" defer></script>
 </body>
 </html>
