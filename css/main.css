@@ -934,6 +934,43 @@ svg {
   transform: scale(1.03);
 }
 
+/* Poster catalog (servicios/posters.html) */
+.poster-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.poster-card figure {
+  margin: 0 0 6px;
+  border-radius: calc(var(--radius) - 6px);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.poster-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.poster-card h3 {
+  margin: 0;
+}
+
+.poster-card .price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent-soft);
+}
+
+.poster-card .btn {
+  margin-top: auto;
+  text-align: center;
+}
+
 .chip-list {
   display: flex;
   flex-wrap: wrap;

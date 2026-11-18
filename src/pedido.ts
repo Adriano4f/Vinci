@@ -70,6 +70,14 @@
     productSelect.value = product;
   }
 
+  // Catalog buttons also pass ?diseno=<name>; the message is prefilled with
+  // it so the visitor only adds their details.
+  const design = new URLSearchParams(window.location.search).get("diseno");
+  const messageField = form.elements.namedItem("message");
+  if (messageField instanceof HTMLTextAreaElement && design) {
+    messageField.value = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$350).`;
+  }
+
   // --- Validation rules ------------------------------------------------------
 
   const validate = (): boolean => {
