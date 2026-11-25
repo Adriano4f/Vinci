@@ -63,6 +63,21 @@
     if (productSelect instanceof HTMLSelectElement && product) {
         productSelect.value = product;
     }
+    // Catalog buttons also pass ?diseno=<name>; the message is prefilled with
+    // it so the visitor only adds their details.
+    const design = new URLSearchParams(window.location.search).get("diseno");
+    const messageField = form.elements.namedItem("message");
+    if (messageField instanceof HTMLTextAreaElement && design) {
+        const prefilled = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$250).`;
+        messageField.value = prefilled;
+        // Switching to another product drops the poster request, unless the
+        // visitor already edited the message.
+        form.addEventListener("change", (event) => {
+            if (event.target === productSelect && messageField.value === prefilled) {
+                messageField.value = "";
+            }
+        });
+    }
     // --- Validation rules ------------------------------------------------------
     const validate = () => {
         let ok = true;
