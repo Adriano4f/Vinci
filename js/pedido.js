@@ -68,7 +68,15 @@
     const design = new URLSearchParams(window.location.search).get("diseno");
     const messageField = form.elements.namedItem("message");
     if (messageField instanceof HTMLTextAreaElement && design) {
-        messageField.value = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$250).`;
+        const prefilled = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$250).`;
+        messageField.value = prefilled;
+        // Switching to another product drops the poster request, unless the
+        // visitor already edited the message.
+        form.addEventListener("change", (event) => {
+            if (event.target === productSelect && messageField.value === prefilled) {
+                messageField.value = "";
+            }
+        });
     }
     // --- Validation rules ------------------------------------------------------
     const validate = () => {
