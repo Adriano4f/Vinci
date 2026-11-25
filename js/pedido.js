@@ -68,7 +68,7 @@
     const design = new URLSearchParams(window.location.search).get("diseno");
     const messageField = form.elements.namedItem("message");
     if (messageField instanceof HTMLTextAreaElement && design) {
-        messageField.value = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$350).`;
+        messageField.value = `Quiero el poster "${design}" del catálogo (18 × 24 pulgadas, RD$250).`;
     }
     // --- Validation rules ------------------------------------------------------
     const validate = () => {
