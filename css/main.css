@@ -935,15 +935,23 @@ svg {
 }
 
 /* Poster catalog (servicios/posters.html) */
+.poster-list {
+  display: grid;
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 .poster-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+  padding: 24px;
 }
 
 .poster-card figure {
-  margin: 0 0 6px;
+  margin: 0;
   border-radius: calc(var(--radius) - 6px);
   overflow: hidden;
   aspect-ratio: 3 / 4;
@@ -956,19 +964,49 @@ svg {
   display: block;
 }
 
-.poster-card h3 {
-  margin: 0;
+.poster-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.poster-card .price {
-  font-size: 1.3rem;
+.poster-info .kicker {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.poster-info h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.poster-info p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.poster-info ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.poster-info .price {
+  font-size: 1.6rem;
   font-weight: 800;
   color: var(--accent-soft);
 }
 
-.poster-card .btn {
-  margin-top: auto;
-  text-align: center;
+@media (max-width: 720px) {
+  .poster-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 .chip-list {
