@@ -164,7 +164,8 @@
         if (!validate())
             return;
         // Build a mailto: link containing everything the user wrote.
-        const recipient = "vinci.websites@example.com"; // <- replace with your real email
+        // RFC 6068: a mailto: URI takes several addresses separated by commas.
+        const recipient = ["10093374@ipl.edu.do", "10041045@ipl.edu.do"].join(",");
         const subject = `Nueva solicitud de sitio web · ${valueOf("name")}`;
         // Array of strings; `${ }` interpolations are evaluated left to right.
         // `|| "(sin especificar)"` falls back on empty string ("" is falsy).

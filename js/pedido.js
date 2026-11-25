@@ -134,7 +134,8 @@
         event.preventDefault();
         if (!validate())
             return;
-        const recipient = "vinci.websites@example.com"; // <- replace with your real email
+        // RFC 6068: a mailto: URI takes several addresses separated by commas.
+        const recipient = ["10093374@ipl.edu.do", "10041045@ipl.edu.do"].join(",");
         const subject = `Nuevo pedido de producto · ${valueOf("name")}`;
         const bodyLines = [
             `Nombre: ${valueOf("name")}`,
