@@ -1,5 +1,7 @@
 /*
  * common.ts — shared behavior used on every page.
+ * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
+ * in plain Spanish.
  * Compiled to js/common.js and loaded by all HTML pages.
  *
  * Responsibilities:

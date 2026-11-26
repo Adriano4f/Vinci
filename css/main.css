@@ -73,6 +73,11 @@ svg {
   display: block;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ---------- 3. Layout helpers ---------- */
 .container {
   max-width: var(--max-w);
@@ -561,7 +566,8 @@ svg {
   font-weight: 700;
   font-size: 0.92rem;
   text-decoration: none;
-  margin-top: 14px;
+  margin-top: 8px;
+  padding: 6px 0;
   display: inline-block;
 }
 
@@ -924,6 +930,7 @@ svg {
 
 .svc-back {
   display: inline-block;
+  padding: 6px 0;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--muted);
@@ -1164,4 +1171,27 @@ svg {
     display: block;
     transform: none;
   }
+}
+
+/* ---------- Page not found (404.html) ---------- */
+.not-found {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.not-found .code {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(4rem, 14vw, 7rem);
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+
+.not-found .lead {
+  max-width: 520px;
+  margin: 12px auto 28px;
+  color: var(--muted);
 }

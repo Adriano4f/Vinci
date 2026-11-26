@@ -1,136 +1,156 @@
-# Vinci — sitios web para negocios estudiantiles
+# Vinci Web Studio
 
-Este es el sitio web de **Vinci**, nuestro proyecto de emprendimiento
-escolar: un estudio web dirigido por estudiantes que construye páginas para
-otros negocios de estudiantes.
+Sitio web de **Vinci Web Studio**: vendemos páginas web para negocios y
+productos personalizados (posters, imanes, marcos con estampado y bisutería).
 
-El sitio tiene tres páginas principales más una carpeta con plantillas demo:
+- Sitio en vivo: <https://vincihost.vercel.app>
+- Guía del código para principiantes: [`docs/GUIA-CODIGO.md`](docs/GUIA-CODIGO.md)
 
-| Página | Archivo | Qué es |
-|--------|---------|--------|
-| Inicio | `index.html` | Quiénes somos, por qué deberían comprarnos, qué ofrecemos |
-| Plantillas | `templates.html` | Galería de diseños que los clientes pueden elegir |
-| Contacto | `contact.html` | Formulario para que los clientes nos cuenten su proyecto |
-| Demos | `examples/` | Tres sitios de muestra (panadería, tienda de tecnología, portafolio) que muestran cómo puede verse un sitio terminado |
+> **Si nunca has programado en TypeScript o JavaScript**, empieza por la
+> sección "Cómo funciona una página" de abajo y luego lee la guía del código.
+> Para cambiar textos, precios o fotos **no necesitas saber programar**: solo
+> se editan los archivos `.html`.
 
 ---
 
-## Cómo está organizado el proyecto
+## Cómo funciona una página (en palabras simples)
+
+Cada página del sitio está hecha de tres piezas, como una casa:
+
+| Pieza | Archivos | Es como… | Qué hace |
+|---|---|---|---|
+| **HTML** | `index.html`, `contact.html`… | Las paredes y los muebles | El contenido: textos, títulos, fotos, botones, formularios |
+| **CSS** | `css/main.css` | La pintura y la decoración | Colores, letras, tamaños, espacios, cómo se ve en el celular |
+| **JavaScript** | `js/*.js` | La electricidad | Lo que *reacciona*: abrir el menú, filtrar plantillas, revisar el formulario |
+
+El navegador (Chrome, Safari…) abre el `.html`, y ese archivo le dice "carga
+también este `.css` y este `.js"`. Al final de cada página verás algo como:
+
+```html
+<script src="js/common.js" defer></script>
+```
+
+### ¿Y TypeScript?
+
+El navegador solo entiende **JavaScript**. Nosotros escribimos el código en
+**TypeScript** (carpeta `src/`), que es JavaScript con una ayuda extra: antes
+de publicar, revisa que no hayamos cometido errores tontos (por ejemplo, usar
+un botón que no existe). El programa `tsc` traduce cada archivo de `src/` a
+uno de `js/`:
 
 ```
-Vinci/
-├── index.html          # Página de inicio
-├── templates.html      # Galería de plantillas (con filtro por categoría)
-├── contact.html        # Página de contacto con formulario validado
-├── examples/           # Sitios demo independientes para que los clientes vean
-│   ├── bakery.html
-│   ├── techstore.html
-│   └── portfolio.html
+src/contact.ts  ──tsc──▶  js/contact.js   (este es el que usa el navegador)
+```
+
+Regla de oro: **edita `src/*.ts`, nunca `js/*.js`**. Los `.js` se vuelven a
+generar solos al compilar, y cualquier cambio hecho a mano en ellos se pierde.
+
+---
+
+## Qué hay en cada carpeta
+
+```
+vincihost/
+├── index.html            Inicio: quiénes somos, cómo trabajamos y los 3 planes con sus límites
+├── templates.html        Galería de plantillas/demos, con filtro por categoría
+├── contact.html          Formulario para pedir una página web
+├── 404.html              Página que aparece cuando alguien abre un enlace que no existe
+├── servicios/            Productos físicos
+│   ├── index.html        Resumen de los 4 productos
+│   ├── posters.html      Catálogo de posters (18 × 24 pulgadas, RD$250)
+│   ├── imanes.html, marcos.html, bisuteria.html
+│   └── pedido.html       Formulario para pedir un producto
+├── examples/             Demos de sitios terminados para mostrar a clientes
+│   ├── bakery*.html      Panadería "La Miga Dorada" (5 páginas)
+│   ├── techstore*.html   Tienda de tecnología "ByteShop" (5 páginas)
+│   ├── restaurant.html   Menú de restaurante "Brasa & Sabor"
+│   ├── event.html        Evento "Nexus Summit"
+│   ├── tutorias*.html    Plataforma de tutorías "Nexum Academy" (3 páginas)
+│   └── portfolio.html    Portafolio (demo sencilla)
 ├── css/
-│   ├── main.css        # Todos los estilos de las tres páginas principales
-│   └── examples.css    # Estilos compartidos por las páginas demo
-├── src/                # Código TypeScript FUENTE — esto es lo que editamos
-│   ├── common.ts       # Navbar (menú móvil, enlace activo), año del footer
-│   ├── gallery.ts      # Filtro de categorías en templates.html
-│   └── contact.ts      # Validación del formulario de contacto
-├── js/                 # JavaScript compilado — GENERADO, no editar a mano
-├── tsconfig.json       # Configuración del compilador TypeScript
-├── package.json        # Metadatos del proyecto + comandos abreviados
-└── .gitignore          # Le dice a git que ignore node_modules/
+│   ├── main.css          Estilos del sitio de Vinci (los colores están arriba, en :root)
+│   └── examples.css, bakery.css, techstore.css…   Estilos propios de cada demo
+├── src/                  Código TypeScript: AQUÍ se edita la lógica
+│   ├── common.ts         Menú del celular, menú "Otros servicios", enlace activo, año, animaciones
+│   ├── gallery.ts        Filtro de categorías de templates.html
+│   ├── contact.ts        Revisa el formulario de contacto y arma el mensaje
+│   ├── pedido.ts         Igual, para el formulario de productos
+│   └── bakery.ts, techstore.ts, restaurant.ts, event.ts, tutorias*.ts, tutors-data.ts   (demos)
+├── js/                   JavaScript generado por tsc. NO editar a mano
+├── img/                  Fotos (img/og-vinci.jpg es la imagen que sale al compartir el enlace)
+├── robots.txt, sitemap.xml   Le dicen a Google qué páginas existen
+├── scripts/build-static.mjs  Copia los archivos públicos a dist/ para Vercel
+├── package.json          Lista de comandos (npm run build, etc.)
+├── tsconfig.json         Opciones de TypeScript
+└── vercel.json           Le dice a Vercel cómo publicar el sitio
 ```
 
-## El modelo mental (para quien viene de C++)
+---
 
-Si conoces C++, las tecnologías web se corresponden más o menos así:
+## Cambios comunes (sin programar)
 
-| Web | Equivalente en C++ |
-|-----|--------------------|
-| **HTML** (`.html`) | La *estructura* de la página — como declarar los widgets/layout de un programa. Texto, encabezados, botones, formularios. Sin lógica. |
-| **CSS** (`.css`) | La *apariencia* — colores, fuentes, tamaños, espaciado, disposición. Puramente cosmético. |
-| **TypeScript** (`.ts`) | La *lógica* — como tus archivos `.cpp`. Los navegadores no pueden ejecutar TypeScript directamente. |
-| **JavaScript** (`.js` en `js/`) | El *resultado compilado* — como el binario que produce `g++`. `tsc` convierte cada `.ts` en un `.js` que el navegador sí entiende. |
-| `tsc` (compilador de TypeScript) | `g++` / `clang++` |
-| `tsconfig.json` | Las banderas del compilador, como los `CXXFLAGS` de un Makefile |
-| `package.json` | Algo como un Makefile + manifiesto: lista dependencias y define atajos `npm run …` |
-| `npm` | Gestor de paquetes — como vcpkg/conan, instala bibliotecas (`typescript` es nuestra única dependencia) |
+| Si quieres… | Abre… | Busca… |
+|---|---|---|
+| Cambiar textos o precios de los planes | `index.html` | `class="offer"` (una tarjeta por plan) |
+| Cambiar qué es una página / qué incluye cada plan | `index.html` | `class="plan-terms"` |
+| Cambiar los planes que aparecen en el formulario | `contact.html` | `<option value="basic">` |
+| Agregar un poster | `servicios/posters.html` | Copia un bloque `<article class="card poster-card reveal">`, cambia nombre, descripción y foto (`img/servicios/posters/`) |
+| Cambiar el precio de los posters | `servicios/posters.html` **y** `src/pedido.ts` | `RD$250` (el `.ts` lo usa para el mensaje del pedido) |
+| Cambiar colores | `css/main.css` | El bloque `:root` al principio: `--accent` es el azul de la marca |
+| Agregar una tarjeta a la galería | `templates.html` | Copia un `<article class="card template-card">` y ajusta `data-category` |
+| Cambiar los correos que reciben los formularios | `src/contact.ts` y `src/pedido.ts` | `const recipient` |
+| Cambiar el número de WhatsApp | `src/contact.ts`, `src/pedido.ts`, `contact.html`, `servicios/pedido.html` | `18298591920` / `829) 859-1920` |
+| Cambiar la imagen al compartir el enlace | `img/og-vinci.jpg` | Imagen de 1200 × 630 píxeles |
 
-Cada página HTML carga los scripts que necesita al final, por ejemplo
-`<script src="js/common.js" defer></script>`.
+Después de cambiar un archivo de `src/`, compila (ver abajo) para que se
+actualice su `.js`.
 
-## Configuración inicial (una sola vez)
+---
 
-Necesitas **Node.js** (incluye `npm`). Instálalo desde
-<https://nodejs.org> (elige la versión LTS) y luego, en esta carpeta, ejecuta:
+## Cómo probar el sitio en tu computadora
 
-```bash
-npm install
-```
+1. Instala **Node.js** (versión LTS) desde <https://nodejs.org>. Una sola vez.
+2. En esta carpeta, abre una terminal y ejecuta una sola vez:
+   ```bash
+   npm install
+   ```
+   Eso descarga TypeScript en `node_modules/`.
+3. Cada vez que cambies algo:
+   ```bash
+   npm run build     # traduce src/*.ts a js/*.js y prepara dist/
+   npm run serve     # abre el sitio en http://localhost:3000
+   ```
+   También sirve `npm run watch`: deja `tsc` abierto y recompila cada vez
+   que guardas un `.ts`.
 
-Eso descarga el compilador de TypeScript en `node_modules/`. Solo hace falta
-una vez (y de nuevo únicamente si cambia `package.json`).
+Si `npm run build` muestra un error, te dice el archivo y la línea, por
+ejemplo `src/contact.ts(42,5): error TS2339…`. Ve a esa línea: casi siempre es
+un nombre mal escrito o un elemento que puede no existir.
 
-## Flujo de trabajo diario
+---
 
-```bash
-# 1. Edita los archivos de src/ (TypeScript) o los .html / .css.
+## Cómo se publica (Vercel)
 
-# 2. Compila TypeScript -> JavaScript
-npm run build        # es lo mismo que: npx tsc
+- Este repositorio (**vincihost**) está conectado a Vercel. Cada vez que algo
+  llega a la rama `main`, Vercel ejecuta `npm run build` y publica la carpeta
+  `dist/` en <https://vincihost.vercel.app> en uno o dos minutos.
+- Cada pull request recibe además una *vista previa* con su propio enlace,
+  para revisarla antes de unirla a `main`.
+- El repositorio **Vinci** guarda el mismo código: cuando cambies algo aquí,
+  haz el mismo cambio allá para que no se separen.
+- La carpeta `js/` se guarda en git a propósito, para que el sitio funcione
+  aunque nadie haya compilado. `dist/` no se guarda: se crea en cada build.
 
-#    …o deja el compilador corriendo para que recompile al guardar:
-npm run watch
+---
 
-# 3. Mira el sitio
-npm run serve        # luego abre http://localhost:3000
-#    o sin npm:
-python3 -m http.server 8000    # luego abre http://localhost:8000
-```
+## Cosas que conviene saber
 
-> **¿Por qué un servidor?** Abrir `index.html` con doble clic funciona para
-> la mayoría del sitio, pero usar un servidor local es la forma confiable —
-> algunos navegadores restringen páginas abiertas desde `file://`. Los
-> comandos `serve`/`http.server` de arriba son la forma recomendada.
-
-La carpeta `js/` está versionada en git a propósito: el sitio funciona aunque
-nadie haya ejecutado `tsc` (por ejemplo, en GitHub Pages). Solo recuerda —
-**edita los `.ts` de `src/`, nunca los `.js` de `js/`**.
-
-## Desplegar en Vercel
-
-`npm run build` hace dos cosas: compila TypeScript (`tsc`) y copia los
-archivos públicos a la carpeta `dist/` (`scripts/build-static.mjs`). El
-archivo `vercel.json` ya le dice a Vercel que use `npm run build` y publique
-`dist/`, así que basta con importar este repo en Vercel — sin configuración
-extra.
-
-Para ver localmente exactamente lo que Vercel publicará:
-
-```bash
-npm run preview    # compila y sirve dist/
-```
-
-`dist/` está en `.gitignore`: se genera en cada build/deploy, no se versiona.
-
-## Dónde hacer los cambios más comunes
-
-| Si quieres… | Edita… |
-|---|---|
-| Cambiar textos, precios o secciones | El `.html` de esa página |
-| Cambiar colores / fuentes / espaciado | `css/main.css` — todos los colores son variables CSS en el bloque `:root` de arriba |
-| Agregar una tarjeta a la galería | Copia un bloque `<article class="card template-card">` en `templates.html` y ajusta su `data-category` |
-| Cambiar el correo o el WhatsApp del formulario | `recipient` y `whatsappNumber` cerca del final de `src/contact.ts` (el número también aparece en `contact.html`) |
-| Cambiar cómo funciona la validación | `src/contact.ts` — cada regla es un pequeño `if` |
-| Agregar un nuevo sitio demo | Crea un archivo en `examples/` (copia uno existente) y agrega una tarjeta en `templates.html` |
-
-## Notas
-
-- **No hay backend**: el formulario valida los datos y luego ofrece dos
-  botones — un enlace de WhatsApp (`wa.me`) que abre el chat con el mensaje
-  ya escrito, y un enlace `mailto:` que abre la aplicación de correo. Para
-  recibir mensajes directo en un inbox sin que el cliente haga nada más se
-  puede agregar un servicio como FormSubmit/Web3Forms con un correo real.
-- La configuración de TypeScript usa el modo `strict` — si `npm run build`
-  marca un error, el mensaje te dice el archivo y la línea, igual que los
-  errores de `g++`.
-- El texto visible del sitio está en español; el código (nombres, comentarios)
-  está en inglés.
+- **No hay servidor ni base de datos.** Los formularios no "envían" nada por
+  sí solos: revisan los datos y luego le muestran al cliente dos botones, uno
+  que abre WhatsApp y otro que abre su correo, con el mensaje ya escrito. El
+  cliente toca uno y lo envía él mismo. Los detalles están en
+  [`docs/GUIA-CODIGO.md`](docs/GUIA-CODIGO.md#el-formulario-de-contacto-paso-a-paso).
+- Los textos que ve el cliente están en español; los nombres en el código y
+  los comentarios están en inglés.
+- Las demos de `examples/` son de mentira: los carritos, reservas y pedidos
+  solo funcionan dentro del navegador de quien las prueba.
