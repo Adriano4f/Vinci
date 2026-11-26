@@ -1,4 +1,4 @@
-# Vinci Web Studio — Technical Reference
+# Vinci Web Studio: Technical Reference
 
 This document specifies how the site is built, deployed and executed, and
 the exact semantics of every TypeScript, JavaScript and browser feature the
@@ -19,8 +19,6 @@ Contents
 8. [Module reference](#8-module-reference)
 9. [Glossary](#9-glossary)
 
----
-
 ## 1. System overview
 
 The site is a **static site**: every response is a file served unchanged
@@ -37,8 +35,6 @@ code. All dynamic behavior executes in the visitor's browser.
 Data that leaves the browser does so only through two URI schemes opened by
 the visitor's own applications (§7.9): `mailto:` (email client) and
 `https://wa.me/` (WhatsApp). The site itself transmits nothing.
-
----
 
 ## 2. Repository layout
 
@@ -66,15 +62,13 @@ build output and is not committed.
 The repository exists twice: `Adriano4f/vincihost` (connected to Vercel) and
 `Adriano4f/Vinci`. Changes are applied to both.
 
----
-
 ## 3. Build pipeline
 
 ### 3.1 Tooling
 
-- **Node.js** — a JavaScript runtime outside the browser. Used only to run
+- **Node.js**: a JavaScript runtime outside the browser. Used only to run
   build tools. The environment blueprint installs Node 20.
-- **npm** — Node's package manager. `package.json` declares one development
+- **npm**: Node's package manager. `package.json` declares one development
   dependency, `typescript` (`^5.9.3`), installed into `node_modules/` by
   `npm install` (or `npm ci`, which installs the exact versions from
   `package-lock.json`).
@@ -134,8 +128,6 @@ and copies:
 Anything not listed is not deployed. **A new top-level file or directory
 must be added to these arrays.**
 
----
-
 ## 4. Deployment
 
 - **Host:** Vercel, project linked to `Adriano4f/vincihost`.
@@ -156,8 +148,6 @@ must be added to these arrays.**
   Open Graph `<meta property="og:*">` tags, read by WhatsApp, Instagram,
   Facebook etc. to render link previews (`og:image` = `img/og-vinci.jpg`,
   1200 × 630).
-
----
 
 ## 5. Runtime model: how a page executes
 
@@ -246,8 +236,6 @@ JavaScript), then renders if needed and takes the next. Consequences:
 - There is no data race between handlers; shared state is only observed
   between tasks.
 
----
-
 ## 6. Language semantics used by the code
 
 ### 6.1 Strict mode
@@ -322,7 +310,7 @@ value of `form` whenever it runs, long after the IIFE returned. Captured
 bindings live as long as any closure referencing them is reachable; memory
 is reclaimed by the garbage collector.
 
-Default parameters: `(slug: string, qty = 1)` — `qty` is `1` when the
+Default parameters: `(slug: string, qty = 1)`: `qty` is `1` when the
 argument is omitted or `undefined`.
 
 ### 6.6 Arrays and objects
@@ -399,25 +387,23 @@ contains a match. `^` and `$` anchor to the start and end, `[^\s@]` is any
 character except whitespace and `@`, `+` = one or more, `{2,}` = two or
 more, `{6,}` = six or more.
 
-- `EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/` — local part, `@`,
+- `EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/`: local part, `@`,
   domain, `.`, top-level label of ≥ 2 characters. A syntactic plausibility
   check only.
-- `PHONE_PATTERN = /^[+()0-9][0-9()\-\s]{6,}$/` — first character `+`,
+- `PHONE_PATTERN = /^[+()0-9][0-9()\-\s]{6,}$/`: first character `+`,
   `(`, `)` or a digit, followed by ≥ 6 digits, parentheses, hyphens or
   whitespace.
-
----
 
 ## 7. Browser APIs used by the code
 
 ### 7.1 Element lookup
 
-- `document.querySelector(sel)` / `el.querySelector(sel)` — first
+- `document.querySelector(sel)` / `el.querySelector(sel)`: first
   descendant matching the CSS selector `sel`, or `null`.
-- `querySelectorAll(sel)` — a static `NodeList` of all matches (a snapshot,
+- `querySelectorAll(sel)`: a static `NodeList` of all matches (a snapshot,
   not updated afterwards; iterable, has `forEach`, not an `Array`).
-- `el.closest(sel)` — nearest inclusive ancestor matching `sel`, or `null`.
-- `form.elements.namedItem(name)` — the form control(s) with that `name`:
+- `el.closest(sel)`: nearest inclusive ancestor matching `sel`, or `null`.
+- `form.elements.namedItem(name)`: the form control(s) with that `name`:
   an `Element`, a `RadioNodeList` (several controls share the name), or
   `null`.
 
@@ -450,9 +436,9 @@ navigates and reloads the page). Propagation to other listeners continues.
 
 ### 7.3 Element state
 
-- `el.textContent = s` — replaces all children with one text node. `s` is
+- `el.textContent = s`: replaces all children with one text node. `s` is
   never parsed as HTML.
-- `el.innerHTML = s` — parses `s` as HTML and replaces the children with
+- `el.innerHTML = s`: parses `s` as HTML and replaces the children with
   the result. Interpolating an untrusted string into `s` permits HTML/script
   injection (XSS); untrusted text must be assigned with `textContent` or
   escaped (`tutorias-pages.ts` defines `esc()` for this).
@@ -461,14 +447,14 @@ navigates and reloads the page). Propagation to other listeners continues.
   (add if `force` is `true`, remove if `false`). Classes are the interface
   between scripts and CSS: scripts set classes such as `open`, `active`,
   `hidden`, `visible`, `invalid`; `css/*.css` defines their appearance.
-- `el.hidden = bool` — reflects the `hidden` attribute; hidden elements are
+- `el.hidden = bool`: reflects the `hidden` attribute; hidden elements are
   not rendered.
 - `el.setAttribute(k, v)` / `getAttribute(k)` (`string | null`).
-- `el.dataset` — a `DOMStringMap` exposing `data-*` attributes:
+- `el.dataset`: a `DOMStringMap` exposing `data-*` attributes:
   `data-error-for` ↔ `dataset.errorFor`. Values are always strings; a
   missing attribute reads as `undefined`.
-- `a.href = url` — sets a link's destination.
-- `el.scrollIntoView({ behavior: "smooth", block: "center" })` — scrolls
+- `a.href = url`: sets a link's destination.
+- `el.scrollIntoView({ behavior: "smooth", block: "center" })`: scrolls
   the nearest scroll container so `el` is vertically centered.
 - `document.createElement(tag)` creates a detached element; `append`
   inserts it.
@@ -480,10 +466,10 @@ state.
 
 ### 7.4 URL and navigation
 
-- `window.location.pathname` — path of the current URL
-  (`/servicios/pedido.html`). `location.search` — the query string
+- `window.location.pathname`: path of the current URL
+  (`/servicios/pedido.html`). `location.search`: the query string
   including `?`.
-- `new URLSearchParams(location.search).get(k)` — the first value of
+- `new URLSearchParams(location.search).get(k)`: the first value of
   parameter `k`, percent-decoded (`+` decodes to a space), or `null`.
 
 Query parameters accepted by the site:
@@ -538,10 +524,10 @@ are stored as JSON text.
 
 ### 7.9 Outbound URIs
 
-- `mailto:a@x,b@y?subject=…&body=…` (RFC 6068) — opens the default email
+- `mailto:a@x,b@y?subject=…&body=…` (RFC 6068): opens the default email
   client with the recipients, subject and body pre-filled. Multiple
   recipients are comma-separated.
-- `https://wa.me/<digits>?text=…` — opens WhatsApp with a chat to the
+- `https://wa.me/<digits>?text=…`: opens WhatsApp with a chat to the
   number (international format, digits only: `18298591920`) and the text
   pre-filled.
 
@@ -549,14 +535,12 @@ Nothing is sent until the visitor confirms in that application.
 
 ### 7.10 Other
 
-- `new Date().getFullYear()` — current year in local time.
-- `performance.now()` — high-resolution milliseconds since page start;
+- `new Date().getFullYear()`: current year in local time.
+- `performance.now()`: high-resolution milliseconds since page start;
   with `requestAnimationFrame(cb)` (calls `cb` before the next repaint)
   drives frame-based animations.
-- `String(x)` — conversion to string; `parseFloat`, `parseInt(s, 10)` —
+- `String(x)`: conversion to string; `parseFloat`, `parseInt(s, 10)`:
   string to number.
-
----
 
 ## 8. Module reference
 
@@ -692,8 +676,6 @@ with arrow buttons, FAQ accordion, header state on `scroll`, mobile menu,
   tutor directory with a subject filter built from the union of all tutors'
   subjects; the profile page, which reads `?t=<slug>` and looks it up with
   `NEXUM_TUTORS.find`. Interpolated text is passed through `esc()`.
-
----
 
 ## 9. Glossary
 
