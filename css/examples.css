@@ -20,14 +20,14 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 10px 20px;
-  background: #7cc9f5;
-  color: #04284a;
+  background: #0d3b66;
+  color: #ffffff;
   font-size: 0.85rem;
   font-weight: 600;
 }
 
 .demo-ribbon a {
-  color: #04284a;
+  color: #ffffff;
   font-weight: 800;
   text-decoration: none;
   border-bottom: 2px solid #04284a;
