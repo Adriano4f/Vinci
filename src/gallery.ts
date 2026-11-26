@@ -1,7 +1,6 @@
 /*
  * gallery.ts — category filter for the templates gallery.
- * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
- * in plain Spanish.
+ * Specified in docs/REFERENCE.md §8.
  * Compiled to js/gallery.js and loaded only by templates.html.
  *
  * Each card carries a data-category attribute (e.g. data-category="food")

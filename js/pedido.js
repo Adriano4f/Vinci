@@ -1,8 +1,7 @@
 "use strict";
 /*
  * pedido.ts — validation for the product order form (servicios/pedido.html).
- * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
- * in plain Spanish.
+ * Specified in docs/REFERENCE.md §8.
  * Compiled to js/pedido.js and loaded only by servicios/pedido.html.
  *
  * Same idea as contact.ts: the site has no server, so the script validates
@@ -37,7 +36,7 @@
     const labelOf = (name) => {
         const field = form.elements.namedItem(name);
         if (field instanceof HTMLSelectElement) {
-            // selectedOptions[0] is `HTMLOptionElement | undefined`.
+            // selectedOptions[0] is undefined at runtime when nothing is selected.
             const option = field.selectedOptions[0];
             return option && option.value !== "" ? option.textContent.trim() : "";
         }

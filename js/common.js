@@ -1,8 +1,7 @@
 "use strict";
 /*
  * common.ts — shared behavior used on every page.
- * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
- * in plain Spanish.
+ * Specified in docs/REFERENCE.md §8.
  * Compiled to js/common.js and loaded by all HTML pages.
  *
  * Responsibilities:
@@ -92,8 +91,8 @@
     // String.split("/") → array; .filter(Boolean) removes empty strings
     // ("", produced by leading/trailing slashes) because Boolean("") === false.
     const segments = window.location.pathname.split("/").filter(Boolean);
-    // `segments[i]` is `string | undefined` under strict indexing;
-    // `?? ""` supplies the fallback.
+    // Indexing an empty array yields undefined at runtime (the static type is
+    // still `string`, since noUncheckedIndexedAccess is off); `?? ""` guards it.
     const lastSegment = (_a = segments[segments.length - 1]) !== null && _a !== void 0 ? _a : "";
     let route = "inicio";
     if (segments.includes("servicios"))

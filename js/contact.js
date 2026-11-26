@@ -1,8 +1,7 @@
 "use strict";
 /*
  * contact.ts — validation for the "Contact us" form.
- * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
- * in plain Spanish.
+ * Specified in docs/REFERENCE.md §8.
  * Compiled to js/contact.js and loaded only by contact.html.
  *
  * The site has no server, so instead of sending data anywhere the script:
@@ -53,7 +52,7 @@
         const field = form.elements.namedItem(name);
         if (field instanceof HTMLSelectElement) {
             // selectedOptions is a live HTMLCollection of chosen <option>s;
-            // [0] may be undefined under strict indexing.
+            // [0] is undefined at runtime when nothing is selected.
             const option = field.selectedOptions[0];
             // `option && option.value !== "" ? ... : ""` — the ternary; && first
             // guards against undefined option, then checks the value isn't the
