@@ -1,5 +1,7 @@
 /*
  * contact.ts — validation for the "Contact us" form.
+ * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
+ * in plain Spanish.
  * Compiled to js/contact.js and loaded only by contact.html.
  *
  * The site has no server, so instead of sending data anywhere the script:
@@ -196,7 +198,7 @@
       `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 
     // WhatsApp deep link — opens a chat with our number, message prefilled.
-    const whatsappNumber = "18298591920"; // <- replace with your real number
+    const whatsappNumber = "18298591920"; // Vinci's WhatsApp: country code 1 + 829-859-1920, digits only
     const whatsapp =
       `https://wa.me/${whatsappNumber}?text=` +
       encodeURIComponent(`${subject}\n\n${bodyLines.join("\n")}`);

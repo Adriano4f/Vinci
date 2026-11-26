@@ -1,6 +1,8 @@
 "use strict";
 /*
  * pedido.ts — validation for the product order form (servicios/pedido.html).
+ * New to TypeScript? docs/GUIA-CODIGO.md explains this file step by step
+ * in plain Spanish.
  * Compiled to js/pedido.js and loaded only by servicios/pedido.html.
  *
  * Same idea as contact.ts: the site has no server, so the script validates
@@ -148,7 +150,7 @@
         // Percent-encode both pieces so spaces/&/newlines survive inside the URI.
         const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}` +
             `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-        const whatsappNumber = "18298591920"; // <- replace with your real number
+        const whatsappNumber = "18298591920"; // Vinci's WhatsApp: country code 1 + 829-859-1920, digits only
         const whatsapp = `https://wa.me/${whatsappNumber}?text=` +
             encodeURIComponent(`${subject}\n\n${bodyLines.join("\n")}`);
         const mailtoLink = document.querySelector("#mailto-link");
